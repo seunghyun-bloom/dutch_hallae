@@ -18,3 +18,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+//TODO: solve the problem of Android debug (13 Jan 2022)
+//TODO: solve Facebook Login error (consider using web version) (13 Jan 2022)

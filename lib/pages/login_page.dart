@@ -1,8 +1,13 @@
+import 'package:dutch_hallae/firebase/social_login/facebook_login.dart';
+import 'package:dutch_hallae/firebase/social_login/google_login.dart';
 import 'package:dutch_hallae/pages/user_profile_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
+  //TODO: insert StreamBuilder with FirebaseAuth.instance.userChanges()
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -19,19 +24,25 @@ class LoginPage extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Card(
-                  child: ListTile(
-                    leading: Image.asset('assets/images/google_logo.png'),
-                    title: Text('Google 로그인 하기'),
-                    trailing: Icon(Icons.arrow_forward_ios),
+                InkWell(
+                  child: Card(
+                    child: ListTile(
+                      leading: Image.asset('assets/images/google_logo.png'),
+                      title: Text('Google 로그인 하기'),
+                      trailing: Icon(Icons.arrow_forward_ios),
+                    ),
                   ),
+                  onTap: () => signInWithGoogle(),
                 ),
-                Card(
-                  child: ListTile(
-                    leading: Image.asset('assets/images/facebook_logo.png'),
-                    title: Text('facebook 로그인 하기'),
-                    trailing: Icon(Icons.arrow_forward_ios),
+                InkWell(
+                  child: Card(
+                    child: ListTile(
+                      leading: Image.asset('assets/images/facebook_logo.png'),
+                      title: Text('facebook 로그인 하기'),
+                      trailing: Icon(Icons.arrow_forward_ios),
+                    ),
                   ),
+                  onTap: () => signInWithFacebook(),
                 ),
                 Card(
                   child: ListTile(
@@ -57,13 +68,9 @@ class LoginPage extends StatelessWidget {
                   color: Colors.red[800],
                 ),
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => UserProfilePage(),
-                  ),
-                );
+              onTap: () async {
+                UserCredential userCredential = await _auth.signInAnonymously();
+                userCredential;
               },
             ),
           ],
