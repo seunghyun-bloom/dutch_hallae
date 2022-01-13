@@ -58,6 +58,7 @@ class LoginPage extends StatelessWidget {
                     trailing: Icon(Icons.arrow_forward_ios),
                   ),
                 ),
+                const Text('Hello'),
               ],
             ),
             InkWell(
