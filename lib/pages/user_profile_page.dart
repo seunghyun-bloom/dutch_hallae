@@ -25,6 +25,7 @@ class UserProfilePage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Text("이것은 성진이 만든 것"),
                   CircleAvatar(
                     radius: 60,
                     backgroundColor: Colors.grey[300],
