@@ -58,6 +58,7 @@ class LoginPage extends StatelessWidget {
                     trailing: Icon(Icons.arrow_forward_ios),
                   ),
                 ),
+                const Text('이것은 승현이 만든 텍스트이다.'),
               ],
             ),
             InkWell(
