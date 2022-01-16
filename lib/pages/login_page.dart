@@ -54,7 +54,7 @@ class LoginPage extends StatelessWidget {
                 Card(
                   child: ListTile(
                     leading: Image.asset('assets/images/apple_logo.png'),
-                    title: Text('apple로 로그인 하기'),
+                    title: Text('apple 로그인 하기'),
                     trailing: Icon(Icons.arrow_forward_ios),
                   ),
                 ),
