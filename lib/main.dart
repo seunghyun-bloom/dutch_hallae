@@ -20,4 +20,4 @@ class MyApp extends StatelessWidget {
 }
 
 //TODO: solve the problem of Android debug (13 Jan 2022) -- solved at 16 Jan 2022
-//TODO: solve Facebook Login error (consider using web version) (13 Jan 2022)
+//TODO: solve Facebook Login error (only iOS) (13 Jan 2022) -- solved at 17 Jan 2022

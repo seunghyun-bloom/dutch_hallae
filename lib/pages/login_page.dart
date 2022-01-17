@@ -1,6 +1,6 @@
 import 'package:dutch_hallae/firebase/social_login/facebook_login.dart';
 import 'package:dutch_hallae/firebase/social_login/google_login.dart';
-import 'package:dutch_hallae/pages/user_profile_page.dart';
+import 'package:dutch_hallae/firebase/social_login/twitter_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -44,19 +44,25 @@ class LoginPage extends StatelessWidget {
                   ),
                   onTap: () => signInWithFacebook(),
                 ),
-                Card(
-                  child: ListTile(
-                    leading: Image.asset('assets/images/twitter_logo.png'),
-                    title: Text('twitter 로그인 하기'),
-                    trailing: Icon(Icons.arrow_forward_ios),
+                InkWell(
+                  child: Card(
+                    child: ListTile(
+                      leading: Image.asset('assets/images/twitter_logo.png'),
+                      title: Text('twitter 로그인 하기'),
+                      trailing: Icon(Icons.arrow_forward_ios),
+                    ),
                   ),
+                  onTap: () => signInWithTwitter(),
                 ),
-                Card(
-                  child: ListTile(
-                    leading: Image.asset('assets/images/apple_logo.png'),
-                    title: Text('apple 로그인 하기'),
-                    trailing: Icon(Icons.arrow_forward_ios),
+                InkWell(
+                  child: Card(
+                    child: ListTile(
+                      leading: Image.asset('assets/images/apple_logo.png'),
+                      title: Text('apple 로그인 하기'),
+                      trailing: Icon(Icons.arrow_forward_ios),
+                    ),
                   ),
+                  onTap: () {},
                 ),
               ],
             ),
