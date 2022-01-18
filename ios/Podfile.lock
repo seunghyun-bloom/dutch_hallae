@@ -79,6 +79,8 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - PromisesObjC (2.0.0)
+  - sign_in_with_apple (0.0.1):
+    - Flutter
   - twitter_login (0.0.1):
     - Flutter
 
@@ -88,6 +90,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_facebook_auth (from `.symlinks/plugins/flutter_facebook_auth/ios`)
   - google_sign_in (from `.symlinks/plugins/google_sign_in/ios`)
+  - sign_in_with_apple (from `.symlinks/plugins/sign_in_with_apple/ios`)
   - twitter_login (from `.symlinks/plugins/twitter_login/ios`)
 
 SPEC REPOS:
@@ -120,6 +123,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_facebook_auth/ios"
   google_sign_in:
     :path: ".symlinks/plugins/google_sign_in/ios"
+  sign_in_with_apple:
+    :path: ".symlinks/plugins/sign_in_with_apple/ios"
   twitter_login:
     :path: ".symlinks/plugins/twitter_login/ios"
 
@@ -145,6 +150,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
   twitter_login: 2794db69b7640681171b17b3c2c84ad9dfb4a57f
 
 PODFILE CHECKSUM: c0eae4f5a486db13bf749534368a5cae8ad809cf
