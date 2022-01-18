@@ -1,8 +1,11 @@
+import 'package:dutch_hallae/firebase/social_login/apple_login.dart';
 import 'package:dutch_hallae/firebase/social_login/facebook_login.dart';
 import 'package:dutch_hallae/firebase/social_login/google_login.dart';
 import 'package:dutch_hallae/firebase/social_login/twitter_login.dart';
+import 'package:dutch_hallae/utilities/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'dart:io' show Platform;
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -62,7 +65,9 @@ class LoginPage extends StatelessWidget {
                       trailing: Icon(Icons.arrow_forward_ios),
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () => Platform.isIOS
+                      ? signInWithApple()
+                      : showToast('iOS에서만 사용할 수 있습니다.'),
                 ),
               ],
             ),
