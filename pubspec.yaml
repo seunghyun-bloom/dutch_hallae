@@ -41,6 +41,7 @@ dependencies:
   twitter_login: ^4.0.1
   sign_in_with_apple: ^3.3.0
   fluttertoast: ^8.0.8
+  font_awesome_flutter: ^9.2.0
 
 dev_dependencies:
   flutter_test:
