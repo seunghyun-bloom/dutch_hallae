@@ -1,5 +1,6 @@
 import 'package:dutch_hallae/pages/login_page.dart';
-import 'package:dutch_hallae/utilities/selection_card.dart';
+import 'package:dutch_hallae/utilities/styles.dart';
+import 'package:dutch_hallae/utilities/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -8,8 +9,6 @@ class UserProfilePage extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final String defaultProfile =
       'https://i.ibb.co/Hx9LP5Z/default-profile-image.png';
-  final String ireneImage =
-      'https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202112/16/4ab8f74f-79e5-4c14-bdbe-efe62f05b6ee.jpg';
 
   @override
   Widget build(BuildContext context) {
@@ -44,29 +43,37 @@ class UserProfilePage extends StatelessWidget {
                       style: const TextStyle(fontSize: 20),
                     ),
                   ),
-                  SelectionCard(label: '계좌정보 보러가기', onTap: () {}),
-                  SelectionCard(label: '정산기록 보러가기', onTap: () {}),
-                  SelectionCard(label: '설정하러 가기', onTap: () {}),
+                  ElevatedButton(
+                    child: const Text('프로필 수정'),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.blueGrey),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                    ),
+                    onPressed: () => showToast('프로필을 수정해보세요!'),
+                  ),
+                  TextButton(
+                    child: const Text('설정 하기'),
+                    onPressed: () => showToast('무엇을 설정할까?'),
+                  ),
+                  const SizedBox(height: 150),
+                  OutlinedButton(
+                    child: const Text('로그아웃'),
+                    style: kRedOutlinedButtonStyle,
+                    onPressed: () => _auth.signOut(),
+                  ),
+                  const SizedBox(height: 10),
+                  OutlinedButton(
+                    child: const Text('회원탈퇴'),
+                    style: kRedOutlinedButtonStyle,
+                    onPressed: () => _auth.currentUser?.delete(),
+                  ),
                 ],
               ),
-            ),
-            bottomNavigationBar: InkWell(
-              child: Container(
-                height: 70,
-                color: Colors.blue,
-                child: const Center(
-                  child: Text(
-                    'sign out',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-              ),
-              onTap: () {
-                _auth.signOut();
-              },
             ),
           );
         }
