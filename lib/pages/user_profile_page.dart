@@ -32,6 +32,7 @@ class UserProfilePage extends StatelessWidget {
                     ? 'Guest'
                     : '${_userData?.displayName}',
                 style: const TextStyle(fontSize: 20),
+
               ),
             ),
             ElevatedButton(
