@@ -1,3 +1,4 @@
+import 'package:dutch_hallae/firebase/firestore/create_firestore_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
@@ -10,5 +11,6 @@ Future<UserCredential> signInWithFacebook() async {
       FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
   // Once signed in, return the UserCredential
-  return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+  await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+  return await createFirestoreData();
 }

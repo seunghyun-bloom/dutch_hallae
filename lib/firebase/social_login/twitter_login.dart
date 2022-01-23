@@ -1,3 +1,4 @@
+import 'package:dutch_hallae/firebase/firestore/create_firestore_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:twitter_login/entity/auth_result.dart';
 import 'package:twitter_login/twitter_login.dart';
@@ -19,6 +20,6 @@ Future<UserCredential> signInWithTwitter() async {
   );
 
   // Once signed in, return the UserCredential
-  return await FirebaseAuth.instance
-      .signInWithCredential(twitterAuthCredential);
+  await FirebaseAuth.instance.signInWithCredential(twitterAuthCredential);
+  return await createFirestoreData();
 }

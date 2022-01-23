@@ -1,12 +1,21 @@
+import 'package:dutch_hallae/firebase/firestore/create_firestore_data.dart';
 import 'package:dutch_hallae/pages/login_page.dart';
 import 'package:dutch_hallae/pages/user_profile_page.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
+import 'package:dutch_hallae/utilities/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   MainPage({Key? key}) : super(key: key);
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
@@ -19,10 +28,8 @@ class MainPage extends StatelessWidget {
         } else {
           return Scaffold(
             appBar: AppBar(
-              title: const FaIcon(
-                FontAwesomeIcons.moneyBillWave,
-                color: Colors.green,
-              ),
+              title: const Text('더치할래'),
+              centerTitle: true,
             ),
             drawer: Drawer(
               child: ListView(
@@ -30,25 +37,21 @@ class MainPage extends StatelessWidget {
                 children: [
                   UserAccountsDrawerHeader(
                     currentAccountPicture: CircleAvatar(
-                      backgroundImage:
-                          NetworkImage('${snapshot.data?.photoURL}'),
+                      backgroundImage: NetworkImage(profileImageFS == null
+                          ? defaultProfile
+                          : '$profileImageFS'),
                     ),
-                    accountName: Text('${snapshot.data?.displayName}'),
-                    accountEmail: Text('${snapshot.data?.email}'),
+                    accountName: Text(displayNameFS == null
+                        ? defaultProfile
+                        : '$displayNameFS'),
+                    accountEmail: Text(emailFS == null ? '' : '$emailFS'),
                     decoration: kDrawerHeaderStyle,
-                    onDetailsPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UserProfilePage(),
-                        ),
-                      );
-                    },
+                    onDetailsPressed: () => Get.to(() => UserProfilePage()),
                   ),
                   ListTile(
                     leading: const FaIcon(FontAwesomeIcons.userAlt),
                     title: const Text('마이페이지'),
-                    onTap: () {},
+                    onTap: () => Get.to(() => UserProfilePage()),
                   ),
                   ListTile(
                     leading: const FaIcon(FontAwesomeIcons.users),
@@ -256,7 +259,7 @@ class MainPage extends StatelessWidget {
                               style: TextStyle(fontSize: 18),
                             ),
                             style: kRoundedButtonStyle,
-                            onPressed: () {},
+                            onPressed: () => showToast('준비 중'),
                           ),
                         ),
                       ),
