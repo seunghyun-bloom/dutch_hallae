@@ -53,6 +53,7 @@ class LoginPage extends StatelessWidget {
                   ),
                 ],
               ),
+              //TODO: Convert signInAnonymously to signInWithEmail
               TextButton(
                 child: Text(
                   'Guest로 시작하기',
