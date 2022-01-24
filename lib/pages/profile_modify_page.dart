@@ -1,13 +1,10 @@
 import 'dart:io';
 import 'package:dutch_hallae/firebase/firestore/create_firestore_data.dart';
+import 'package:dutch_hallae/firebase/firestore/image_uploader.dart';
 import 'package:dutch_hallae/pages/user_profile_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileModifyPage extends StatefulWidget {
@@ -18,12 +15,6 @@ class ProfileModifyPage extends StatefulWidget {
 }
 
 class _ProfileModifyPageState extends State<ProfileModifyPage> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final User? _userData = FirebaseAuth.instance.currentUser;
-  late File _image;
-  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
-  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -57,12 +48,12 @@ class _ProfileModifyPageState extends State<ProfileModifyPage> {
                               CupertinoDialogAction(
                                 child: const Text('사진첩'),
                                 onPressed: () =>
-                                    _uploadImageToStorage(ImageSource.gallery),
+                                    uploadImageToStorage(ImageSource.gallery),
                               ),
                               CupertinoDialogAction(
                                 child: const Text('카메라'),
                                 onPressed: () =>
-                                    _uploadImageToStorage(ImageSource.camera),
+                                    uploadImageToStorage(ImageSource.camera),
                               ),
                             ],
                           ),
@@ -77,12 +68,12 @@ class _ProfileModifyPageState extends State<ProfileModifyPage> {
                               TextButton(
                                 child: const Text('갤러리'),
                                 onPressed: () =>
-                                    _uploadImageToStorage(ImageSource.gallery),
+                                    uploadImageToStorage(ImageSource.gallery),
                               ),
                               TextButton(
                                 child: const Text('카메라'),
                                 onPressed: () =>
-                                    _uploadImageToStorage(ImageSource.camera),
+                                    uploadImageToStorage(ImageSource.camera),
                               ),
                             ],
                           ),
@@ -94,40 +85,5 @@ class _ProfileModifyPageState extends State<ProfileModifyPage> {
         ),
       ),
     );
-  }
-
-  //TODO: Extract to seperage class
-  _uploadImageToStorage(ImageSource source) async {
-    final ImagePicker _picker = ImagePicker();
-    XFile? ximage = await _picker.pickImage(
-      source: source,
-      maxHeight: 300,
-      maxWidth: 300,
-    );
-    File image = File(ximage!.path);
-
-    setState(() {
-      _image = image;
-    });
-    // Determine the path and file name of the uploading profile image
-    // Remove the possibility of duplicating the file name using the user's uid.
-    Reference reference =
-        _firebaseStorage.ref().child('profile').child('${_userData?.uid}');
-
-    // Upload file to Firebase storage
-    UploadTask uploadTask = reference.putFile(_image);
-
-    // wait until upload completed
-    await uploadTask.whenComplete(() => null);
-
-    // get uploaded url
-    String downloadURL = await reference.getDownloadURL();
-
-    _firebaseFirestore
-        .collection('userData')
-        .doc(_auth.currentUser?.uid)
-        .update({'profileImage': downloadURL});
-
-    Get.back();
   }
 }
