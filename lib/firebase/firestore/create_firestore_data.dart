@@ -9,12 +9,11 @@ dynamic displayNameFS;
 dynamic emailFS;
 dynamic uidFS;
 
+//TODO: 2) firestore의 doc에 uid 값이 없을 경우에만 실행되도록 수정
+//TODO:    현재는 if 값이 always false라 실행이 되지 않음.
 createFirestoreData() async {
   if (_firestore.collection('userData').doc(_auth.currentUser?.uid) == null) {
-    return await _firestore
-        .collection('userData')
-        .doc(_auth.currentUser?.uid)
-        .set({
+    await _firestore.collection('userData').doc(_auth.currentUser?.uid).set({
       'displayName': _auth.currentUser?.displayName,
       'email': _auth.currentUser?.email,
       'profileImage': _auth.currentUser?.photoURL,

@@ -2,7 +2,6 @@ import 'package:dutch_hallae/firebase/firestore/create_firestore_data.dart';
 import 'package:dutch_hallae/pages/login_page.dart';
 import 'package:dutch_hallae/pages/user_profile_page.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
-import 'package:dutch_hallae/utilities/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -17,6 +16,9 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  //TODO: 3) firestore data가 업데이트 되었지만 메인화면에 반영되지 않는 문제 해결
+  //TODO:    Stream을 사용하는 것 고려
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +39,14 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   UserAccountsDrawerHeader(
                     currentAccountPicture: CircleAvatar(
-                      backgroundImage: NetworkImage(profileImageFS == null
-                          ? defaultProfile
-                          : '$profileImageFS'),
+                      backgroundImage: NetworkImage(
+                        profileImageFS == null
+                            ? defaultProfile
+                            : '$profileImageFS',
+                      ),
                     ),
-                    accountName: Text(displayNameFS == null
-                        ? defaultProfile
-                        : '$displayNameFS'),
+                    accountName: Text(
+                        displayNameFS == null ? 'Guest' : '$displayNameFS'),
                     accountEmail: Text(emailFS == null ? '' : '$emailFS'),
                     decoration: kDrawerHeaderStyle,
                     onDetailsPressed: () => Get.to(() => UserProfilePage()),
@@ -259,7 +262,11 @@ class _MainPageState extends State<MainPage> {
                               style: TextStyle(fontSize: 18),
                             ),
                             style: kRoundedButtonStyle,
-                            onPressed: () => showToast('준비 중'),
+                            onPressed: () {
+                              setState(() {
+                                createFirestoreData();
+                              });
+                            },
                           ),
                         ),
                       ),
