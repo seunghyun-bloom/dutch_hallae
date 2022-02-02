@@ -1,8 +1,10 @@
-import 'package:dutch_hallae/firebase/firestore/create_firestore_data.dart';
+import 'package:dutch_hallae/firebase/firestore/user_data_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 Future<UserCredential> signInWithApple() async {
+  Get.put(UserDataController());
   // Request credential for the currently signed in Apple account.
   final appleCredential = await SignInWithApple.getAppleIDCredential(
     scopes: [
@@ -20,5 +22,5 @@ Future<UserCredential> signInWithApple() async {
   // Sign in the user with Firebase. If the nonce we generated earlier does
   // not match the nonce in `appleCredential.identityToken`, sign in will fail.
   await FirebaseAuth.instance.signInWithCredential(oauthCredential);
-  return await createFirestoreData();
+  return Get.find<UserDataController>().createFirestoreData();
 }
