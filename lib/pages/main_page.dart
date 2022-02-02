@@ -1,4 +1,4 @@
-import 'package:dutch_hallae/firebase/firestore/create_firestore_data.dart';
+import 'package:dutch_hallae/firebase/firestore/user_data_controller.dart';
 import 'package:dutch_hallae/pages/login_page.dart';
 import 'package:dutch_hallae/pages/user_profile_page.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
@@ -8,7 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class MainPage extends StatefulWidget {
-  MainPage({Key? key}) : super(key: key);
+  const MainPage({Key? key}) : super(key: key);
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -17,11 +17,9 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  //TODO: 3) firestore data가 업데이트 되었지만 메인화면에 반영되지 않는 문제 해결
-  //TODO:    Stream을 사용하는 것 고려
-
   @override
   Widget build(BuildContext context) {
+    Get.put(UserDataController());
     return StreamBuilder(
       stream: _auth.userChanges(),
       builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
@@ -38,16 +36,33 @@ class _MainPageState extends State<MainPage> {
                 padding: EdgeInsets.zero,
                 children: [
                   UserAccountsDrawerHeader(
-                    currentAccountPicture: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        profileImageFS == null
-                            ? defaultProfile
-                            : '$profileImageFS',
+                    currentAccountPicture: Obx(
+                      () => CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          Get.find<UserDataController>().profileImageFS.isEmpty
+                              ? defaultProfile
+                              : Get.find<UserDataController>()
+                                  .profileImageFS
+                                  .value,
+                        ),
                       ),
                     ),
-                    accountName: Text(
-                        displayNameFS == null ? 'Guest' : '$displayNameFS'),
-                    accountEmail: Text(emailFS == null ? '' : '$emailFS'),
+                    accountName: Obx(
+                      () => Text(
+                        Get.find<UserDataController>().displayNameFS.isEmpty
+                            ? 'Guest'
+                            : Get.find<UserDataController>()
+                                .displayNameFS
+                                .value,
+                      ),
+                    ),
+                    accountEmail: Obx(
+                      () => Text(
+                        Get.find<UserDataController>().emailFS.isEmpty
+                            ? ''
+                            : Get.find<UserDataController>().emailFS.value,
+                      ),
+                    ),
                     decoration: kDrawerHeaderStyle,
                     onDetailsPressed: () => Get.to(() => UserProfilePage()),
                   ),
@@ -145,7 +160,7 @@ class _MainPageState extends State<MainPage> {
                       SizedBox(
                         height: 200,
                         child: ListView.builder(
-                          physics: ClampingScrollPhysics(),
+                          physics: const ClampingScrollPhysics(),
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           itemCount: 6,
@@ -210,7 +225,7 @@ class _MainPageState extends State<MainPage> {
                       SizedBox(
                         height: 150,
                         child: ListView.builder(
-                          physics: ClampingScrollPhysics(),
+                          physics: const ClampingScrollPhysics(),
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           itemCount: 6,
@@ -263,9 +278,12 @@ class _MainPageState extends State<MainPage> {
                             ),
                             style: kRoundedButtonStyle,
                             onPressed: () {
-                              setState(() {
-                                createFirestoreData();
-                              });
+                              print(
+                                  'displayName : ${Get.find<UserDataController>().displayNameFS.value}');
+                              print(
+                                  'profileImage : ${Get.find<UserDataController>().profileImageFS.value}');
+                              print(
+                                  'uid : ${Get.find<UserDataController>().uidFS.value}');
                             },
                           ),
                         ),

@@ -1,7 +1,6 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dutch_hallae/firebase/firestore/create_firestore_data.dart';
+import 'package:dutch_hallae/firebase/firestore/user_data_controller.dart';
 import 'package:dutch_hallae/pages/login_page.dart';
 import 'package:dutch_hallae/pages/profile_modify_page.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
@@ -23,6 +22,7 @@ class UserProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(UserDataController());
     return StreamBuilder(
       stream: _auth.userChanges(),
       builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
@@ -36,26 +36,34 @@ class UserProfilePage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundColor: Colors.grey[300],
-                      backgroundImage: NetworkImage(
-                        profileImageFS == null
-                            ? defaultProfile
-                            : '$profileImageFS',
-                      ),
-                    ),
+                    Obx(() => CircleAvatar(
+                          radius: 60,
+                          backgroundColor: Colors.grey[300],
+                          backgroundImage: NetworkImage(
+                            Get.find<UserDataController>()
+                                    .profileImageFS
+                                    .isEmpty
+                                ? defaultProfile
+                                : Get.find<UserDataController>()
+                                    .profileImageFS
+                                    .value,
+                          ),
+                        )),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
-                      child: Text(
-                        displayNameFS == null ? 'Guest' : '$displayNameFS',
-                        style: const TextStyle(fontSize: 20),
-                      ),
+                      child: Obx(() => Text(
+                            Get.find<UserDataController>().displayNameFS.isEmpty
+                                ? ''
+                                : Get.find<UserDataController>()
+                                    .displayNameFS
+                                    .value,
+                            style: const TextStyle(fontSize: 20),
+                          )),
                     ),
                     ElevatedButton(
                       child: const Text('프로필 수정'),
                       style: kRoundedButtonStyle,
-                      onPressed: () => Get.to(() => ProfileModifyPage()),
+                      onPressed: () => Get.to(() => const ProfileModifyPage()),
                     ),
                     TextButton(
                       child: const Text('설정 하기'),
@@ -63,13 +71,15 @@ class UserProfilePage extends StatelessWidget {
                     ),
                     const SizedBox(height: 150),
                     OutlinedButton(
-                        onPressed: () => print(_userData?.uid),
-                        child: Text('uid')),
+                      onPressed: () => print(_userData?.uid),
+                      child: const Text('uid'),
+                    ),
                     OutlinedButton(
-                        onPressed: () => print(_firestore
-                            .collection('userData')
-                            .doc(_auth.currentUser?.uid)),
-                        child: Text('firestore')),
+                      child: const Text('createFirestoreData'),
+                      onPressed: () {
+                        Get.find<UserDataController>().createFirestoreData();
+                      },
+                    ),
                     OutlinedButton(
                       child: const Text('로그아웃'),
                       style: kRedOutlinedButtonStyle,
@@ -95,7 +105,7 @@ class UserProfilePage extends StatelessWidget {
                                         CupertinoDialogAction(
                                           child: const Text('예'),
                                           onPressed: () {
-                                            _userData?.delete();
+                                            _auth.currentUser?.delete();
                                             _firestore
                                                 .collection('userData')
                                                 .doc(_userData?.uid)
@@ -153,14 +163,3 @@ class UserProfilePage extends StatelessWidget {
     );
   }
 }
-
-// _userData?.delete();
-// _firestore
-//     .collection('userData')
-//     .doc(_userData?.uid)
-//     .delete();
-// _firebaseStorage
-//     .ref()
-//     .child('profile/${_userData?.uid}')
-//     .delete();
-// Get.back();

@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dutch_hallae/firebase/firestore/create_firestore_data.dart';
+import 'package:dutch_hallae/firebase/firestore/user_data_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
@@ -10,8 +10,9 @@ final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-//TODO: 1) iOS에서 이미지 업로드 안되는 문제 해결
 uploadImageToStorage(ImageSource source) async {
+  Get.put(UserDataController());
+
   final ImagePicker _picker = ImagePicker();
   XFile? ximage = await _picker.pickImage(
     source: source,
@@ -41,7 +42,7 @@ uploadImageToStorage(ImageSource source) async {
       .doc(_auth.currentUser?.uid)
       .update({'profileImage': downloadURL});
 
-  profileImageFS = downloadURL;
+  Get.find<UserDataController>().changeProfileImage(downloadURL);
 
   Get.back();
 }

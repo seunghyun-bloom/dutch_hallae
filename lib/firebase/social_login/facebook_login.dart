@@ -1,8 +1,10 @@
-import 'package:dutch_hallae/firebase/firestore/create_firestore_data.dart';
+import 'package:dutch_hallae/firebase/firestore/user_data_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:get/get.dart';
 
 Future<UserCredential> signInWithFacebook() async {
+  Get.put(UserDataController());
   // Trigger the sign-in flow
   final LoginResult loginResult = await FacebookAuth.instance.login();
 
@@ -12,5 +14,5 @@ Future<UserCredential> signInWithFacebook() async {
 
   // Once signed in, return the UserCredential
   await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-  return await createFirestoreData();
+  return Get.find<UserDataController>().createFirestoreData();
 }

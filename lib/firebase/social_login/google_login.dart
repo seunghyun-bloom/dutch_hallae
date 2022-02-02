@@ -1,8 +1,10 @@
-import 'package:dutch_hallae/firebase/firestore/create_firestore_data.dart';
+import 'package:dutch_hallae/firebase/firestore/user_data_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 Future<UserCredential> signInWithGoogle() async {
+  Get.put(UserDataController());
   // Trigger the authentication flow
   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -18,5 +20,5 @@ Future<UserCredential> signInWithGoogle() async {
 
   // Once signed in, return the UserCredential
   await FirebaseAuth.instance.signInWithCredential(credential);
-  return await createFirestoreData();
+  return Get.find<UserDataController>().createFirestoreData();
 }
