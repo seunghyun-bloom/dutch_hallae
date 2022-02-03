@@ -4,6 +4,7 @@ const kAppBarStyle = AppBarTheme(
   color: Colors.white,
   foregroundColor: Colors.black,
   elevation: 1,
+  centerTitle: true,
 );
 
 ButtonStyle kRedOutlinedButtonStyle = ButtonStyle(

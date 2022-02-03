@@ -60,4 +60,10 @@ class UserDataController extends GetxController {
   changeDisplayName(String value) {
     displayNameFS(value);
   }
+
+  @override
+  void onInit() {
+    createFirestoreData();
+    super.onInit();
+  }
 }

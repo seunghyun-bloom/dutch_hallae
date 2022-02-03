@@ -16,8 +16,8 @@ uploadImageToStorage(ImageSource source) async {
   final ImagePicker _picker = ImagePicker();
   XFile? ximage = await _picker.pickImage(
     source: source,
-    maxHeight: 200,
-    maxWidth: 200,
+    maxHeight: 300,
+    maxWidth: 300,
   );
   File image = File(ximage!.path);
 

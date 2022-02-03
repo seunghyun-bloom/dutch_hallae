@@ -71,16 +71,6 @@ class UserProfilePage extends StatelessWidget {
                     ),
                     const SizedBox(height: 150),
                     OutlinedButton(
-                      onPressed: () => print(_userData?.uid),
-                      child: const Text('uid'),
-                    ),
-                    OutlinedButton(
-                      child: const Text('createFirestoreData'),
-                      onPressed: () {
-                        Get.find<UserDataController>().createFirestoreData();
-                      },
-                    ),
-                    OutlinedButton(
                       child: const Text('로그아웃'),
                       style: kRedOutlinedButtonStyle,
                       onPressed: () {

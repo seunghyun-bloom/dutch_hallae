@@ -1,4 +1,5 @@
 import 'package:dutch_hallae/firebase/firestore/user_data_controller.dart';
+import 'package:dutch_hallae/pages/account_page.dart';
 import 'package:dutch_hallae/pages/login_page.dart';
 import 'package:dutch_hallae/pages/user_profile_page.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
@@ -67,10 +68,12 @@ class _MainPageState extends State<MainPage> {
                     onDetailsPressed: () => Get.to(() => UserProfilePage()),
                   ),
                   ListTile(
-                    leading: const FaIcon(FontAwesomeIcons.userAlt),
-                    title: const Text('마이페이지'),
-                    onTap: () => Get.to(() => UserProfilePage()),
-                  ),
+                      leading: const FaIcon(FontAwesomeIcons.userAlt),
+                      title: const Text('마이페이지'),
+                      onTap: () {
+                        Get.back();
+                        Get.to(() => UserProfilePage());
+                      }),
                   ListTile(
                     leading: const FaIcon(FontAwesomeIcons.users),
                     title: const Text('모임관리'),
@@ -82,10 +85,12 @@ class _MainPageState extends State<MainPage> {
                     onTap: () {},
                   ),
                   ListTile(
-                    leading: const FaIcon(FontAwesomeIcons.moneyCheckAlt),
-                    title: const Text('계좌관리'),
-                    onTap: () {},
-                  ),
+                      leading: const FaIcon(FontAwesomeIcons.moneyCheckAlt),
+                      title: const Text('계좌관리'),
+                      onTap: () {
+                        Get.back();
+                        Get.to(() => AccountPage());
+                      }),
                   ListTile(
                     leading: const FaIcon(FontAwesomeIcons.clipboardList),
                     title: const Text('정산기록'),
@@ -130,7 +135,7 @@ class _MainPageState extends State<MainPage> {
                               trailing: ElevatedButton(
                                 child: const Text('변경'),
                                 style: kRoundedButtonStyle,
-                                onPressed: () {},
+                                onPressed: () => Get.to(() => AccountPage()),
                               ),
                             ),
                             const Padding(
