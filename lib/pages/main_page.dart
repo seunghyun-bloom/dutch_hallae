@@ -124,6 +124,7 @@ class _MainPageState extends State<MainPage> {
                   padding: const EdgeInsets.all(15.0),
                   child: Column(
                     children: [
+                      // TODO: 2) favorite == true인 계좌를 mainPage에 띄우기
                       Card(
                         color: Colors.indigo.shade100,
                         clipBehavior: Clip.antiAlias,
