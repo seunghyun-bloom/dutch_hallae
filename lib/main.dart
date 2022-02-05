@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.white,
           primarySwatch: Colors.blueGrey,
           appBarTheme: kAppBarStyle,
+          useMaterial3: true,
         ),
         builder: (context, widget) {
           ScreenUtil.setContext(context);

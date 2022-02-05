@@ -1,8 +1,8 @@
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dutch_hallae/firebase/firestore/user_data_controller.dart';
 import 'package:dutch_hallae/pages/login_page.dart';
 import 'package:dutch_hallae/pages/profile_modify_page.dart';
+import 'package:dutch_hallae/utilities/dialog.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:dutch_hallae/utilities/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,120 +31,76 @@ class UserProfilePage extends StatelessWidget {
         } else {
           return Scaffold(
             appBar: AppBar(title: const Text('마이페이지')),
-            body: SingleChildScrollView(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Obx(() => CircleAvatar(
-                          radius: 60,
-                          backgroundColor: Colors.grey[300],
-                          backgroundImage: NetworkImage(
-                            Get.find<UserDataController>()
-                                    .profileImageFS
-                                    .isEmpty
-                                ? defaultProfile
-                                : Get.find<UserDataController>()
-                                    .profileImageFS
-                                    .value,
-                          ),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Obx(
+                    () => CircleAvatar(
+                      radius: 60,
+                      backgroundColor: Colors.grey[300],
+                      backgroundImage: NetworkImage(
+                        Get.find<UserDataController>().profileImageFS.isEmpty
+                            ? defaultProfile
+                            : Get.find<UserDataController>()
+                                .profileImageFS
+                                .value,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Obx(() => Text(
+                          Get.find<UserDataController>().displayNameFS.isEmpty
+                              ? ''
+                              : Get.find<UserDataController>()
+                                  .displayNameFS
+                                  .value,
+                          style: const TextStyle(fontSize: 20),
                         )),
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Obx(() => Text(
-                            Get.find<UserDataController>().displayNameFS.isEmpty
-                                ? ''
-                                : Get.find<UserDataController>()
-                                    .displayNameFS
-                                    .value,
-                            style: const TextStyle(fontSize: 20),
-                          )),
-                    ),
-                    ElevatedButton(
-                      child: const Text('프로필 수정'),
-                      style: kRoundedButtonStyle,
-                      onPressed: () => Get.to(() => const ProfileModifyPage()),
-                    ),
-                    TextButton(
-                      child: const Text('설정 하기'),
-                      onPressed: () => showToast('무엇을 설정할까?'),
-                    ),
-                    const SizedBox(height: 150),
-                    OutlinedButton(
-                      child: const Text('로그아웃'),
-                      style: kRedOutlinedButtonStyle,
-                      onPressed: () {
-                        _auth.signOut();
-                        Get.back();
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    OutlinedButton(
-                      child: const Text('회원탈퇴'),
-                      style: kRedOutlinedButtonStyle,
-                      onPressed: () {
-                        Platform.isIOS
-                            ? showCupertinoDialog(
-                                barrierDismissible: true,
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    CupertinoAlertDialog(
-                                      title: const Text('회원탈퇴'),
-                                      content: const Text('정말로 탈퇴하시겠습니까?'),
-                                      actions: [
-                                        CupertinoDialogAction(
-                                          child: const Text('예'),
-                                          onPressed: () {
-                                            _auth.currentUser?.delete();
-                                            _firestore
-                                                .collection('userData')
-                                                .doc(_userData?.uid)
-                                                .delete();
-                                            _firebaseStorage
-                                                .ref()
-                                                .child(
-                                                    'profile/${_userData?.uid}')
-                                                .delete();
-                                            Get.back();
-                                          },
-                                        ),
-                                        CupertinoDialogAction(
-                                            child: const Text('아니오'),
-                                            onPressed: () => Get.back()),
-                                      ],
-                                    ))
-                            : showDialog(
-                                barrierDismissible: true,
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                  title: const Text('회원탈퇴'),
-                                  content: const Text('정말로 탈퇴하시겠습니까?'),
-                                  actions: [
-                                    TextButton(
-                                      child: const Text('예'),
-                                      onPressed: () {
-                                        _userData?.delete();
-                                        _firestore
-                                            .collection('userData')
-                                            .doc(_userData?.uid)
-                                            .delete();
-                                        _firebaseStorage
-                                            .ref()
-                                            .child('profile/${_userData?.uid}')
-                                            .delete();
-                                        Get.back();
-                                      },
-                                    ),
-                                    TextButton(
-                                        child: const Text('아니오'),
-                                        onPressed: () => Get.back()),
-                                  ],
-                                ),
-                              );
-                      },
-                    ),
-                  ],
-                ),
+                  ),
+                  ElevatedButton(
+                    child: const Text('프로필 수정'),
+                    style: kRoundedButtonStyle,
+                    onPressed: () => Get.to(() => const ProfileModifyPage()),
+                  ),
+                  TextButton(
+                    child: const Text('설정 하기'),
+                    onPressed: () => showToast('무엇을 설정할까?'),
+                  ),
+                  const SizedBox(height: 100),
+                  OutlinedButton(
+                    child: const Text('로그아웃'),
+                    style: kRedOutlinedButtonStyle,
+                    onPressed: () {
+                      _auth.signOut();
+                      Get.back();
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  OutlinedButton(
+                    child: const Text('회원탈퇴'),
+                    style: kRedOutlinedButtonStyle,
+                    onPressed: () {
+                      DialogByPlatform(
+                          title: '회원탈퇴',
+                          content: '정말로 탈퇴하시겠습니까?',
+                          onTap: () {
+                            _auth.currentUser?.delete();
+                            _firestore
+                                .collection('userData')
+                                .doc(_userData?.uid)
+                                .delete();
+                            _firebaseStorage
+                                .ref()
+                                .child('profile/${_userData?.uid}')
+                                .delete();
+                            Get.back();
+                          },
+                          context: context);
+                    },
+                  ),
+                ],
               ),
             ),
           );
