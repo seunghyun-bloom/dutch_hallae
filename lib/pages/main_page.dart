@@ -1,3 +1,4 @@
+import 'package:dutch_hallae/firebase/firestore/bank_account_controller.dart';
 import 'package:dutch_hallae/firebase/firestore/user_data_controller.dart';
 import 'package:dutch_hallae/pages/account_page.dart';
 import 'package:dutch_hallae/pages/login_page.dart';
@@ -5,6 +6,7 @@ import 'package:dutch_hallae/pages/user_profile_page.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
@@ -17,10 +19,11 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _getxBank = Get.put(BankAccountController());
+  final _getxUser = Get.put(UserDataController());
 
   @override
   Widget build(BuildContext context) {
-    Get.put(UserDataController());
     return StreamBuilder(
       stream: _auth.userChanges(),
       builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
@@ -36,36 +39,28 @@ class _MainPageState extends State<MainPage> {
               child: ListView(
                 padding: EdgeInsets.zero,
                 children: [
-                  UserAccountsDrawerHeader(
-                    currentAccountPicture: Obx(
-                      () => CircleAvatar(
+                  Obx(
+                    () => UserAccountsDrawerHeader(
+                      currentAccountPicture: CircleAvatar(
                         backgroundImage: NetworkImage(
-                          Get.find<UserDataController>().profileImageFS.isEmpty
+                          _getxUser.profileImageFS.isEmpty
                               ? defaultProfile
-                              : Get.find<UserDataController>()
-                                  .profileImageFS
-                                  .value,
+                              : _getxUser.profileImageFS.value,
                         ),
                       ),
-                    ),
-                    accountName: Obx(
-                      () => Text(
-                        Get.find<UserDataController>().displayNameFS.isEmpty
+                      accountName: Text(
+                        _getxUser.displayNameFS.isEmpty
                             ? 'Guest'
-                            : Get.find<UserDataController>()
-                                .displayNameFS
-                                .value,
+                            : _getxUser.displayNameFS.value,
                       ),
-                    ),
-                    accountEmail: Obx(
-                      () => Text(
-                        Get.find<UserDataController>().emailFS.isEmpty
+                      accountEmail: Text(
+                        _getxUser.emailFS.isEmpty
                             ? ''
-                            : Get.find<UserDataController>().emailFS.value,
+                            : _getxUser.emailFS.value,
                       ),
+                      decoration: kDrawerHeaderStyle,
+                      onDetailsPressed: () => Get.to(() => UserProfilePage()),
                     ),
-                    decoration: kDrawerHeaderStyle,
-                    onDetailsPressed: () => Get.to(() => UserProfilePage()),
                   ),
                   ListTile(
                       leading: const FaIcon(FontAwesomeIcons.userAlt),
@@ -121,10 +116,11 @@ class _MainPageState extends State<MainPage> {
             body: SingleChildScrollView(
               child: Center(
                 child: Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: EdgeInsets.all(15.w),
                   child: Column(
                     children: [
-                      // TODO: 2) favorite == true인 계좌를 mainPage에 띄우기
+                      //TODO: favorite == true인 계좌를 mainPage에 띄우기
+                      //TODO: BankAccountController로 method를 생성하고 onInit() 하자
                       Card(
                         color: Colors.indigo.shade100,
                         clipBehavior: Clip.antiAlias,
@@ -139,15 +135,62 @@ class _MainPageState extends State<MainPage> {
                                 onPressed: () => Get.to(() => AccountPage()),
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 12),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 12.w),
                               child: Divider(color: Colors.blueGrey),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: ListTile(
-                                title: Text('국민은행'),
-                                subtitle: Text('123-4567-54321'),
+                            InkWell(
+                              onTap: () => Get.to(() => AccountPage()),
+                              child: Padding(
+                                padding: EdgeInsets.all(10.w),
+                                child: Obx(
+                                  () => Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            _getxBank.accountNameFS.value,
+                                            style: TextStyle(
+                                              fontSize: 17.sp,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            '  (예금주: ${_getxBank.accountHolderFS.value})',
+                                            style: TextStyle(fontSize: 14.sp),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              _getxBank.bankFS.value,
+                                              style: TextStyle(
+                                                color: Colors.indigo,
+                                                fontSize: 17.sp,
+                                              ),
+                                            ),
+                                            Text(
+                                              _getxBank.accountNumberFS.isEmpty
+                                                  ? '즐겨찾는 계좌를 설정해주세요'
+                                                  : '  ${_getxBank.accountNumberFS.value}',
+                                              style: TextStyle(
+                                                fontSize: _getxBank
+                                                        .accountNumberFS.isEmpty
+                                                    ? 14.sp
+                                                    : 17.sp,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -184,9 +227,9 @@ class _MainPageState extends State<MainPage> {
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: const [
+                                      children: [
                                         FaIcon(FontAwesomeIcons.userAlt),
-                                        SizedBox(width: 10),
+                                        SizedBox(width: 10.w),
                                         Text(
                                           '4',
                                           style: TextStyle(fontSize: 15),
@@ -290,6 +333,12 @@ class _MainPageState extends State<MainPage> {
                                   'profileImage : ${Get.find<UserDataController>().profileImageFS.value}');
                               print(
                                   'uid : ${Get.find<UserDataController>().uidFS.value}');
+                              print(
+                                  'accountName : ${Get.find<BankAccountController>().accountNameFS}');
+                              print(
+                                  'bank : ${Get.find<BankAccountController>().bankFS}');
+                              print(
+                                  'number : ${Get.find<BankAccountController>().accountNumberFS}');
                             },
                           ),
                         ),

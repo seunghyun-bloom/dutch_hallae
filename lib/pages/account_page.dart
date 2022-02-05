@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dutch_hallae/firebase/firestore/bank_account_controller.dart';
+import 'package:dutch_hallae/utilities/dialog.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +17,7 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
+  final _getxBank = Get.put(BankAccountController());
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   FirebaseAuth _auth = FirebaseAuth.instance;
   TextEditingController accountNameController = TextEditingController();
@@ -61,7 +64,6 @@ class _AccountPageState extends State<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(BankAccountController());
     return Scaffold(
       appBar: AppBar(
         title: const Text('계좌 정보 관리'),
@@ -98,7 +100,22 @@ class _AccountPageState extends State<AccountPage> {
                                     snapshot.data?.docs[index]['accountName']);
                               },
                               onLongPress: () {
-                                //TODO: 1) 계좌 정보 삭제하기 - alertDialog 사용
+                                DialogByPlatform(
+                                  title: '계좌정보 삭제',
+                                  content:
+                                      '${snapshot.data?.docs[index]['accountName']} 계좌정보를 삭제하시겠습니까?',
+                                  onTap: () {
+                                    _firestore
+                                        .collection('userData')
+                                        .doc(_auth.currentUser?.uid)
+                                        .collection('bankAccount')
+                                        .doc(snapshot.data?.docs[index]
+                                            ['accountName'])
+                                        .delete();
+                                    Get.back();
+                                  },
+                                  context: context,
+                                );
                               },
                               child: Container(
                                 color:
@@ -118,9 +135,8 @@ class _AccountPageState extends State<AccountPage> {
                                         color: Colors.grey,
                                         iconSize: 25.h,
                                         onPressed: () {
-                                          Get.find<BankAccountController>()
-                                              .setToFavorite(snapshot.data
-                                                  ?.docs[index]['accountName']);
+                                          _getxBank.setToFavorite(snapshot.data
+                                              ?.docs[index]['accountName']);
                                         },
                                       ),
                                       Column(
@@ -306,8 +322,7 @@ class _AccountPageState extends State<AccountPage> {
                               style: kRoundedButtonStyle,
                               onPressed: () {
                                 Get.back();
-                                Get.find<BankAccountController>()
-                                    .createAccountInfo(
+                                _getxBank.createAccountInfo(
                                   accountNameController.text,
                                   dropdownValue,
                                   accountNumberController.text,
