@@ -74,6 +74,7 @@ class _MainPageState extends State<MainPage> {
                     title: const Text('모임관리'),
                     onTap: () {},
                   ),
+                  //TODO: 친구목록을 만들어보자
                   ListTile(
                     leading: const FaIcon(FontAwesomeIcons.userFriends),
                     title: const Text('친구목록'),
@@ -119,8 +120,6 @@ class _MainPageState extends State<MainPage> {
                   padding: EdgeInsets.all(15.w),
                   child: Column(
                     children: [
-                      //TODO: favorite == true인 계좌를 mainPage에 띄우기
-                      //TODO: BankAccountController로 method를 생성하고 onInit() 하자
                       Card(
                         color: Colors.indigo.shade100,
                         clipBehavior: Clip.antiAlias,

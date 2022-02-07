@@ -4,12 +4,14 @@ class LoginButton extends StatelessWidget {
   final String platform;
   final Color color;
   final dynamic onTap;
+  Color? fontColor = Colors.black;
 
-  const LoginButton({
+  LoginButton({
     Key? key,
     required this.platform,
     required this.color,
     required this.onTap,
+    this.fontColor,
   }) : super(key: key);
 
   @override
@@ -22,11 +24,13 @@ class LoginButton extends StatelessWidget {
           child: ListTile(
             leading:
                 Image.asset('assets/images/${platform.toLowerCase()}_logo.png'),
-            title: Text('$platform로 시작하기'),
+            title: Text(
+              '$platform로 시작하기',
+              style: TextStyle(color: fontColor),
+            ),
           ),
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(color),
-            overlayColor: MaterialStateProperty.all(Colors.purple.shade100),
           ),
           onPressed: onTap,
         ),
