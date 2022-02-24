@@ -1,4 +1,4 @@
-import 'package:dutch_hallae/pages/main_page.dart';
+import 'package:dutch_hallae/getx/route_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,7 @@ class FirebaseInitializer extends StatelessWidget {
           );
         }
         if (snapshot.connectionState == ConnectionState.done) {
-          return MainPage();
+          return RouteManager();
         }
         return const CircularProgressIndicator();
       },

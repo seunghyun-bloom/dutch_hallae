@@ -7,12 +7,18 @@ import 'package:get/get.dart';
 class DialogByPlatform {
   String title;
   String content;
+  String? leftLabel;
+  String? rightLabel;
   final onTap;
+  final onRightTap;
   BuildContext context;
   DialogByPlatform(
       {required this.title,
       required this.content,
+      this.leftLabel = '예',
+      this.rightLabel = '아니오',
       required this.onTap,
+      this.onRightTap,
       required this.context}) {
     Platform.isIOS
         ? showCupertinoDialog(
@@ -24,18 +30,17 @@ class DialogByPlatform {
                 content: Text(content),
                 actions: [
                   CupertinoDialogAction(
-                    child: Text('예'),
+                    child: Text(leftLabel!),
                     onPressed: onTap,
                   ),
                   CupertinoDialogAction(
-                    child: Text('아니오'),
-                    onPressed: () {
-                      Get.back();
-                    },
+                    child: Text(rightLabel!),
+                    onPressed: onRightTap ?? () => Get.back(),
                   ),
                 ],
               );
-            })
+            },
+          )
         : showDialog(
             barrierDismissible: true,
             context: context,
@@ -45,17 +50,16 @@ class DialogByPlatform {
                 content: Text(content),
                 actions: [
                   TextButton(
-                    child: const Text('예'),
+                    child: Text(leftLabel!),
                     onPressed: onTap,
                   ),
                   TextButton(
-                    child: const Text('아니오'),
-                    onPressed: () {
-                      Get.back();
-                    },
+                    child: Text(rightLabel!),
+                    onPressed: onRightTap ?? () => Get.back(),
                   ),
                 ],
               );
-            });
+            },
+          );
   }
 }
