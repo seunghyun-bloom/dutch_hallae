@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:dutch_hallae/firebase/firestore/user_data_controller.dart';
 import 'package:dutch_hallae/firebase/firestore/image_uploader.dart';
+import 'package:dutch_hallae/utilities/dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -36,47 +37,15 @@ class _ProfileModifyPageState extends State<ProfileModifyPage> {
                 ),
               ),
               onTap: () {
-                Platform.isIOS
-                    ? showCupertinoDialog(
-                        barrierDismissible: true,
-                        context: context,
-                        builder: (BuildContext context) => CupertinoAlertDialog(
-                          title: const Text('프로필 사진 변경'),
-                          content: const Text('어디에서 불러오시겠습니까?'),
-                          actions: [
-                            CupertinoDialogAction(
-                              child: const Text('사진첩'),
-                              onPressed: () =>
-                                  uploadImageToStorage(ImageSource.gallery),
-                            ),
-                            CupertinoDialogAction(
-                              child: const Text('카메라'),
-                              onPressed: () =>
-                                  uploadImageToStorage(ImageSource.camera),
-                            ),
-                          ],
-                        ),
-                      )
-                    : showDialog(
-                        barrierDismissible: true,
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text('프로필 사진 변경'),
-                          content: const Text('어디에서 불러오시겠습니까?'),
-                          actions: [
-                            TextButton(
-                              child: const Text('갤러리'),
-                              onPressed: () =>
-                                  uploadImageToStorage(ImageSource.gallery),
-                            ),
-                            TextButton(
-                              child: const Text('카메라'),
-                              onPressed: () =>
-                                  uploadImageToStorage(ImageSource.camera),
-                            ),
-                          ],
-                        ),
-                      );
+                DialogByPlatform(
+                  title: '프로필 사진 변경',
+                  content: '어디에서 불러오시겠습니까?',
+                  leftLabel: '사진첩',
+                  onTap: () => uploadImageToStorage(ImageSource.gallery),
+                  rightLabel: '카메라',
+                  onRightTap: () => uploadImageToStorage(ImageSource.camera),
+                  context: context,
+                );
               },
             ),
           ],

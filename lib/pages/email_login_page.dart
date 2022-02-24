@@ -40,19 +40,23 @@ class EmailLoginPage extends StatelessWidget {
               child: TextField(
                 controller: _passwordController,
                 decoration: const InputDecoration(
-                    labelText: '비밀번호', hintText: '********'),
+                  labelText: '비밀번호',
+                  hintText: '********',
+                ),
                 obscureText: true,
               ),
             ),
             ElevatedButton(
               child: const Text('로그인'),
               onPressed: () => createWithEmail(
-                  email: _emailController.text,
-                  password: _passwordController.text),
+                email: _emailController.text,
+                password: _passwordController.text,
+              ),
             ),
-            OutlinedButton(onPressed: (){
-              print()
-            }, child: Text('verifyed'))
+            OutlinedButton(
+              onPressed: () {},
+              child: Text('verifyed'),
+            ),
           ],
         ),
       ),

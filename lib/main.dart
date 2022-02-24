@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'getx/binding/init_bindings.dart';
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
         title: 'Dutch-pay calculator with convenience functions.',
         theme: ThemeData(
           primaryColor: Colors.white,
-          primarySwatch: Colors.blueGrey,
+          primarySwatch: Palette.veryPeri,
           appBarTheme: kAppBarStyle,
           useMaterial3: true,
         ),
@@ -31,6 +33,7 @@ class MyApp extends StatelessWidget {
             child: widget!,
           );
         },
+        initialBinding: InitBinding(),
         home: const FirebaseInitializer(),
       ),
     );
