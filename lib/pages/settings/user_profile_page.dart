@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dutch_hallae/firebase/firestore/user_data_controller.dart';
-import 'package:dutch_hallae/pages/login_page.dart';
-import 'package:dutch_hallae/pages/profile_modify_page.dart';
+import 'package:dutch_hallae/pages/login/login_page.dart';
+import 'package:dutch_hallae/pages/settings/profile_modify_page.dart';
 import 'package:dutch_hallae/utilities/dialog.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:dutch_hallae/utilities/toast.dart';

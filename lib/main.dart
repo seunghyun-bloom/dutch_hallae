@@ -1,6 +1,7 @@
 import 'package:dutch_hallae/firebase/firebase_initializer.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -18,11 +19,18 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: () => GetMaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [Locale('en'), Locale('ko')],
+        locale: Locale('ko'),
         debugShowCheckedModeBanner: false,
         title: 'Dutch-pay calculator with convenience functions.',
         theme: ThemeData(
           primaryColor: Colors.white,
-          primarySwatch: Palette.veryPeri,
+          primarySwatch: Pantone.veryPeri,
           appBarTheme: kAppBarStyle,
           useMaterial3: true,
         ),

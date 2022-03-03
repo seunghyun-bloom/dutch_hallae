@@ -29,6 +29,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -47,6 +49,9 @@ dependencies:
   image_picker: ^0.8.4+4
   firebase_storage: ^10.2.5
   flutter_screenutil: ^5.1.1
+  naver_map_plugin:
+    git: https://github.com/LBSTECH/naver_map_plugin.git
+  syncfusion_flutter_calendar: ^19.4.54
 
 dev_dependencies:
   flutter_test:
