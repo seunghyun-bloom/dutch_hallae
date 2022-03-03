@@ -11,9 +11,9 @@ ButtonStyle kRedOutlinedButtonStyle = ButtonStyle(
   foregroundColor: MaterialStateProperty.all(Colors.red),
 );
 
-BoxDecoration kDrawerHeaderStyle = BoxDecoration(
-  color: Colors.indigo.shade100,
-  borderRadius: const BorderRadius.only(
+BoxDecoration kDrawerHeaderStyle = const BoxDecoration(
+  color: Pantone.cloudDancer,
+  borderRadius: BorderRadius.only(
     bottomLeft: Radius.circular(40),
     bottomRight: Radius.circular(40),
   ),
@@ -31,20 +31,65 @@ RoundedRectangleBorder kShape20 = RoundedRectangleBorder(
   borderRadius: BorderRadius.circular(20),
 );
 
-class Palette {
+class Pantone {
   static const MaterialColor veryPeri = MaterialColor(
     0xff6667ab,
     <int, Color>{
-      50: Color(0xffce5641), //10%
-      100: Color(0xffb74c3a), //20%
-      200: Color(0xffa04332), //30%
-      300: Color(0xff89392b), //40%
-      400: Color(0xff733024), //50%
+      50: Color(0xff6667ab), //10%
+      100: Color(0xff6667ab), //20%
+      200: Color(0xff6667ab), //30%
+      300: Color(0xff6667ab), //40%
+      400: Color(0xff6667ab), //50%
       500: Color(0xff6667ab), //60%
-      600: Color(0xff451c16), //70%
-      700: Color(0xff2e130e), //80%
-      800: Color(0xff170907), //90%
-      900: Color(0xff000000), //100%
+      600: Color(0xff6667ab), //70%
+      700: Color(0xff6667ab), //80%
+      800: Color(0xff6667ab), //90%
+      900: Color(0xff6667ab), //100%
+    },
+  );
+  static const MaterialColor volcanicGalss = MaterialColor(
+    0xff615c61,
+    <int, Color>{
+      50: Color(0xff615c61), //10%
+      100: Color(0xff615c61), //20%
+      200: Color(0xff615c61), //30%
+      300: Color(0xff615c61), //40%
+      400: Color(0xff615c61), //50%
+      500: Color(0xff615c61), //60%
+      600: Color(0xff615c61), //70%
+      700: Color(0xff615c61), //80%
+      800: Color(0xff615c61), //90%
+      900: Color(0xff615c61), //100%
+    },
+  );
+  static const MaterialColor whiteSand = MaterialColor(
+    0xffdbd5d1,
+    <int, Color>{
+      50: Color(0xffdbd5d1), //10%
+      100: Color(0xffdbd5d1), //20%
+      200: Color(0xffdbd5d1), //30%
+      300: Color(0xffdbd5d1), //40%
+      400: Color(0xffdbd5d1), //50%
+      500: Color(0xffdbd5d1), //60%
+      600: Color(0xffdbd5d1), //70%
+      700: Color(0xffdbd5d1), //80%
+      800: Color(0xffdbd5d1), //90%
+      900: Color(0xffdbd5d1), //100%
+    },
+  );
+  static const MaterialColor cloudDancer = MaterialColor(
+    0xffF0EEE9,
+    <int, Color>{
+      50: Color(0xffF0EEE9), //10%
+      100: Color(0xffF0EEE9), //20%
+      200: Color(0xffF0EEE9), //30%
+      300: Color(0xffF0EEE9), //40%
+      400: Color(0xffF0EEE9), //50%
+      500: Color(0xffF0EEE9), //60%
+      600: Color(0xffF0EEE9), //70%
+      700: Color(0xffF0EEE9), //80%
+      800: Color(0xffF0EEE9), //90%
+      900: Color(0xffF0EEE9), //100%
     },
   );
 }

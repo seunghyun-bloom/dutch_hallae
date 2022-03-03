@@ -1,6 +1,9 @@
 import 'package:dutch_hallae/getx/controller/bottom_nav_controller.dart';
-import 'package:dutch_hallae/pages/login_page.dart';
-import 'package:dutch_hallae/pages/main_page.dart';
+import 'package:dutch_hallae/pages/calendar/calendar_page.dart';
+import 'package:dutch_hallae/pages/login/login_page.dart';
+import 'package:dutch_hallae/pages/main/main_page.dart';
+import 'package:dutch_hallae/pages/map/map_page.dart';
+import 'package:dutch_hallae/pages/settings/user_profile_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,21 +31,9 @@ class RouteManager extends GetView<BottomNavController> {
                   index: controller.pageIndex.value,
                   children: [
                     MainPage(),
-                    Container(
-                      child: Center(
-                        child: Text('캘린더'),
-                      ),
-                    ),
-                    Container(
-                      child: Center(
-                        child: Text('지도'),
-                      ),
-                    ),
-                    Container(
-                      child: Center(
-                        child: Text('세팅'),
-                      ),
-                    ),
+                    CalendarPage(),
+                    MapPage(),
+                    UserProfilePage(),
                   ],
                 ),
                 bottomNavigationBar: BottomNavigationBar(

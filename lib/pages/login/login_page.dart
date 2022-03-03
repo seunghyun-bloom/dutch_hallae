@@ -2,7 +2,7 @@ import 'package:dutch_hallae/firebase/social_login/apple_login.dart';
 import 'package:dutch_hallae/firebase/social_login/facebook_login.dart';
 import 'package:dutch_hallae/firebase/social_login/google_login.dart';
 import 'package:dutch_hallae/firebase/social_login/twitter_login.dart';
-import 'package:dutch_hallae/pages/email_login_page.dart';
+import 'package:dutch_hallae/pages/login/email_login_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:dutch_hallae/utilities/login_button.dart';
 import 'package:dutch_hallae/utilities/toast.dart';

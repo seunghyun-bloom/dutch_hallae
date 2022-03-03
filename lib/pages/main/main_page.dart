@@ -1,7 +1,7 @@
 import 'package:dutch_hallae/firebase/firestore/bank_account_controller.dart';
 import 'package:dutch_hallae/firebase/firestore/user_data_controller.dart';
-import 'package:dutch_hallae/pages/account_page.dart';
-import 'package:dutch_hallae/pages/user_profile_page.dart';
+import 'package:dutch_hallae/pages/main/account_page.dart';
+import 'package:dutch_hallae/pages/settings/user_profile_page.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:dutch_hallae/utilities/toast.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +65,6 @@ class _MainPageState extends State<MainPage> {
               title: const Text('모임관리'),
               onTap: () {},
             ),
-            //TODO: 친구목록을 만들어보자
             ListTile(
               leading: const FaIcon(FontAwesomeIcons.userFriends),
               title: const Text('친구목록'),

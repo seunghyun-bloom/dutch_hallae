@@ -97,5 +97,19 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+
+    <key>NMFClientId</key>
+    <string>f2kmy3pquo</string>
+    <key>io.flutter.embedded_views_preview</key>
+    <true/>
+    <key>NSAllowsArbitraryLoads</key>
+    <true/>
+
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>need location permission to show user's currnet location in map</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>need location permission to show user's currnet location in map</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>need location permission to show user's currnet location in map</string>
 </dict>
 </plist>
