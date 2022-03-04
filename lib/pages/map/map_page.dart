@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:naver_map_plugin/naver_map_plugin.dart';
 
+import '../../utilities/toast.dart';
+
 class MapPage extends StatefulWidget {
   const MapPage({Key? key}) : super(key: key);
 
@@ -19,6 +21,10 @@ class _MapPageState extends State<MapPage> {
         onMapCreated: onMapCreated,
         mapType: MapType.Basic,
         locationButtonEnable: true,
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () => showToast('정산 시작'),
       ),
     );
   }

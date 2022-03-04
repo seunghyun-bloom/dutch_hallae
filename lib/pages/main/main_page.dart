@@ -1,6 +1,7 @@
 import 'package:dutch_hallae/firebase/firestore/bank_account_controller.dart';
 import 'package:dutch_hallae/firebase/firestore/user_data_controller.dart';
 import 'package:dutch_hallae/pages/main/account_page.dart';
+import 'package:dutch_hallae/pages/main/friends_page.dart';
 import 'package:dutch_hallae/pages/settings/user_profile_page.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:dutch_hallae/utilities/toast.dart';
@@ -54,12 +55,13 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
             ListTile(
-                leading: const FaIcon(FontAwesomeIcons.userAlt),
-                title: const Text('마이페이지'),
-                onTap: () {
-                  Get.back();
-                  Get.to(() => UserProfilePage());
-                }),
+              leading: const FaIcon(FontAwesomeIcons.userAlt),
+              title: const Text('마이페이지'),
+              onTap: () {
+                Get.back();
+                Get.to(() => UserProfilePage());
+              },
+            ),
             ListTile(
               leading: const FaIcon(FontAwesomeIcons.users),
               title: const Text('모임관리'),
@@ -68,7 +70,10 @@ class _MainPageState extends State<MainPage> {
             ListTile(
               leading: const FaIcon(FontAwesomeIcons.userFriends),
               title: const Text('친구목록'),
-              onTap: () {},
+              onTap: () {
+                Get.back();
+                Get.to(() => FriendsPage());
+              },
             ),
             ListTile(
                 leading: const FaIcon(FontAwesomeIcons.moneyCheckAlt),
