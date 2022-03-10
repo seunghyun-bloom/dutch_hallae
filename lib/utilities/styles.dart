@@ -5,6 +5,11 @@ const kAppBarStyle = AppBarTheme(
   foregroundColor: Colors.black,
   elevation: 1,
   centerTitle: true,
+  titleTextStyle: TextStyle(
+    fontWeight: FontWeight.w700,
+    color: Colors.black,
+    fontSize: 20,
+  ),
 );
 
 ButtonStyle kRedOutlinedButtonStyle = ButtonStyle(

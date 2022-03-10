@@ -14,3 +14,16 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
+## TODO list
+
+### firebase Authentication
+
+bug
+- when user sign up at the very first time, user's profile info doesn't showing at the profile screen
+
+### account page
+
+code refactoring
+- create new GetX controller

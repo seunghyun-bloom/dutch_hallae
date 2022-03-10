@@ -9,6 +9,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+//TODO: code refactoring with getx controller
+//TODO: create new getx controller
+
 class AccountPage extends StatefulWidget {
   AccountPage({Key? key}) : super(key: key);
 
@@ -48,7 +51,7 @@ class _AccountPageState extends State<AccountPage> {
     '새마을금고',
     '수협',
     '수협중앙회',
-    '신협중앙회'
+    '신협중앙회',
   ];
   late Stream<QuerySnapshot> _firestoreQuery;
 
