@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Dutch-pay calculator with convenience functions.',
         theme: ThemeData(
+          fontFamily: 'AppleSDGothic',
           primaryColor: Colors.white,
           primarySwatch: Pantone.veryPeri,
           appBarTheme: kAppBarStyle,

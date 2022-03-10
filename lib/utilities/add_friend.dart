@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-//TODO: popup 형태로 친구추가 화면 생성
-//TODO: 상단에 TextField로 이름 검색
-//TODO: 하단에 주소록 목록 위치
-
-//TODO: contacts_service package로 폰 주소록에 있는 목록 불러오기
-//TODO: 처음부터 cloud firestore에 저장하지 않고,
-//TODO: 선택해서 추가된 친구만 firestore에 추가
-
 class AddFriendPopup {
   AddFriendPopup(BuildContext context) {
     showDialog(
@@ -31,8 +23,12 @@ class AddFriendPopup {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Flexible(
-                          child: TextField(),
+                        const Flexible(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: '목록에서 검색',
+                            ),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 10),
@@ -43,6 +39,50 @@ class AddFriendPopup {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: height * 0.4,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            InkWell(
+                              child: ListTile(
+                                title: Text('아이린'),
+                                subtitle: Text('010-2323-4545'),
+                              ),
+                              onTap: () {},
+                            ),
+                            InkWell(
+                              child: ListTile(
+                                title: Text('슬기'),
+                                subtitle: Text('010-2323-4545'),
+                              ),
+                              onTap: () {},
+                            ),
+                            InkWell(
+                              child: ListTile(
+                                title: Text('웬디'),
+                                subtitle: Text('010-2323-4545'),
+                              ),
+                              onTap: () {},
+                            ),
+                            InkWell(
+                              child: ListTile(
+                                title: Text('조이'),
+                                subtitle: Text('010-2323-4545'),
+                              ),
+                              onTap: () {},
+                            ),
+                            InkWell(
+                              child: ListTile(
+                                title: Text('예리'),
+                                subtitle: Text('010-2323-4545'),
+                              ),
+                              onTap: () {},
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
                   ],
                 ),
               );
