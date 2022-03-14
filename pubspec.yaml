@@ -53,6 +53,8 @@ dependencies:
     git: https://github.com/LBSTECH/naver_map_plugin.git
   syncfusion_flutter_calendar: ^19.4.54
   dotted_border: ^2.0.0+2
+  contacts_service: ^0.6.3
+  permission_handler: ^9.2.0
 
 dev_dependencies:
   flutter_test:

@@ -353,6 +353,8 @@ PODS:
     - Firebase/Firestore (= 8.10.0)
     - firebase_core
     - Flutter
+  - contacts_service (0.2.2):
+    - Flutter
   - FBAEMKit (12.2.1):
     - FBSDKCoreKit_Basics (= 12.2.1)
   - FBSDKCoreKit (12.2.1):
@@ -487,6 +489,8 @@ PODS:
     - Flutter
     - NMapsMap
   - NMapsMap (3.14.1)
+  - permission_handler_apple (9.0.2):
+    - Flutter
   - PromisesObjC (2.0.0)
   - sign_in_with_apple (0.0.1):
     - Flutter
@@ -496,6 +500,7 @@ PODS:
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
+  - contacts_service (from `.symlinks/plugins/contacts_service/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
@@ -505,6 +510,7 @@ DEPENDENCIES:
   - google_sign_in (from `.symlinks/plugins/google_sign_in/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - naver_map_plugin (from `.symlinks/plugins/naver_map_plugin/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - sign_in_with_apple (from `.symlinks/plugins/sign_in_with_apple/ios`)
   - twitter_login (from `.symlinks/plugins/twitter_login/ios`)
 
@@ -539,6 +545,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
+  contacts_service:
+    :path: ".symlinks/plugins/contacts_service/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
@@ -557,6 +565,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_picker/ios"
   naver_map_plugin:
     :path: ".symlinks/plugins/naver_map_plugin/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
   sign_in_with_apple:
     :path: ".symlinks/plugins/sign_in_with_apple/ios"
   twitter_login:
@@ -567,6 +577,7 @@ SPEC CHECKSUMS:
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   cloud_firestore: 03020d987c2828e9b2d87f6940d365ddb089394f
+  contacts_service: 849e1f84281804c8bfbec1b4c3eedcb23c5d3eca
   FBAEMKit: 4cea610d0bc1680572f2aad7b25db7a2f2690d82
   FBSDKCoreKit: 5b1992fe65802ca26be7e68bc4fac5f59fa39908
   FBSDKCoreKit_Basics: a6a92ca628e05f86f458a4721574c5ddfb058ba3
@@ -596,11 +607,12 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   naver_map_plugin: d1d67733c56b20b88270d9da51218e18fa916232
   NMapsMap: 79bae4e0d7cc5214dd6dabdb95687a1356616556
+  permission_handler_apple: d21b38e1a4b2e041c63af9568f9165e114e507a6
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   twitter_login: 2794db69b7640681171b17b3c2c84ad9dfb4a57f
 
-PODFILE CHECKSUM: c0eae4f5a486db13bf749534368a5cae8ad809cf
+PODFILE CHECKSUM: cd161cb7e0566dc577e3b5fd66daf9ba6aa7e481
 
 COCOAPODS: 1.11.2
