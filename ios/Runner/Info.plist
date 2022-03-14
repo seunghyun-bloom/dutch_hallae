@@ -105,11 +105,16 @@
     <key>NSAllowsArbitraryLoads</key>
     <true/>
 
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>need location permission to show user's currnet location in map</string>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>need location permission to show user's currnet location in map</string>
+    <key>NSLocationUsageDescription</key>
     <string>need location permission to show user's currnet location in map</string>
     <key>NSLocationAlwaysUsageDescription</key>
     <string>need location permission to show user's currnet location in map</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>need location permission to show user's currnet location in map</string>
+
+    <key>NSContactsUsageDescription</key>
+    <string>This app requires contacts access to function properly.</string>
 </dict>
 </plist>
