@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-//TODO: 1. contacts 가 가나다 순으로 보이도록 수정
-//TODO: 2. listTile 에서 onTap으로 data 선택해서
-//TODO: 3. 완료 버튼 누르면 프로필사진 설정 popup 등장
-//TODO: 4. cloudFirestore 에 data 저장 (getxController 사용)
+//TODO: 1. 이름 터치하면 bottom up popup 으로 프로필 완성 창 띄우기
+//TODO: 2. 프로필 완성창에는 이름, 전화번호, 프로필사진 제작 나오게끔
+//TODO: 3. cloudFirestore 에 data 저장 (getxController 사용)
+//TODO: 4. 검색했는데 아무것도 안나오면 직접 추가하기 버튼 나오기
+//TODO: 5. FriendsPage에 firestore에 있는 친구 정보 띄우기
 
 class AddFriendsPage extends StatefulWidget {
   const AddFriendsPage({Key? key}) : super(key: key);
@@ -21,17 +22,12 @@ class _AddFriendsPageState extends State<AddFriendsPage> {
   List<Contact> contacts = [];
   List<Contact> contactsFiltered = [];
   TextEditingController _searchController = TextEditingController();
-  bool _isChecked = false;
   int? selectedIndex;
 
   @override
   void initState() {
     super.initState();
     _askPermissions();
-    getAllContacts();
-    _searchController.addListener(() {
-      filterContacts();
-    });
   }
 
   Future<void> _askPermissions() async {
@@ -40,6 +36,7 @@ class _AddFriendsPageState extends State<AddFriendsPage> {
       setState(() {
         contactsPermission = true;
       });
+      getAllContacts();
     } else {
       setState(() {
         contactsPermission = false;
@@ -63,6 +60,8 @@ class _AddFriendsPageState extends State<AddFriendsPage> {
     setState(() {
       contacts = _contacts;
     });
+
+    _searchController.addListener(() => filterContacts());
   }
 
   filterContacts() {
@@ -82,12 +81,18 @@ class _AddFriendsPageState extends State<AddFriendsPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isSearching = _searchController.text.isNotEmpty;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('친구추가'),
-        actions: [AppBarButton(title: '완료', onTap: () {})],
+        actions: [
+          AppBarButton(
+            title: '추가',
+            onTap: () {
+              print(contactsFiltered.length);
+              print(selectedIndex);
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -102,28 +107,25 @@ class _AddFriendsPageState extends State<AddFriendsPage> {
             ),
           ),
           !contactsPermission
-              ? const Center(
-                  child: Text('주소록 접근 권한을 활성화해주세요'),
+              ? Expanded(
+                  child: Center(
+                    child: TextButton(
+                      child: const Text('주소록 접근 권한을 활성화해주세요'),
+                      onPressed: () => print(contactsPermission),
+                    ),
+                  ),
                 )
               : Expanded(
                   child: ListView.builder(
-                    itemCount:
-                        isSearching ? contactsFiltered.length : contacts.length,
+                    shrinkWrap: true,
+                    itemCount: contactsFiltered.length,
                     itemBuilder: (context, index) {
-                      Contact contact = isSearching
-                          ? contactsFiltered[index]
-                          : contacts[index];
+                      Contact contact = contactsFiltered[index];
+
                       return ListTile(
                         title: Text(contact.displayName ?? ''),
                         subtitle:
                             Text(contact.phones?.elementAt(0).value ?? ''),
-                        trailing: Checkbox(
-                            value: selectedIndex == index ? true : false,
-                            onChanged: (value) {
-                              setState(() {
-                                _isChecked = value!;
-                              });
-                            }),
                         onTap: () {
                           setState(() {
                             selectedIndex = index;
