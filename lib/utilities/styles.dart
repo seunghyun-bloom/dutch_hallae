@@ -36,6 +36,18 @@ RoundedRectangleBorder kShape20 = RoundedRectangleBorder(
   borderRadius: BorderRadius.circular(20),
 );
 
+InputDecoration kTextFieldStyle = InputDecoration(
+  prefixIcon: const Icon(Icons.search),
+  hintText: '검색 / 직접 입력',
+  filled: true,
+  fillColor: Colors.grey.shade200,
+  contentPadding: EdgeInsets.zero,
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(8),
+    borderSide: BorderSide.none,
+  ),
+);
+
 class Pantone {
   static const MaterialColor veryPeri = MaterialColor(
     0xff6667ab,
