@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dutch_hallae/firebase/firestore/user_data_controller.dart';
+import 'package:dutch_hallae/getx/controller/user_data_controller.dart';
 import 'package:dutch_hallae/pages/login/login_page.dart';
 import 'package:dutch_hallae/pages/settings/profile_modify_page.dart';
 import 'package:dutch_hallae/utilities/dialog.dart';
@@ -22,7 +22,7 @@ class UserProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(UserDataController());
+    final _getxUser = Get.put(UserDataController());
     return StreamBuilder(
       stream: _auth.userChanges(),
       builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
@@ -40,22 +40,18 @@ class UserProfilePage extends StatelessWidget {
                       radius: 60,
                       backgroundColor: Colors.grey[300],
                       backgroundImage: NetworkImage(
-                        Get.find<UserDataController>().profileImageFS.isEmpty
+                        _getxUser.profileImageFS.isEmpty
                             ? defaultProfile
-                            : Get.find<UserDataController>()
-                                .profileImageFS
-                                .value,
+                            : _getxUser.profileImageFS.value,
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Obx(() => Text(
-                          Get.find<UserDataController>().displayNameFS.isEmpty
+                          _getxUser.displayNameFS.isEmpty
                               ? ''
-                              : Get.find<UserDataController>()
-                                  .displayNameFS
-                                  .value,
+                              : _getxUser.displayNameFS.value,
                           style: const TextStyle(fontSize: 20),
                         )),
                   ),
