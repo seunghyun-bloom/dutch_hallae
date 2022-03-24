@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dutch_hallae/firebase/firestore/bank_account_controller.dart';
+import 'package:dutch_hallae/getx/controller/bank_account_controller.dart';
 import 'package:dutch_hallae/utilities/dialog.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';

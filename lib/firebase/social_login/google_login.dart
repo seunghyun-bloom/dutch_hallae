@@ -1,4 +1,4 @@
-import 'package:dutch_hallae/firebase/firestore/user_data_controller.dart';
+import 'package:dutch_hallae/getx/controller/user_data_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';

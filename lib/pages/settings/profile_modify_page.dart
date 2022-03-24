@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:dutch_hallae/firebase/firestore/user_data_controller.dart';
-import 'package:dutch_hallae/firebase/firestore/image_uploader.dart';
+import 'package:dutch_hallae/getx/controller/user_data_controller.dart';
+import 'package:dutch_hallae/getx/controller/image_controller.dart';
 import 'package:dutch_hallae/utilities/dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +19,7 @@ class _ProfileModifyPageState extends State<ProfileModifyPage> {
   @override
   Widget build(BuildContext context) {
     Get.put(UserDataController());
+    Get.put(ImageController());
     return Scaffold(
       appBar: AppBar(title: const Text('프로필 수정')),
       body: Center(
@@ -41,9 +42,11 @@ class _ProfileModifyPageState extends State<ProfileModifyPage> {
                   title: '프로필 사진 변경',
                   content: '어디에서 불러오시겠습니까?',
                   leftLabel: '사진첩',
-                  onTap: () => uploadImageToStorage(ImageSource.gallery),
+                  onTap: () => Get.find<ImageController>()
+                      .uploadProfileImage(ImageSource.gallery),
                   rightLabel: '카메라',
-                  onRightTap: () => uploadImageToStorage(ImageSource.camera),
+                  onRightTap: () => Get.find<ImageController>()
+                      .uploadProfileImage(ImageSource.camera),
                   context: context,
                 );
               },

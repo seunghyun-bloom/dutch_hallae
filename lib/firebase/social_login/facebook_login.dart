@@ -1,4 +1,4 @@
-import 'package:dutch_hallae/firebase/firestore/user_data_controller.dart';
+import 'package:dutch_hallae/getx/controller/user_data_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
