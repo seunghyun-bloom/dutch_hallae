@@ -11,8 +11,6 @@ final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class ImageController extends GetxController {
-  RxString friendImageTemp = ''.obs;
-
   uploadProfileImage(ImageSource source) async {
     Get.put(UserDataController());
 
@@ -28,8 +26,10 @@ class ImageController extends GetxController {
     // Remove the possibility of duplicating the file name using the user's uid.
     Reference reference = _firebaseStorage
         .ref()
+        .child('user')
+        .child('${_auth.currentUser?.uid}')
         .child('profile')
-        .child('${_auth.currentUser?.uid}');
+        .child('profile_image_${_auth.currentUser?.uid}');
 
     // Upload file to Firebase storage
     UploadTask uploadTask = reference.putFile(image);
@@ -47,17 +47,6 @@ class ImageController extends GetxController {
 
     Get.find<UserDataController>().changeProfileImage(downloadURL);
 
-    Get.back();
-  }
-
-  getFriendImage(ImageSource source) async {
-    final ImagePicker _picker = ImagePicker();
-    XFile? ximage = await _picker.pickImage(
-      source: source,
-      maxHeight: 300,
-      maxWidth: 300,
-    );
-    friendImageTemp(ximage!.path);
     Get.back();
   }
 }

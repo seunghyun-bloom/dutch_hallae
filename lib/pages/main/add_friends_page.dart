@@ -1,4 +1,5 @@
 import 'package:contacts_service/contacts_service.dart';
+import 'package:dutch_hallae/getx/controller/friends_controller.dart';
 import 'package:dutch_hallae/utilities/appbar_button.dart';
 import 'package:dutch_hallae/utilities/modal_fit.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
@@ -7,10 +8,6 @@ import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-//TODO: 1. 이름 터치하면 bottom up popup 으로 프로필 완성 창 띄우기 (0k)
-//TODO: 2. 프로필 완성창에는 이름, 전화번호, 프로필사진 제작 나오게끔  (0k)
-//TODO: 검색창에 '누나' 라고 치면 에러가 뜨는 문제 해결 (OK)
-//TODO: 3. 프로필 완성창에 imagePicker 로드
 //TODO: 4. cloudFirestore 에 data 저장 (getxController 사용)
 //TODO: 5. 검색했는데 아무것도 안나오면 직접 추가하기 버튼 나오기
 //TODO: 6. FriendsPage에 firestore에 있는 친구 정보 띄우기
