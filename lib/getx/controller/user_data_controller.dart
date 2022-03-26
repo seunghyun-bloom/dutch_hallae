@@ -18,7 +18,6 @@ class UserDataController extends GetxController {
         .get()
         .then((value) async {
       if (value.exists) {
-        print('createFirestoreData() called : ${value['displayName']}');
         await createVariables(
           value['profileImage'].toString(),
           value['displayName'].toString(),

@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 class FriendsPage extends StatelessWidget {
   const FriendsPage({Key? key}) : super(key: key);
 
+  //TODO: show friends list (data from firestore)
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
