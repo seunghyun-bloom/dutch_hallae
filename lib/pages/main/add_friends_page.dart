@@ -1,16 +1,12 @@
 import 'package:contacts_service/contacts_service.dart';
-import 'package:dutch_hallae/getx/controller/friends_controller.dart';
 import 'package:dutch_hallae/utilities/appbar_button.dart';
 import 'package:dutch_hallae/utilities/modal_fit.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-//TODO: 4. cloudFirestore 에 data 저장 (getxController 사용)
 //TODO: 5. 검색했는데 아무것도 안나오면 직접 추가하기 버튼 나오기
-//TODO: 6. FriendsPage에 firestore에 있는 친구 정보 띄우기
 
 class AddFriendsPage extends StatefulWidget {
   const AddFriendsPage({Key? key}) : super(key: key);
@@ -139,7 +135,7 @@ class _AddFriendsPageState extends State<AddFriendsPage> {
                             context: context,
                             builder: (context) => ModalFit(
                               friend: contact.displayName!,
-                              number: contact.phones!.elementAt(0).value ?? '',
+                              phone: contact.phones!.elementAt(0).value ?? '',
                             ),
                           );
                         },

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dutch_hallae/getx/controller/friends_controller.dart';
 import 'package:dutch_hallae/utilities/dialog.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +8,10 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ModalFit extends StatelessWidget {
-  ModalFit({Key? key, required this.friend, required this.number})
+  ModalFit({Key? key, required this.friend, required this.phone})
       : super(key: key);
   final String friend;
-  final String number;
+  final String phone;
 
   final _getxFriends = Get.put(FriendsController());
 
@@ -24,14 +26,11 @@ class ModalFit extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
               child: InkWell(
-                child: Obx(
-                  () => CircleAvatar(
-                    backgroundImage:
-                        NetworkImage(_getxFriends.friendImageTemp.value),
-                    backgroundColor: Colors.grey.shade300,
-                    radius: 50,
-                  ),
-                ),
+                child: Obx(() => _getxFriends.isSample.value
+                    ? _circleAvatar(
+                        AssetImage(_getxFriends.showingFriendImage.value))
+                    : _circleAvatar(FileImage(
+                        File(_getxFriends.showingFriendImage.value)))),
                 onTap: () {
                   DialogByPlatform(
                     title: '친구 사진',
@@ -84,7 +83,9 @@ class ModalFit extends StatelessWidget {
                         '완료',
                         textAlign: TextAlign.center,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        _getxFriends.uploadFriendFirestore(friend, phone);
+                      },
                     ),
                   ),
                 ],
@@ -113,6 +114,14 @@ class ModalFit extends StatelessWidget {
             ),
         ],
       ),
+    );
+  }
+
+  _circleAvatar(ImageProvider imageProvider) {
+    return CircleAvatar(
+      backgroundImage: imageProvider,
+      backgroundColor: Colors.grey.shade300,
+      radius: 50,
     );
   }
 }
