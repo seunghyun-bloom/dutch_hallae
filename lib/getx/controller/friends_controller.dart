@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dutch_hallae/utilities/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -64,7 +65,8 @@ class FriendsController extends GetxController {
     showingFriendImage('assets/images/friend_sample_$i.jpeg');
   }
 
-  uploadFriendFirestore(String name, String phone) async {
+  uploadFriendFirestore(
+      String name, String phone, String textfieldValue) async {
     Reference refSelected = _refFriends.child('selected_profile').child(name);
 
     if (isSample.value == false) {
@@ -78,8 +80,14 @@ class FriendsController extends GetxController {
       friendImageURL(downloadURL);
     }
 
-    await _friendsRef.doc(name).set({
-      'name': name,
+    String uploadName = name;
+
+    if (textfieldValue != '') {
+      uploadName = textfieldValue;
+    }
+
+    await _friendsRef.doc(uploadName).set({
+      'name': uploadName,
       'phone': phone,
       'image': friendImageURL.value,
     });

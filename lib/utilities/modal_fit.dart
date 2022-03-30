@@ -2,18 +2,28 @@ import 'dart:io';
 
 import 'package:dutch_hallae/getx/controller/friends_controller.dart';
 import 'package:dutch_hallae/utilities/dialog.dart';
+import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ModalFit extends StatelessWidget {
+//TODO: 이름 변경할 수 있도록 수정
+
+class ModalFit extends StatefulWidget {
   ModalFit({Key? key, required this.friend, required this.phone})
       : super(key: key);
   final String friend;
   final String phone;
 
+  @override
+  State<ModalFit> createState() => _ModalFitState();
+}
+
+class _ModalFitState extends State<ModalFit> {
   final _getxFriends = Get.put(FriendsController());
+
+  final TextEditingController _textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +56,32 @@ class ModalFit extends StatelessWidget {
                 },
               ),
             ),
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom / 3),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 100.w,
+                    child: TextField(
+                      controller: _textEditingController,
+                      style: bold20,
+                      decoration: InputDecoration(
+                        hintText: widget.friend,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    '님의',
+                    style: bold20,
+                  ),
+                ],
+              ),
+            ),
             Text(
-              '$friend 님의\n프로필을 완성해 보세요',
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+              '프로필을 완성해 보세요',
+              style: bold20,
             ),
             SizedBox(height: 10.h),
             sampleImages(0),
@@ -84,7 +116,8 @@ class ModalFit extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       onPressed: () {
-                        _getxFriends.uploadFriendFirestore(friend, phone);
+                        _getxFriends.uploadFriendFirestore(widget.friend,
+                            widget.phone, _textEditingController.text);
                       },
                     ),
                   ),
