@@ -48,6 +48,8 @@ InputDecoration kTextFieldStyle = InputDecoration(
   ),
 );
 
+TextStyle bold20 = const TextStyle(fontWeight: FontWeight.w700, fontSize: 20);
+
 class Pantone {
   static const MaterialColor veryPeri = MaterialColor(
     0xff6667ab,
