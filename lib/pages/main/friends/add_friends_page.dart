@@ -1,6 +1,6 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:dutch_hallae/utilities/appbar_button.dart';
-import 'package:dutch_hallae/utilities/modal_fit.dart';
+import 'package:dutch_hallae/pages/main/friends/modal_fit.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -119,14 +119,14 @@ class _AddFriendsPageState extends State<AddFriendsPage> {
                       return ListTile(
                         title: Text(
                           contact.displayName ?? '',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w800,
                             fontSize: 18,
                           ),
                         ),
                         subtitle: Text(
                           contact.phones?.elementAt(0).value ?? '',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
                           ),
                         ),

@@ -1,14 +1,18 @@
-import 'package:dutch_hallae/pages/main/add_friends_page.dart';
+import 'package:dutch_hallae/pages/main/friends/add_friends_page.dart';
+import 'package:dutch_hallae/pages/main/friends/friends_streamer.dart';
 import 'package:dutch_hallae/utilities/appbar_button.dart';
-import 'package:dutch_hallae/utilities/no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class FriendsPage extends StatelessWidget {
+class FriendsPage extends StatefulWidget {
   const FriendsPage({Key? key}) : super(key: key);
 
-  //TODO: show friends list (data from firestore)
+  @override
+  State<FriendsPage> createState() => _FriendsPageState();
+}
 
+class _FriendsPageState extends State<FriendsPage> {
+  //TODO: show friends list (data from firestore)
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,13 +27,7 @@ class FriendsPage extends StatelessWidget {
           ),
         ],
       ),
-      body: NoData(
-        subject: '친구가',
-        object: '친구를',
-        onTap: () {
-          Get.to(() => const AddFriendsPage());
-        },
-      ),
+      body: const FriendsStreamer(),
     );
   }
 }

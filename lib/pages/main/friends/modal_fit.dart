@@ -8,8 +8,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-//TODO: 이름 변경할 수 있도록 수정
-
 class ModalFit extends StatefulWidget {
   ModalFit({Key? key, required this.friend, required this.phone})
       : super(key: key);
@@ -66,6 +64,7 @@ class _ModalFitState extends State<ModalFit> {
                     width: 100.w,
                     child: TextField(
                       controller: _textEditingController,
+                      textAlign: TextAlign.center,
                       style: bold20,
                       decoration: InputDecoration(
                         hintText: widget.friend,
