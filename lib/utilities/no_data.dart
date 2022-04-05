@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'styles.dart';
 
-class NoData extends StatelessWidget {
-  const NoData(
+class NoDataSquare extends StatelessWidget {
+  const NoDataSquare(
       {Key? key,
       required this.subject,
       required this.object,

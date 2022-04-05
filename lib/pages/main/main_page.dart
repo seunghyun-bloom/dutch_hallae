@@ -1,7 +1,7 @@
 import 'package:dutch_hallae/getx/controller/bank_account_controller.dart';
 import 'package:dutch_hallae/getx/controller/user_data_controller.dart';
 import 'package:dutch_hallae/pages/main/account_page.dart';
-import 'package:dutch_hallae/pages/main/friends_page.dart';
+import 'package:dutch_hallae/pages/main/friends/friends_page.dart';
 import 'package:dutch_hallae/pages/settings/user_profile_page.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:dutch_hallae/utilities/toast.dart';
