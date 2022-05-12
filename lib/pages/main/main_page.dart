@@ -36,6 +36,7 @@ class _MainPageState extends State<MainPage> {
             Obx(
               () => UserAccountsDrawerHeader(
                 currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.grey.shade300,
                   backgroundImage: NetworkImage(
                     _getxUser.profileImageFS.isEmpty
                         ? defaultProfile
