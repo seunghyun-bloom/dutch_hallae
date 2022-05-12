@@ -1,3 +1,4 @@
+import 'package:dutch_hallae/getx/controller/friends_controller.dart';
 import 'package:dutch_hallae/pages/main/friends/add_friends_page.dart';
 import 'package:dutch_hallae/pages/main/friends/friends_streamer.dart';
 import 'package:dutch_hallae/utilities/appbar_button.dart';
@@ -12,7 +13,6 @@ class FriendsPage extends StatefulWidget {
 }
 
 class _FriendsPageState extends State<FriendsPage> {
-  //TODO: show friends list (data from firestore)
   @override
   Widget build(BuildContext context) {
     return Scaffold(

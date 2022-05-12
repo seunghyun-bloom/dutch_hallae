@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dutch_hallae/utilities/dialog.dart';
 import 'package:dutch_hallae/utilities/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -43,6 +44,8 @@ class FriendsController extends GetxController {
 
   String downloadUrlTemp = '';
   RxBool isSample = true.obs;
+  RxBool imageChanged = false.obs;
+  RxString changedImage = ''.obs;
 
   getFriendImage(ImageSource source) async {
     isSample(false);
@@ -58,6 +61,25 @@ class FriendsController extends GetxController {
     Get.back();
   }
 
+  changeFriendImage(ImageSource source) async {
+    imageChanged(true);
+
+    final ImagePicker _picker = ImagePicker();
+    XFile? ximage = await _picker.pickImage(
+      source: source,
+      maxHeight: 300,
+      maxWidth: 300,
+    );
+
+    changedImage(ximage!.path);
+
+    Get.back();
+  }
+
+  openFriendInfo() {
+    imageChanged(false);
+  }
+
   selectSampleImage(int i) {
     isSample(true);
     String selectedSampleImage = sampleFriendImages[i];
@@ -65,12 +87,63 @@ class FriendsController extends GetxController {
     showingFriendImage('assets/images/friend_sample_$i.jpeg');
   }
 
-  uploadFriendFirestore(
-      String name, String phone, String textfieldValue) async {
+  uploadFriendFirestore(String name, String phone, String textfieldValue,
+      BuildContext context) async {
+    String uploadName = name;
+
+    if (textfieldValue != '') {
+      uploadName = textfieldValue;
+    }
+
+    await _friendsRef.doc(uploadName).get().then((value) async {
+      if (value.exists == true) {
+        DialogByPlatform(
+          title: '이미 등록된 친구',
+          content: '기존 정보를 삭제하고 새로 추가하시겠습니까?\n동명이인이라면 다른 이름을 지정해주세요.',
+          leftLabel: '삭제 후 추가',
+          rightLabel: '돌아가기',
+          onTap: () async {
+            await storageUploader(
+                isSample.value, uploadName, showingFriendImage.value);
+            firestoreUploader(uploadName, phone, friendImageURL.value);
+            Get.back();
+          },
+          context: context,
+        );
+      } else {
+        await storageUploader(
+            isSample.value, uploadName, showingFriendImage.value);
+
+        firestoreUploader(uploadName, phone, friendImageURL.value);
+        Get.back();
+      }
+    });
+  }
+
+  changeFriendFirestore(String name, String phone, BuildContext context) async {
+    await storageUploader(false, name, changedImage.value);
+    firestoreUploader(name, phone, friendImageURL.value);
+    imageChanged(false);
+  }
+
+  firestoreUploader(String name, String phone, String imageURL) {
+    _friendsRef.doc(name).set({
+      'name': name,
+      'phone': phone,
+      'image': imageURL,
+      'updatedTime': DateTime.now().toString(),
+    });
+    Get.back();
+    showToast('$name님의 정보가 업데이트 되었습니다.');
+    showingFriendImage(defaultImage);
+    isSample(true);
+  }
+
+  storageUploader(bool isSample, String name, String imagePath) async {
     Reference refSelected = _refFriends.child('selected_profile').child(name);
 
-    if (isSample.value == false) {
-      File friendImage = File(showingFriendImage.value);
+    if (isSample == false) {
+      File friendImage = File(imagePath);
 
       UploadTask uploadTask = refSelected.putFile(friendImage);
 
@@ -79,24 +152,14 @@ class FriendsController extends GetxController {
       String downloadURL = await refSelected.getDownloadURL();
       friendImageURL(downloadURL);
     }
+  }
 
-    String uploadName = name;
-
-    if (textfieldValue != '') {
-      uploadName = textfieldValue;
-    }
-
-    await _friendsRef.doc(uploadName).set({
-      'name': uploadName,
+  editor(String name, String phone, String imageURL) {
+    _friendsRef.doc(name).set({
+      'name': name,
       'phone': phone,
-      'image': friendImageURL.value,
+      'image': imageURL,
+      'updatedTime': DateTime.now().toString(),
     });
-
-    Get.back();
-
-    showToast('$name님의 정보가 업데이트 되었습니다.');
-
-    showingFriendImage(defaultImage);
-    isSample(true);
   }
 }

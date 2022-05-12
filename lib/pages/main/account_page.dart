@@ -3,7 +3,6 @@ import 'package:dutch_hallae/getx/controller/bank_account_controller.dart';
 import 'package:dutch_hallae/utilities/dialog.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,7 +12,7 @@ import 'package:get/get.dart';
 //TODO: create new getx controller
 
 class AccountPage extends StatefulWidget {
-  AccountPage({Key? key}) : super(key: key);
+  const AccountPage({Key? key}) : super(key: key);
 
   @override
   State<AccountPage> createState() => _AccountPageState();
@@ -21,8 +20,8 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends State<AccountPage> {
   final _getxBank = Get.put(BankAccountController());
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   TextEditingController accountNameController = TextEditingController();
   TextEditingController accountNumberController = TextEditingController();
   TextEditingController accountHolderController = TextEditingController();
@@ -82,7 +81,7 @@ class _AccountPageState extends State<AccountPage> {
                   builder: (context, snapshot) {
                     if (snapshot.data?.docs.length == 0) {
                       return Padding(
-                        padding: EdgeInsets.all(38.0),
+                        padding: const EdgeInsets.all(38.0),
                         child: Center(
                           child: Text(
                             '계좌를 추가해보세요.',
@@ -124,7 +123,7 @@ class _AccountPageState extends State<AccountPage> {
                                 color:
                                     Colors.blueGrey.shade200.withOpacity(0.5),
                                 child: Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(8.0),
                                   child: Row(
                                     children: [
                                       IconButton(
@@ -134,7 +133,8 @@ class _AccountPageState extends State<AccountPage> {
                                                 Icons.star_rounded,
                                                 color: Colors.yellow.shade700,
                                               )
-                                            : Icon(Icons.star_border_rounded),
+                                            : const Icon(
+                                                Icons.star_border_rounded),
                                         color: Colors.grey,
                                         iconSize: 25.h,
                                         onPressed: () {

@@ -34,11 +34,18 @@ class _ModalFitState extends State<ModalFit> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
               child: InkWell(
-                child: Obx(() => _getxFriends.isSample.value
-                    ? _circleAvatar(
-                        AssetImage(_getxFriends.showingFriendImage.value))
-                    : _circleAvatar(FileImage(
-                        File(_getxFriends.showingFriendImage.value)))),
+                child: Obx(
+                  () => _getxFriends.isSample.value
+                      ? ModifiableAvatar(
+                          image:
+                              AssetImage(_getxFriends.showingFriendImage.value),
+                        )
+                      : ModifiableAvatar(
+                          image: FileImage(
+                            File(_getxFriends.showingFriendImage.value),
+                          ),
+                        ),
+                ),
                 onTap: () {
                   DialogByPlatform(
                     title: '친구 사진',
@@ -116,7 +123,7 @@ class _ModalFitState extends State<ModalFit> {
                       ),
                       onPressed: () {
                         _getxFriends.uploadFriendFirestore(widget.friend,
-                            widget.phone, _textEditingController.text);
+                            widget.phone, _textEditingController.text, context);
                       },
                     ),
                   ),
@@ -146,14 +153,6 @@ class _ModalFitState extends State<ModalFit> {
             ),
         ],
       ),
-    );
-  }
-
-  _circleAvatar(ImageProvider imageProvider) {
-    return CircleAvatar(
-      backgroundImage: imageProvider,
-      backgroundColor: Colors.grey.shade300,
-      radius: 50,
     );
   }
 }
