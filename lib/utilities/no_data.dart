@@ -7,12 +7,12 @@ import 'styles.dart';
 class NoDataSquare extends StatelessWidget {
   const NoDataSquare(
       {Key? key,
-      required this.subject,
-      required this.object,
+      required this.titleString,
+      required this.contentString,
       required this.onTap})
       : super(key: key);
-  final String subject;
-  final String object;
+  final String titleString;
+  final String contentString;
   final dynamic onTap;
 
   @override
@@ -25,7 +25,7 @@ class NoDataSquare extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           child: SizedBox(
-            height: 240.h,
+            height: Get.height * 0.3,
             width: Get.width * 0.9,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -47,7 +47,7 @@ class NoDataSquare extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    '$object 추가해주세요',
+                    titleString,
                     style: const TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 20,
@@ -55,10 +55,8 @@ class NoDataSquare extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '아직 등록된 $subject 없으시네요',
-                ),
-                Text(
-                  '$object 추가해주세요',
+                  contentString,
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),

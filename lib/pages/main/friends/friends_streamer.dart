@@ -30,15 +30,6 @@ class _FriendsStreamerState extends State<FriendsStreamer> {
           .collection('friends')
           .snapshots(),
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return NoDataSquare(
-            subject: '친구가',
-            object: '친구를',
-            onTap: () {
-              Get.to(() => const AddFriendsPage());
-            },
-          );
-        }
         final friends = snapshot.data?.docs.reversed;
 
         List<FriendsBubble> friendsBubbles = [];
@@ -57,9 +48,15 @@ class _FriendsStreamerState extends State<FriendsStreamer> {
           friendsBubbles.add(friendBubble);
         }
 
-        return ListView(
-          children: friendsBubbles,
-        );
+        return friendsBubbles.isEmpty
+            ? NoDataSquare(
+                titleString: '친구를 추가해 주세요',
+                contentString: '아직 등록된 친구가 없으시네요\n친구를 추가해 보세요',
+                onTap: () => Get.to(() => const AddFriendsPage()),
+              )
+            : ListView(
+                children: friendsBubbles,
+              );
       },
     );
   }
