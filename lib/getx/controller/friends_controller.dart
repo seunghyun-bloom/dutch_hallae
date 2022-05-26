@@ -32,11 +32,11 @@ class FriendsController extends GetxController {
     'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Ffriend_sample_8.jpeg?alt=media&token=970360fd-32fc-4677-b55e-3f33c732e1cf',
     'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Ffriend_sample_9.jpeg?alt=media&token=ffd0c33a-dc81-412a-b090-61dbd6630f6e'
   ];
-  final CollectionReference _friendsRef = _firestore
+  final CollectionReference _firestoreREF = _firestore
       .collection('userData')
       .doc(FirebaseAuth.instance.currentUser?.uid)
       .collection('friends');
-  final Reference _refFriends = _firebaseStorage
+  final Reference _storageREF = _firebaseStorage
       .ref()
       .child('user')
       .child('${_auth.currentUser?.uid}')
@@ -95,7 +95,7 @@ class FriendsController extends GetxController {
       uploadName = textfieldValue;
     }
 
-    await _friendsRef.doc(uploadName).get().then((value) async {
+    await _firestoreREF.doc(uploadName).get().then((value) async {
       if (value.exists == true) {
         DialogByPlatform(
           title: '이미 등록된 친구',
@@ -120,19 +120,37 @@ class FriendsController extends GetxController {
     });
   }
 
-  changeFriendFirestore(String name, String phone, BuildContext context) async {
-    await storageUploader(false, name, changedImage.value);
-    firestoreUploader(name, phone, friendImageURL.value);
-    imageChanged(false);
+  changeFriendFirestore(String name, String phone, String textfieldValue,
+      BuildContext context) async {
+    String newPhone = phone;
+    if (textfieldValue != '') {
+      newPhone = textfieldValue;
+    }
+
+    if (imageChanged.isTrue) {
+      await storageUploader(false, name, changedImage.value);
+      firestoreUploader(name, newPhone, friendImageURL.value);
+      imageChanged(false);
+    } else {
+      firestoreUploader(name, newPhone, 'DoNotChange');
+    }
   }
 
   firestoreUploader(String name, String phone, String imageURL) {
-    _friendsRef.doc(name).set({
-      'name': name,
-      'phone': phone,
-      'image': imageURL,
-      'updatedTime': DateTime.now().toString(),
-    });
+    if (imageURL == 'DoNotChange') {
+      _firestoreREF.doc(name).update({
+        'name': name,
+        'phone': phone,
+        'updatedTime': DateTime.now().toString(),
+      });
+    } else {
+      _firestoreREF.doc(name).set({
+        'name': name,
+        'phone': phone,
+        'image': imageURL,
+        'updatedTime': DateTime.now().toString(),
+      });
+    }
     Get.back();
     showToast('$name님의 정보가 업데이트 되었습니다.');
     showingFriendImage(defaultImage);
@@ -140,7 +158,7 @@ class FriendsController extends GetxController {
   }
 
   storageUploader(bool isSample, String name, String imagePath) async {
-    Reference refSelected = _refFriends.child('selected_profile').child(name);
+    Reference refSelected = _storageREF.child('selected_profile').child(name);
 
     if (isSample == false) {
       File friendImage = File(imagePath);
@@ -154,12 +172,28 @@ class FriendsController extends GetxController {
     }
   }
 
-  editor(String name, String phone, String imageURL) {
-    _friendsRef.doc(name).set({
-      'name': name,
-      'phone': phone,
-      'image': imageURL,
-      'updatedTime': DateTime.now().toString(),
-    });
+  deleteFriend(String name, BuildContext context) {
+    DialogByPlatform(
+      title: '친구 정보 삭제',
+      content: '$name님의 정보를 정말로 삭제하시겠습니까?',
+      onTap: () async {
+        storageEraser(name);
+        await firestoreEraser(name);
+        Get.back();
+        Get.back();
+        showToast('$name님의 정보가 삭제 되었습니다.');
+      },
+      context: context,
+    );
+  }
+
+  firestoreEraser(String name) async {
+    DocumentReference reference = _firestoreREF.doc(name);
+    await reference.delete();
+  }
+
+  storageEraser(String name) async {
+    Reference friendRef = _storageREF.child('selected_profile').child(name);
+    await friendRef.delete();
   }
 }

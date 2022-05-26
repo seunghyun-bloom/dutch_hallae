@@ -116,5 +116,7 @@
 
     <key>NSContactsUsageDescription</key>
     <string>This app requires contacts access to function properly.</string>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 </dict>
 </plist>

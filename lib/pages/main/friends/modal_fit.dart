@@ -102,7 +102,7 @@ class _ModalFitState extends State<ModalFit> {
                     height: 45,
                     child: ElevatedButton(
                       child: const Text(
-                        '지우기',
+                        '취소',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.black),
                       ),
@@ -110,7 +110,7 @@ class _ModalFitState extends State<ModalFit> {
                         backgroundColor:
                             MaterialStateProperty.all(Colors.grey.shade300),
                       ),
-                      onPressed: () {},
+                      onPressed: () => Get.back(),
                     ),
                   ),
                   SizedBox(

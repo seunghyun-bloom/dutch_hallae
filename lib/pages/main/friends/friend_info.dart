@@ -10,8 +10,6 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../utilities/dialog.dart';
 
-//TODO: 친구정보 편집하고 삭제하는 기능 구현  _22.05.10
-
 final _getxFriends = Get.put(FriendsController());
 
 class FriendInfo {
@@ -82,9 +80,13 @@ class FriendInfoContents extends StatelessWidget {
               );
             },
           ),
-          Text(name),
+          Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: Text(name, style: bold20),
+          ),
           SizedBox(
-            width: 150.w,
+            width: 120.w,
+            // height: 50.h,
             child: TextField(
               controller: _textEditingController,
               keyboardType: TextInputType.number,
@@ -94,17 +96,48 @@ class FriendInfoContents extends StatelessWidget {
               ),
             ),
           ),
-          ElevatedButton(
-            child: const Text('수정하기'),
-            onPressed: () {
-              _getxFriends.changeFriendFirestore(name, phone, context);
-            },
+          SizedBox(height: 10.h),
+          Button(
+            title: '수정하기',
+            color: Pantone.veryPeri,
+            onTap: () => _getxFriends.changeFriendFirestore(
+                name, phone, _textEditingController.text, context),
           ),
-          ElevatedButton(
-            child: const Text('삭제하기'),
-            onPressed: () {},
+          Button(
+            title: '삭제하기',
+            color: Colors.red,
+            onTap: () => _getxFriends.deleteFriend(name, context),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class Button extends StatelessWidget {
+  final String title;
+  final Color color;
+  final dynamic onTap;
+
+  const Button({
+    Key? key,
+    required this.title,
+    required this.color,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: ElevatedButton(
+        child: SizedBox(
+          width: 180.w,
+          child: Center(
+            child: Text(title, style: TextStyle(color: color)),
+          ),
+        ),
+        onPressed: onTap,
       ),
     );
   }
