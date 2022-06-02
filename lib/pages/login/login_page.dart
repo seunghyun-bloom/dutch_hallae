@@ -1,6 +1,7 @@
 import 'package:dutch_hallae/firebase/social_login/apple_login.dart';
 import 'package:dutch_hallae/firebase/social_login/facebook_login.dart';
 import 'package:dutch_hallae/firebase/social_login/google_login.dart';
+import 'package:dutch_hallae/firebase/social_login/kakao_login.dart';
 import 'package:dutch_hallae/firebase/social_login/twitter_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:dutch_hallae/utilities/login_button.dart';
@@ -26,6 +27,11 @@ class LoginPage extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  LoginButton(
+                    platform: 'Kakao',
+                    color: Colors.amber.shade200,
+                    onTap: () => signInWithKakao(),
+                  ),
                   LoginButton(
                     platform: 'Google',
                     color: Colors.red.shade100,

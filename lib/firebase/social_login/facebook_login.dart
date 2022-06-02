@@ -4,7 +4,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 
 Future<UserCredential> signInWithFacebook() async {
-  Get.put(UserDataController());
+  final _getxUser = Get.put(UserDataController());
   // Trigger the sign-in flow
   final LoginResult loginResult = await FacebookAuth.instance.login();
 
@@ -14,5 +14,5 @@ Future<UserCredential> signInWithFacebook() async {
 
   // Once signed in, return the UserCredential
   await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-  return Get.find<UserDataController>().createFirestoreData();
+  return _getxUser.createFirestoreData();
 }

@@ -34,8 +34,8 @@ class BottomNavController extends GetxController {
   Future<bool> willPopAction(BuildContext context) async {
     if (bottomHistory.length == 1) {
       DialogByPlatform(
-        title: '시스템 종료',
-        content: '시스템을 종료하시겠습니까?',
+        title: '앱 종료',
+        content: '앱을 종료하시겠습니까?',
         onTap: () => exit(0),
         context: context,
       );

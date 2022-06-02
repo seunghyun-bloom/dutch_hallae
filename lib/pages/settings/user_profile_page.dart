@@ -10,6 +10,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 
 String defaultProfile = 'https://i.ibb.co/Hx9LP5Z/default-profile-image.png';
 
@@ -68,8 +69,11 @@ class UserProfilePage extends StatelessWidget {
                   OutlinedButton(
                     child: const Text('로그아웃'),
                     style: kRedOutlinedButtonStyle,
-                    onPressed: () {
+                    onPressed: () async {
                       _auth.signOut();
+                      if (_userData!.uid.contains('kakao')) {
+                        await kakao.UserApi.instance.logout();
+                      }
                       Get.back();
                     },
                   ),
@@ -81,7 +85,10 @@ class UserProfilePage extends StatelessWidget {
                       DialogByPlatform(
                           title: '회원탈퇴',
                           content: '정말로 탈퇴하시겠습니까?',
-                          onTap: () {
+                          onTap: () async {
+                            if (_userData!.uid.contains('kakao')) {
+                              await kakao.UserApi.instance.logout();
+                            }
                             _auth.currentUser?.delete();
                             _firestore
                                 .collection('userData')

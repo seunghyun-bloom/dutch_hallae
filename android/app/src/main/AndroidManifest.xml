@@ -37,10 +37,9 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "example://gizmos” -->
-                <!-- Registered Callback URLs in TwitterApp -->
                 <data android:scheme="twittercallback" /> <!-- host is option -->
             </intent-filter>
+            <!-- Twitter Login API -->
 
         </activity>
         <!-- Don't delete the meta-data below.
@@ -53,15 +52,17 @@
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="f2kmy3pquo" />
+        <!-- Naver map API -->
 
-       <meta-data android:name="com.facebook.sdk.ApplicationId"
+        <!-- Facebook Login API -->
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
            android:value="@string/facebook_app_id"/>
 
-       <activity android:name="com.facebook.FacebookActivity"
+        <activity android:name="com.facebook.FacebookActivity"
            android:configChanges=
                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
            android:label="@string/app_name" />
-       <activity
+        <activity
            android:name="com.facebook.CustomTabActivity"
            android:exported="true">
            <intent-filter>
@@ -70,7 +71,20 @@
                <category android:name="android.intent.category.BROWSABLE" />
                <data android:scheme="@string/fb_login_protocol_scheme" />
            </intent-filter>
-       </activity>
+        </activity>
+        <!-- Facebook Login API -->
+
+        <!-- Kakao Login API -->
+        <activity android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity">
+            <intent-filter android:label="flutter_web_auth">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="kakao7bc862771df0af1c0179e1bc4a641a28" android:host="oauth"/>
+            </intent-filter>
+        </activity>
+        <!-- Kakao Login API -->
+
     </application>
 
 </manifest>
