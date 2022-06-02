@@ -8,8 +8,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../utilities/toast.dart';
-
 class RouteManager extends GetView<BottomNavController> {
   RouteManager({Key? key}) : super(key: key);
 
