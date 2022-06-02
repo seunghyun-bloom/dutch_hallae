@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -22,62 +24,84 @@
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
 	<array>
-	    <dict>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>CFBundleURLName</key>
-            <string>twittercallback</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-              <!-- Registered Callback URLs in TwitterApp -->
-              <string>twittercallback</string>
-            </array>
-         </dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
-			  <string>Editor</string>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>twittercallback</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-			  <string>fb448522530146396</string>
-              <string>com.googleusercontent.apps.825324394142-ino80mvqt1fh2ql8s01ah9r7ru30cunv</string>
+				<string>twittercallback</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb448522530146396</string>
+				<string>com.googleusercontent.apps.825324394142-ino80mvqt1fh2ql8s01ah9r7ru30cunv</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>kakao</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kakao7bc862771df0af1c0179e1bc4a641a28</string>
 			</array>
 		</dict>
 	</array>
-	<key>FacebookAppID</key>
-    <string>448522530146396</string>
-    <key>FacebookClientToken</key>
-    <string>ad0777d3ee289976d1889623231897b6</string>
-    <key>FacebookDisplayName</key>
-    <string>dutchHallae</string>
-
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-      <string>fbapi</string>
-      <string>fbapi20130214</string>
-      <string>fbapi20130410</string>
-      <string>fbapi20130702</string>
-      <string>fbapi20131010</string>
-      <string>fbapi20131219</string>
-      <string>fbapi20140410</string>
-      <string>fbapi20140116</string>
-      <string>fbapi20150313</string>
-      <string>fbapi20150629</string>
-      <string>fbapi20160328</string>
-      <string>fbauth</string>
-      <string>fb-messenger-share-api</string>
-      <string>fbauth2</string>
-      <string>fbshareextension</string>
-    </array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FacebookAppID</key>
+	<string>448522530146396</string>
+	<key>FacebookClientToken</key>
+	<string>ad0777d3ee289976d1889623231897b6</string>
+	<key>FacebookDisplayName</key>
+	<string>dutchHallae</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>kakaokompassauth</string>
+		<string>kakaolink</string>
+		<string>fbapi</string>
+		<string>fbapi20130214</string>
+		<string>fbapi20130410</string>
+		<string>fbapi20130702</string>
+		<string>fbapi20131010</string>
+		<string>fbapi20131219</string>
+		<string>fbapi20140410</string>
+		<string>fbapi20140116</string>
+		<string>fbapi20150313</string>
+		<string>fbapi20150629</string>
+		<string>fbapi20160328</string>
+		<string>fbauth</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NMFClientId</key>
+	<string>f2kmy3pquo</string>
+	<key>NSAllowsArbitraryLoads</key>
+	<true/>
 	<key>NSCameraUsageDescription</key>
-    <string>Need to access your camera to capture a photo add and update profile picture.</string>
-
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Need to access your photo library to select a photo add and update profile picture</string>
-
+	<string>Need to access your camera to capture a photo add and update profile picture.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>This app requires contacts access to function properly.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>need location permission to show user's currnet location in map</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>need location permission to show user's currnet location in map</string>
+	<key>NSLocationUsageDescription</key>
+	<string>need location permission to show user's currnet location in map</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>need location permission to show user's currnet location in map</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Need to access your photo library to select a photo add and update profile picture</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -97,26 +121,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-
-    <key>NMFClientId</key>
-    <string>f2kmy3pquo</string>
-    <key>io.flutter.embedded_views_preview</key>
-    <true/>
-    <key>NSAllowsArbitraryLoads</key>
-    <true/>
-
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>need location permission to show user's currnet location in map</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>need location permission to show user's currnet location in map</string>
-    <key>NSLocationUsageDescription</key>
-    <string>need location permission to show user's currnet location in map</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>need location permission to show user's currnet location in map</string>
-
-    <key>NSContactsUsageDescription</key>
-    <string>This app requires contacts access to function properly.</string>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<key>io.flutter.embedded_views_preview</key>
 	<true/>
 </dict>
 </plist>

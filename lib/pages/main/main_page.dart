@@ -337,7 +337,6 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        heroTag: const Text('main'),
         child: const Icon(Icons.add),
         onPressed: () => showToast('정산 시작'),
       ),

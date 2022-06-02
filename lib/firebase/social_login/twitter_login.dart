@@ -5,7 +5,7 @@ import 'package:twitter_login/entity/auth_result.dart';
 import 'package:twitter_login/twitter_login.dart';
 
 Future<UserCredential> signInWithTwitter() async {
-  Get.put(UserDataController());
+  final _getxUser = Get.put(UserDataController());
   // Create a TwitterLogin instance
   final twitterLogin = TwitterLogin(
       apiKey: 'tXqOgkMw3lkqqYsOZ6uhuB8DE',
@@ -23,5 +23,5 @@ Future<UserCredential> signInWithTwitter() async {
 
   // Once signed in, return the UserCredential
   await FirebaseAuth.instance.signInWithCredential(twitterAuthCredential);
-  return Get.find<UserDataController>().createFirestoreData();
+  return _getxUser.createFirestoreData();
 }

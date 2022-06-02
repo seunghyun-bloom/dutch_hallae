@@ -24,7 +24,7 @@ class _MapPageState extends State<MapPage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () => showToast('정산 시작'),
+        onPressed: () => showToast('맵 정산 시작'),
       ),
     );
   }

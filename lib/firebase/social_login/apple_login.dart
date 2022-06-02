@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 Future<UserCredential> signInWithApple() async {
-  Get.put(UserDataController());
+  final _getxUser = Get.put(UserDataController());
   // Request credential for the currently signed in Apple account.
   final appleCredential = await SignInWithApple.getAppleIDCredential(
     scopes: [
@@ -22,5 +22,5 @@ Future<UserCredential> signInWithApple() async {
   // Sign in the user with Firebase. If the nonce we generated earlier does
   // not match the nonce in `appleCredential.identityToken`, sign in will fail.
   await FirebaseAuth.instance.signInWithCredential(oauthCredential);
-  return Get.find<UserDataController>().createFirestoreData();
+  return _getxUser.createFirestoreData();
 }
