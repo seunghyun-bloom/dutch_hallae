@@ -1,6 +1,7 @@
 import 'package:dutch_hallae/getx/controller/bank_account_controller.dart';
 import 'package:dutch_hallae/getx/controller/user_data_controller.dart';
-import 'package:dutch_hallae/pages/main/account_page.dart';
+import 'package:dutch_hallae/pages/main/accounts/account_page.dart';
+import 'package:dutch_hallae/pages/main/components/main_account.dart';
 import 'package:dutch_hallae/pages/main/friends/friends_page.dart';
 import 'package:dutch_hallae/pages/settings/user_profile_page.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
@@ -116,80 +117,7 @@ class _MainPageState extends State<MainPage> {
             padding: EdgeInsets.all(15.w),
             child: Column(
               children: [
-                Card(
-                  // color: Palette.veryPeri,
-                  clipBehavior: Clip.antiAlias,
-                  shape: kShape20,
-                  child: Column(
-                    children: [
-                      ListTile(
-                        title: const Text('계좌정보'),
-                        trailing: ElevatedButton(
-                          child: const Text('변경'),
-                          style: kRoundedButtonStyle,
-                          onPressed: () => Get.to(() => AccountPage()),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
-                        child: Divider(color: Colors.blueGrey),
-                      ),
-                      InkWell(
-                        onTap: () => Get.to(() => AccountPage()),
-                        child: Padding(
-                          padding: EdgeInsets.all(10.w),
-                          child: Obx(
-                            () => Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      _getxBank.accountNameFS.value,
-                                      style: TextStyle(
-                                        fontSize: 17.sp,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      '  (예금주: ${_getxBank.accountHolderFS.value})',
-                                      style: TextStyle(fontSize: 14.sp),
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        _getxBank.bankFS.value,
-                                        style: TextStyle(
-                                          color: Colors.indigo,
-                                          fontSize: 17.sp,
-                                        ),
-                                      ),
-                                      Text(
-                                        _getxBank.accountNumberFS.isEmpty
-                                            ? '즐겨찾는 계좌를 설정해주세요'
-                                            : '  ${_getxBank.accountNumberFS.value}',
-                                        style: TextStyle(
-                                          fontSize:
-                                              _getxBank.accountNumberFS.isEmpty
-                                                  ? 14.sp
-                                                  : 17.sp,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                const MainAccountComponent(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -300,34 +228,6 @@ class _MainPageState extends State<MainPage> {
                           ],
                         ),
                       ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: SizedBox(
-                    width: 200,
-                    height: 50,
-                    child: ElevatedButton(
-                      child: const Text(
-                        '곧 없어질 버튼',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      style: kRoundedButtonStyle,
-                      onPressed: () {
-                        print(
-                            'displayName : ${Get.find<UserDataController>().displayNameFS.value}');
-                        print(
-                            'profileImage : ${Get.find<UserDataController>().profileImageFS.value}');
-                        print(
-                            'uid : ${Get.find<UserDataController>().uidFS.value}');
-                        print(
-                            'accountName : ${Get.find<BankAccountController>().accountNameFS}');
-                        print(
-                            'bank : ${Get.find<BankAccountController>().bankFS}');
-                        print(
-                            'number : ${Get.find<BankAccountController>().accountNumberFS}');
-                      },
                     ),
                   ),
                 ),

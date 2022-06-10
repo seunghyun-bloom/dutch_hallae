@@ -1,4 +1,5 @@
 import 'package:dutch_hallae/firebase/firebase_initializer.dart';
+import 'package:dutch_hallae/utilities/secret_keys.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -9,7 +10,7 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'getx/binding/init_bindings.dart';
 
 void main() {
-  KakaoSdk.init(nativeAppKey: '7bc862771df0af1c0179e1bc4a641a28');
+  KakaoSdk.init(nativeAppKey: kakaoNativeKey);
   runApp(const MyApp());
 }
 

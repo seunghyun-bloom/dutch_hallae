@@ -46,6 +46,8 @@ class DialogByPlatform {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
                 title: Text(title),
                 content: Text(content),
                 actions: [

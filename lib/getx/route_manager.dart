@@ -13,7 +13,6 @@ class RouteManager extends GetView<BottomNavController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(BottomNavController());
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
@@ -29,9 +28,9 @@ class RouteManager extends GetView<BottomNavController> {
                 body: IndexedStack(
                   index: controller.pageIndex.value,
                   children: [
-                    MainPage(),
-                    CalendarPage(),
-                    MapPage(),
+                    const MainPage(),
+                    const CalendarPage(),
+                    const MapPage(),
                     UserProfilePage(),
                   ],
                 ),

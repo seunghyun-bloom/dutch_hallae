@@ -11,27 +11,62 @@ class BankAccountController extends GetxController {
   RxString bankFS = ''.obs;
   RxString accountNumberFS = ''.obs;
   RxString accountHolderFS = ''.obs;
+  late Stream<QuerySnapshot> firestoreQuery;
+  List<String> bankList = [
+    'KB국민',
+    '신한',
+    '하나',
+    '우리',
+    '카카오',
+    '케이뱅크',
+    '토스',
+    'IBK기업',
+    'SC제일',
+    '씨티',
+    'NH농협',
+    '농협중앙회',
+    'KDB산업',
+    '부산',
+    '경남',
+    '대구',
+    '광주',
+    '전북',
+    '제주',
+    '우체국',
+    '새마을금고',
+    '수협',
+    '수협중앙회',
+    '신협중앙회',
+  ];
+  RxString selectedBank = '카카오'.obs;
+  RxBool favoriteChecked = false.obs;
 
-  createAccountInfo(
-      String name, String bank, String number, String holder) async {
-    _accountRef.doc(name).set({
+  createAccountInfo(String name, String number, String holder) async {
+    await _accountRef.doc(name).set({
       'accountName': name,
-      'bank': bank,
+      'bank': selectedBank.value,
       'number': number,
       'holder': holder,
       'favorite': false,
     });
+
+    if (favoriteChecked.value) {
+      await setToFavorite(name);
+    }
+
     QuerySnapshot querySnapshot = await _accountRef.get();
     int docsLength = querySnapshot.docs.length;
+
     if (docsLength <= 1) {
       accountNameFS(name);
-      bankFS(bank);
+      bankFS(selectedBank.value);
       accountNumberFS(number);
       accountHolderFS(holder);
-      print('variable changed');
     } else {
       print('variable did not changed');
     }
+    favoriteChecked(false);
+    Get.back();
   }
 
   setToFavorite(String name) async {
@@ -78,9 +113,15 @@ class BankAccountController extends GetxController {
     print('findFavoite() called');
   }
 
+  deleteAccount(String path) async {
+    await _accountRef.doc(path).delete();
+    Get.back();
+  }
+
   @override
   void onInit() {
     findFavorite();
+    firestoreQuery = _accountRef.snapshots();
     super.onInit();
   }
 }
