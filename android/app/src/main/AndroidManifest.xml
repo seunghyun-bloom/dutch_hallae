@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
     <application
-        android:label="dutch_hallae"
+        android:label="모임할래"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

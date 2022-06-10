@@ -44,3 +44,9 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Cloud Functions related
+/functions/service_account.json
+
+# Secret Keys related
+/lib/utilites/secret_keys.dart

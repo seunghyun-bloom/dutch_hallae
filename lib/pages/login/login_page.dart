@@ -4,7 +4,7 @@ import 'package:dutch_hallae/firebase/social_login/google_login.dart';
 import 'package:dutch_hallae/firebase/social_login/kakao_login.dart';
 import 'package:dutch_hallae/firebase/social_login/twitter_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:dutch_hallae/utilities/login_button.dart';
+import 'package:dutch_hallae/utilities/buttons.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 
