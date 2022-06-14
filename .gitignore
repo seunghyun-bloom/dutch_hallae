@@ -47,6 +47,8 @@ app.*.map.json
 
 # Cloud Functions related
 /functions/service_account.json
+/functions/packages-lock.json
+/functions/node_modules/
 
 # Secret Keys related
 /lib/utilites/secret_keys.dart

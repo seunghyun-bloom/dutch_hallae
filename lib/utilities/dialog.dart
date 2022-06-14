@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:get/get.dart';
 
 class DialogByPlatform {
@@ -9,8 +10,8 @@ class DialogByPlatform {
   String content;
   String? leftLabel;
   String? rightLabel;
-  final onTap;
-  final onRightTap;
+  dynamic onTap;
+  dynamic onRightTap = () => Get.back();
   BuildContext context;
   DialogByPlatform(
       {required this.title,
@@ -35,15 +36,17 @@ class DialogByPlatform {
                   ),
                   CupertinoDialogAction(
                     child: Text(rightLabel!),
-                    onPressed: onRightTap ?? () => Get.back(),
+                    onPressed: onRightTap,
                   ),
                 ],
               );
             },
           )
-        : showDialog(
+        : showAnimatedDialog(
             barrierDismissible: true,
             context: context,
+            animationType: DialogTransitionType.scale,
+            duration: const Duration(milliseconds: 300),
             builder: (BuildContext context) {
               return AlertDialog(
                 shape: RoundedRectangleBorder(
@@ -57,7 +60,7 @@ class DialogByPlatform {
                   ),
                   TextButton(
                     child: Text(rightLabel!),
-                    onPressed: onRightTap ?? () => Get.back(),
+                    onPressed: onRightTap,
                   ),
                 ],
               );

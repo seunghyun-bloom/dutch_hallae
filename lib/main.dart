@@ -23,33 +23,34 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: () => GetMaterialApp(
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [Locale('en'), Locale('ko')],
-        locale: const Locale('ko'),
-        debugShowCheckedModeBanner: false,
-        title: 'Dutch-pay calculator with convenience functions.',
-        theme: ThemeData(
-          fontFamily: 'AppleSDGothic',
-          primaryColor: Colors.white,
-          primarySwatch: Pantone.veryPeri,
-          appBarTheme: kAppBarStyle,
-          useMaterial3: true,
-        ),
-        builder: (context, widget) {
-          ScreenUtil.setContext(context);
-          return MediaQuery(
-            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-            child: widget!,
-          );
-        },
-        initialBinding: InitBinding(),
-        home: const FirebaseInitializer(),
-      ),
+      builder: (context, widget) {
+        return GetMaterialApp(
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [Locale('en'), Locale('ko')],
+          locale: const Locale('ko'),
+          debugShowCheckedModeBanner: false,
+          title: 'Dutch-pay calculator with convenience functions.',
+          theme: ThemeData(
+            fontFamily: 'AppleSDGothic',
+            primaryColor: Colors.white,
+            primarySwatch: Pantone.veryPeri,
+            appBarTheme: kAppBarStyle,
+            useMaterial3: true,
+          ),
+          initialBinding: InitBinding(),
+          home: const FirebaseInitializer(),
+          builder: (context, child) {
+            return MediaQuery(
+              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+              child: child!,
+            );
+          },
+        );
+      },
     );
   }
 }

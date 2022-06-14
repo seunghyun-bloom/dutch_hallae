@@ -13,12 +13,12 @@ final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-String defaultImageURL =
+String _defaultImageURL =
     'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Ffriend_sample_0.jpeg?alt=media&token=3f159e77-cade-4345-8b6e-7a5d4c7e75e8';
 String defaultImage = 'assets/images/friend_sample_0.jpeg';
 
 class FriendsController extends GetxController {
-  RxString friendImageURL = defaultImageURL.obs;
+  RxString friendImageURL = _defaultImageURL.obs;
   RxString showingFriendImage = defaultImage.obs;
   List<String> sampleFriendImages = [
     'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Ffriend_sample_0.jpeg?alt=media&token=3f159e77-cade-4345-8b6e-7a5d4c7e75e8',

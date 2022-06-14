@@ -1,5 +1,4 @@
-import 'package:dutch_hallae/getx/controller/friends_controller.dart';
-import 'package:dutch_hallae/pages/main/friends/add_friends_page.dart';
+import 'package:dutch_hallae/pages/main/friends/friend_add_page.dart';
 import 'package:dutch_hallae/pages/main/friends/friends_streamer.dart';
 import 'package:dutch_hallae/utilities/appbar_button.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,7 @@ class _FriendsPageState extends State<FriendsPage> {
           AppBarButton(
             title: '추가',
             onTap: () {
-              Get.to(() => const AddFriendsPage());
+              Get.to(() => const FriendAddPage());
             },
           ),
         ],

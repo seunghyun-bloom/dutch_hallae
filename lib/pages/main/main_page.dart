@@ -3,6 +3,7 @@ import 'package:dutch_hallae/getx/controller/user_data_controller.dart';
 import 'package:dutch_hallae/pages/main/accounts/account_page.dart';
 import 'package:dutch_hallae/pages/main/components/main_account.dart';
 import 'package:dutch_hallae/pages/main/friends/friends_page.dart';
+import 'package:dutch_hallae/pages/main/groups/group_page.dart';
 import 'package:dutch_hallae/pages/settings/user_profile_page.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:dutch_hallae/utilities/toast.dart';
@@ -19,8 +20,8 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final _getxBank = Get.put(BankAccountController());
   final _getxUser = Get.put(UserDataController());
+  final _getxBank = Get.put(BankAccountController());
 
   @override
   Widget build(BuildContext context) {
@@ -67,14 +68,14 @@ class _MainPageState extends State<MainPage> {
             ListTile(
               leading: const FaIcon(FontAwesomeIcons.users),
               title: const Text('모임관리'),
-              onTap: () {},
+              onTap: () => Get.to(() => const GroupPage()),
             ),
             ListTile(
               leading: const FaIcon(FontAwesomeIcons.userFriends),
               title: const Text('친구목록'),
               onTap: () {
                 Get.back();
-                Get.to(() => FriendsPage());
+                Get.to(() => const FriendsPage());
               },
             ),
             ListTile(
@@ -237,6 +238,7 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'main page',
         child: const Icon(Icons.add),
         onPressed: () => showToast('정산 시작'),
       ),

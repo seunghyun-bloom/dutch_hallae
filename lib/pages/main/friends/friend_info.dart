@@ -10,8 +10,6 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../utilities/dialog.dart';
 
-final _getxFriends = Get.put(FriendsController());
-
 class FriendInfo {
   BuildContext context;
   String name;
@@ -36,7 +34,7 @@ class FriendInfo {
   }
 }
 
-class FriendInfoContents extends StatelessWidget {
+class FriendInfoContents extends GetView<FriendsController> {
   String name;
   String phone;
   String image;
@@ -49,66 +47,69 @@ class FriendInfoContents extends StatelessWidget {
     TextEditingController _textEditingController = TextEditingController();
 
     return AlertDialog(
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          InkWell(
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            child: Obx(
-              () => _getxFriends.imageChanged.value
-                  ? ModifiableAvatar(
-                      image: FileImage(
-                        File(_getxFriends.changedImage.value),
+      content: SingleChildScrollView(
+        physics: const ScrollPhysics(),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            InkWell(
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              child: Obx(
+                () => controller.imageChanged.value
+                    ? ModifiableAvatar(
+                        image: FileImage(
+                          File(controller.changedImage.value),
+                        ),
+                      )
+                    : ModifiableAvatar(
+                        image: NetworkImage(image),
                       ),
-                    )
-                  : ModifiableAvatar(
-                      image: NetworkImage(image),
-                    ),
+              ),
+              onTap: () {
+                DialogByPlatform(
+                  title: '친구 사진',
+                  content: '어디에서 불러오시겠습니까?',
+                  leftLabel: '사진첩',
+                  onTap: () =>
+                      controller.changeFriendImage(ImageSource.gallery),
+                  rightLabel: '카메라',
+                  onRightTap: () =>
+                      controller.changeFriendImage(ImageSource.camera),
+                  context: context,
+                );
+              },
             ),
-            onTap: () {
-              DialogByPlatform(
-                title: '친구 사진',
-                content: '어디에서 불러오시겠습니까?',
-                leftLabel: '사진첩',
-                onTap: () =>
-                    _getxFriends.changeFriendImage(ImageSource.gallery),
-                rightLabel: '카메라',
-                onRightTap: () =>
-                    _getxFriends.changeFriendImage(ImageSource.camera),
-                context: context,
-              );
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 12),
-            child: Text(name, style: bold20),
-          ),
-          SizedBox(
-            width: 120.w,
-            // height: 50.h,
-            child: TextField(
-              controller: _textEditingController,
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                hintText: phone,
+            Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: Text(name, style: bold20),
+            ),
+            SizedBox(
+              width: 120.w,
+              // height: 50.h,
+              child: TextField(
+                controller: _textEditingController,
+                keyboardType: TextInputType.number,
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(
+                  hintText: phone,
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 10.h),
-          Button(
-            title: '수정하기',
-            color: Pantone.veryPeri,
-            onTap: () => _getxFriends.changeFriendFirestore(
-                name, phone, _textEditingController.text, context),
-          ),
-          Button(
-            title: '삭제하기',
-            color: Colors.red,
-            onTap: () => _getxFriends.deleteFriend(name, context),
-          ),
-        ],
+            SizedBox(height: 10.h),
+            Button(
+              title: '수정하기',
+              color: Pantone.veryPeri,
+              onTap: () => controller.changeFriendFirestore(
+                  name, phone, _textEditingController.text, context),
+            ),
+            Button(
+              title: '삭제하기',
+              color: Colors.red,
+              onTap: () => controller.deleteFriend(name, context),
+            ),
+          ],
+        ),
       ),
     );
   }

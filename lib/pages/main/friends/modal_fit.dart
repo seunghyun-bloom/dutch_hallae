@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ModalFit extends StatefulWidget {
-  ModalFit({Key? key, required this.friend, required this.phone})
+  const ModalFit({Key? key, required this.friend, required this.phone})
       : super(key: key);
   final String friend;
   final String phone;
@@ -34,6 +34,8 @@ class _ModalFitState extends State<ModalFit> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
               child: InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
                 child: Obx(
                   () => _getxFriends.isSample.value
                       ? ModifiableAvatar(
