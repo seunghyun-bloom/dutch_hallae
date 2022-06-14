@@ -23,6 +23,7 @@ class _MapPageState extends State<MapPage> {
         locationButtonEnable: true,
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'map page',
         child: const Icon(Icons.add),
         onPressed: () => showToast('맵 정산 시작'),
       ),

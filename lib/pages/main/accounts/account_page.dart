@@ -7,6 +7,7 @@ import 'package:dutch_hallae/utilities/buttons.dart';
 import 'package:dutch_hallae/utilities/no_data.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class AccountPage extends GetView<BankAccountController> {
@@ -54,6 +55,7 @@ class AccountPage extends GetView<BankAccountController> {
                             );
                           },
                         ),
+                        SizedBox(height: 4.h),
                         StretchedButton(
                           color: Pantone.veryPeri,
                           title: '계좌 추가',

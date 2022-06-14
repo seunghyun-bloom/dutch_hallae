@@ -1,6 +1,5 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'styles.dart';
 
@@ -25,40 +24,43 @@ class NoDataSquare extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           child: SizedBox(
-            height: Get.height * 0.3,
+            // height: Get.height * 0.3,
             width: Get.width * 0.9,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    color: Pantone.veryPeri,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      color: Pantone.veryPeri,
+                    ),
+                    height: Get.width * 0.3,
+                    width: Get.width * 0.3,
+                    child: const Center(
+                      child: Text(
+                        '캐릭터',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ),
-                  height: 100,
-                  width: 100,
-                  child: const Center(
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
                     child: Text(
-                      '캐릭터',
-                      style: TextStyle(color: Colors.white),
+                      titleString,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    titleString,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20,
-                    ),
+                  Text(
+                    contentString,
+                    textAlign: TextAlign.center,
                   ),
-                ),
-                Text(
-                  contentString,
-                  textAlign: TextAlign.center,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

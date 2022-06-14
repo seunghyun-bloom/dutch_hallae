@@ -22,6 +22,7 @@ class _CalendarPageState extends State<CalendarPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'calendar page',
         child: const Icon(Icons.add),
         onPressed: () => showToast('캘린더 정산 시작'),
       ),

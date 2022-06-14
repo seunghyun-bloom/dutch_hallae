@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dutch_hallae/getx/controller/friends_controller.dart';
-import 'package:dutch_hallae/pages/main/friends/add_friends_page.dart';
+import 'package:dutch_hallae/pages/main/friends/friend_add_page.dart';
 import 'package:dutch_hallae/pages/main/friends/friend_info.dart';
 import 'package:dutch_hallae/utilities/no_data.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
@@ -30,6 +30,10 @@ class _FriendsStreamerState extends State<FriendsStreamer> {
           .collection('friends')
           .snapshots(),
       builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const CircularProgressIndicator();
+        }
+
         final friends = snapshot.data?.docs.reversed;
 
         List<FriendsBubble> friendsBubbles = [];
@@ -52,7 +56,7 @@ class _FriendsStreamerState extends State<FriendsStreamer> {
             ? NoDataSquare(
                 titleString: '친구를 추가해 주세요',
                 contentString: '아직 등록된 친구가 없으시네요\n친구를 추가해 보세요',
-                onTap: () => Get.to(() => const AddFriendsPage()),
+                onTap: () => Get.to(() => const FriendAddPage()),
               )
             : ListView(
                 children: friendsBubbles,

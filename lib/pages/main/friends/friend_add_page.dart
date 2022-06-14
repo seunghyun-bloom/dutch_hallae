@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-class AddFriendsPage extends StatefulWidget {
-  const AddFriendsPage({Key? key}) : super(key: key);
+class FriendAddPage extends StatefulWidget {
+  const FriendAddPage({Key? key}) : super(key: key);
 
   @override
-  State<AddFriendsPage> createState() => _AddFriendsPageState();
+  State<FriendAddPage> createState() => _FriendAddPageState();
 }
 
-class _AddFriendsPageState extends State<AddFriendsPage> {
+class _FriendAddPageState extends State<FriendAddPage> {
   bool contactsPermission = false;
   List<Contact> contacts = [];
   List<Contact> contactsFiltered = [];
@@ -78,6 +78,7 @@ class _AddFriendsPageState extends State<AddFriendsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('친구추가'),
       ),

@@ -24,7 +24,7 @@ class MainAccountComponent extends GetView<BankAccountController> {
             children: [
               Obx(
                 () => controller.accountNameFS.value == ''
-                    ? Text('대표계좌가 없어요')
+                    ? const Text('대표계좌가 없어요')
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -36,8 +36,8 @@ class MainAccountComponent extends GetView<BankAccountController> {
                                   MaterialStateProperty.all(Pantone.veryPeri),
                               foregroundColor:
                                   MaterialStateProperty.all(Colors.white),
-                              minimumSize: MaterialStateProperty.all(
-                                  const Size.square(35)),
+                              minimumSize:
+                                  MaterialStateProperty.all(Size.square(35.sp)),
                             ),
                           ),
                           Padding(
@@ -48,13 +48,13 @@ class MainAccountComponent extends GetView<BankAccountController> {
                                   controller.bankFS.value,
                                   style: TextStyle(
                                     color: Colors.indigo,
-                                    fontSize: 17.sp,
+                                    fontSize: 15.sp,
                                   ),
                                 ),
                                 Text(
                                   '  ${controller.accountNumberFS.value}',
                                   style: TextStyle(
-                                    fontSize: 17.sp,
+                                    fontSize: 15.sp,
                                   ),
                                 ),
                               ],
@@ -65,7 +65,7 @@ class MainAccountComponent extends GetView<BankAccountController> {
                             child: Text(
                               '${controller.accountHolderFS.value}님의 통장',
                               style: TextStyle(
-                                  fontSize: 20.sp, fontWeight: FontWeight.bold),
+                                  fontSize: 17.sp, fontWeight: FontWeight.bold),
                             ),
                           ),
                         ],

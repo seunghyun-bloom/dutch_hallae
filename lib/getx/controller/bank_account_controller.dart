@@ -62,8 +62,6 @@ class BankAccountController extends GetxController {
       bankFS(selectedBank.value);
       accountNumberFS(number);
       accountHolderFS(holder);
-    } else {
-      print('variable did not changed');
     }
     favoriteChecked(false);
     Get.back();
