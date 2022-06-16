@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dutch_hallae/getx/controller/friends_controller.dart';
+import 'package:dutch_hallae/utilities/modifiable_avatar.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
