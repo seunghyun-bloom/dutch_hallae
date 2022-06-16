@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dutch_hallae/getx/controller/group_controller.dart';
 import 'package:dutch_hallae/pages/main/groups/contents/insert_frame.dart';
 import 'package:dutch_hallae/utilities/dialog.dart';
-import 'package:dutch_hallae/utilities/styles.dart';
+import 'package:dutch_hallae/utilities/modifiable_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';

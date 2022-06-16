@@ -45,6 +45,10 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# Firebase related
+/android/app/google-service.json
+/ios/Runner/GoogleService-Info.plist
+
 # Cloud Functions related
 /functions/service_account.json
 /functions/packages-lock.json

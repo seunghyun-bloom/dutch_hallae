@@ -30,8 +30,8 @@ class _FriendsStreamerState extends State<FriendsStreamer> {
           .collection('friends')
           .snapshots(),
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return const CircularProgressIndicator();
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
         }
 
         final friends = snapshot.data?.docs.reversed;
