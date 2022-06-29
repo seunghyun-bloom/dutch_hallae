@@ -9,4 +9,6 @@ class RecordController extends GetxController {
   RxList<String> members = <String>[].obs;
   RxList<String> specialMembers = <String>[].obs;
   RxString group = ''.obs;
+
+  tempFunction() {}
 }
