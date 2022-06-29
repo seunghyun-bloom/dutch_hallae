@@ -55,4 +55,4 @@ app.*.map.json
 /functions/node_modules/
 
 # Secret Keys related
-/lib/utilites/secret_keys.dart
+/lib/utilities/secret_keys.dart
