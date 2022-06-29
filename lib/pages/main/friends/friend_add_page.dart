@@ -1,4 +1,5 @@
 import 'package:contacts_service/contacts_service.dart';
+import 'package:dutch_hallae/pages/main/friends/contents/friend_add_directly.dart';
 import 'package:dutch_hallae/pages/main/friends/modal_fit.dart';
 import 'package:dutch_hallae/utilities/no_data.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
@@ -19,6 +20,7 @@ class _FriendAddPageState extends State<FriendAddPage> {
   List<Contact> contactsFiltered = [];
   final TextEditingController _searchController = TextEditingController();
   int? selectedIndex;
+  bool showCreateContents = false;
 
   @override
   void initState() {
@@ -145,20 +147,29 @@ class _FriendAddPageState extends State<FriendAddPage> {
                             ),
                           ),
                         )
-                      : NoDataSquare(
-                          titleString: '연락처 목록에 없어요',
-                          contentString:
-                              ' ${_searchController.value.text}님을 직접 추가하시겠습니까?',
-                          onTap: () {
-                            showCupertinoModalBottomSheet(
-                              context: context,
-                              builder: (context) => ModalFit(
-                                friend: _searchController.value.text,
-                                phone: '',
-                              ),
-                            );
-                          },
-                        ),
+                      : !showCreateContents
+                          ? NoDataSquare(
+                              titleString: '연락처 목록에 없어요',
+                              contentString:
+                                  ' ${_searchController.value.text}님을 직접 추가하시겠습니까?',
+                              showButton: true,
+                              buttonTitle: '친구 추가하기',
+                              onTap: () {
+                                setState(() {
+                                  showCreateContents = true;
+                                });
+                                // showCupertinoModalBottomSheet(
+                                //   context: context,
+                                //   builder: (context) => ModalFit(
+                                //     friend: _searchController.value.text,
+                                //     phone: '',
+                                //   ),
+                                // );
+                              },
+                            )
+                          : FriendsAddDirectly(
+                              name: _searchController.value.text,
+                            ),
         ],
       ),
     );

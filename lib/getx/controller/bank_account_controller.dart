@@ -48,6 +48,7 @@ class BankAccountController extends GetxController {
       'number': number,
       'holder': holder,
       'favorite': false,
+      'timeStamp': Timestamp.now(),
     });
 
     if (favoriteChecked.value) {
@@ -62,7 +63,10 @@ class BankAccountController extends GetxController {
       bankFS(selectedBank.value);
       accountNumberFS(number);
       accountHolderFS(holder);
+
+      await setToFavorite(name);
     }
+
     favoriteChecked(false);
     Get.back();
   }
@@ -76,6 +80,7 @@ class BankAccountController extends GetxController {
     }
     _accountRef.doc(name).update({
       'favorite': true,
+      'timeStamp': Timestamp.now(),
     });
     _accountRef.doc(name).get().then((value) {
       createVariable(
@@ -108,18 +113,17 @@ class BankAccountController extends GetxController {
         );
       });
     });
-    print('findFavoite() called');
   }
 
   deleteAccount(String path) async {
     await _accountRef.doc(path).delete();
-    Get.back();
   }
 
   @override
   void onInit() {
     findFavorite();
-    firestoreQuery = _accountRef.snapshots();
+    firestoreQuery =
+        _accountRef.orderBy('timeStamp', descending: true).snapshots();
     super.onInit();
   }
 }

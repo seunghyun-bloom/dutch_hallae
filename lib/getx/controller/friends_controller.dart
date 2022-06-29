@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dutch_hallae/utilities/dialog.dart';
+import 'package:dutch_hallae/utilities/loading.dart';
 import 'package:dutch_hallae/utilities/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -46,6 +47,7 @@ class FriendsController extends GetxController {
   RxBool isSample = true.obs;
   RxBool imageChanged = false.obs;
   RxString changedImage = ''.obs;
+  RxBool showCreateGroupButton = true.obs;
 
   getFriendImage(ImageSource source) async {
     isSample(false);
@@ -87,7 +89,7 @@ class FriendsController extends GetxController {
     showingFriendImage('assets/images/friend_sample_$i.jpeg');
   }
 
-  uploadFriendFirestore(String name, String phone, String textfieldValue,
+  uploadFriendFirebase(String name, String phone, String textfieldValue,
       BuildContext context) async {
     String uploadName = name;
 
@@ -108,20 +110,21 @@ class FriendsController extends GetxController {
             firestoreUploader(uploadName, phone, friendImageURL.value);
             Get.back();
           },
+          onRightTap: () => Get.back(),
           context: context,
         );
       } else {
+        Loading(context);
         await storageUploader(
             isSample.value, uploadName, showingFriendImage.value);
-
-        firestoreUploader(uploadName, phone, friendImageURL.value);
-        Get.back();
+        await firestoreUploader(uploadName, phone, friendImageURL.value);
       }
     });
   }
 
   changeFriendFirestore(String name, String phone, String textfieldValue,
       BuildContext context) async {
+    Loading(context);
     String newPhone = phone;
     if (textfieldValue != '') {
       newPhone = textfieldValue;
@@ -134,6 +137,7 @@ class FriendsController extends GetxController {
     } else {
       firestoreUploader(name, newPhone, 'DoNotChange');
     }
+    Get.back();
   }
 
   firestoreUploader(String name, String phone, String imageURL) {
@@ -141,14 +145,16 @@ class FriendsController extends GetxController {
       _firestoreREF.doc(name).update({
         'name': name,
         'phone': phone,
-        'updatedTime': DateTime.now().toString(),
+        'groups': [],
+        'timeStamp': Timestamp.now(),
       });
     } else {
       _firestoreREF.doc(name).set({
         'name': name,
         'phone': phone,
         'image': imageURL,
-        'updatedTime': DateTime.now().toString(),
+        'groups': [],
+        'timeStamp': Timestamp.now(),
       });
     }
     Get.back();
@@ -177,8 +183,10 @@ class FriendsController extends GetxController {
       title: '친구 정보 삭제',
       content: '$name님의 정보를 정말로 삭제하시겠습니까?',
       onTap: () async {
+        Loading(context);
         storageEraser(name);
         await firestoreEraser(name);
+        Get.back();
         Get.back();
         Get.back();
         showToast('$name님의 정보가 삭제 되었습니다.');

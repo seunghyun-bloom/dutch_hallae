@@ -57,7 +57,7 @@ class AccountPage extends GetView<BankAccountController> {
                         ),
                         SizedBox(height: 4.h),
                         StretchedButton(
-                          color: Pantone.veryPeri,
+                          color: Palette.basicBlue,
                           title: '계좌 추가',
                           onTap: () => CreateAccount(context: context),
                         ),

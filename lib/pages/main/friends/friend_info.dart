@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:dutch_hallae/getx/controller/friends_controller.dart';
+import 'package:dutch_hallae/utilities/buttons.dart';
 import 'package:dutch_hallae/utilities/modifiable_avatar.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
+import 'package:dutch_hallae/utilities/textfield_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -46,8 +48,11 @@ class FriendInfoContents extends GetView<FriendsController> {
   @override
   Widget build(BuildContext context) {
     TextEditingController _textEditingController = TextEditingController();
-
+    Get.put(FriendsController());
     return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
       content: SingleChildScrollView(
         physics: const ScrollPhysics(),
         child: Column(
@@ -86,11 +91,12 @@ class FriendInfoContents extends GetView<FriendsController> {
               child: Text(name, style: bold20),
             ),
             SizedBox(
-              width: 120.w,
-              // height: 50.h,
+              width: 130.w,
               child: TextField(
                 controller: _textEditingController,
                 keyboardType: TextInputType.number,
+                maxLength: 13,
+                inputFormatters: [phoneNumberFormat],
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: phone,
@@ -98,48 +104,19 @@ class FriendInfoContents extends GetView<FriendsController> {
               ),
             ),
             SizedBox(height: 10.h),
-            Button(
+            ColoredOutlinedButton(
               title: '수정하기',
-              color: Pantone.veryPeri,
+              color: Palette.basicBlue,
               onTap: () => controller.changeFriendFirestore(
                   name, phone, _textEditingController.text, context),
             ),
-            Button(
+            ColoredOutlinedButton(
               title: '삭제하기',
               color: Colors.red,
               onTap: () => controller.deleteFriend(name, context),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class Button extends StatelessWidget {
-  final String title;
-  final Color color;
-  final dynamic onTap;
-
-  const Button({
-    Key? key,
-    required this.title,
-    required this.color,
-    required this.onTap,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: ElevatedButton(
-        child: SizedBox(
-          width: 180.w,
-          child: Center(
-            child: Text(title, style: TextStyle(color: color)),
-          ),
-        ),
-        onPressed: onTap,
       ),
     );
   }

@@ -5,18 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-//TODO: 계좌 없을시 화면 완성
-
 class MainAccountComponent extends GetView<BankAccountController> {
-  const MainAccountComponent({Key? key}) : super(key: key);
+  dynamic onTap;
+  MainAccountComponent({Key? key, required this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: EdgeInsets.zero,
+      color: Colors.white,
       clipBehavior: Clip.antiAlias,
-      shape: kShape20,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: InkWell(
-        onTap: () => Get.to(() => AccountPage()),
+        onTap: onTap,
         child: Padding(
           padding: EdgeInsets.all(10.w),
           child: Row(
@@ -28,18 +31,19 @@ class MainAccountComponent extends GetView<BankAccountController> {
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: const Text('대표계좌'),
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Pantone.veryPeri),
-                              foregroundColor:
-                                  MaterialStateProperty.all(Colors.white),
-                              minimumSize:
-                                  MaterialStateProperty.all(Size.square(35.sp)),
-                            ),
-                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(6),
+                          //   child: Container(
+                          //     decoration: BoxDecoration(
+                          //         color: Colors.white.withOpacity(0.3),
+                          //         borderRadius: BorderRadius.circular(50)),
+                          //     padding: const EdgeInsets.symmetric(
+                          //       horizontal: 12,
+                          //       vertical: 6,
+                          //     ),
+                          //     child: const Text('대표'),
+                          //   ),
+                          // ),
                           Padding(
                             padding: const EdgeInsets.all(2),
                             child: Row(
@@ -47,14 +51,13 @@ class MainAccountComponent extends GetView<BankAccountController> {
                                 Text(
                                   controller.bankFS.value,
                                   style: TextStyle(
-                                    color: Colors.indigo,
-                                    fontSize: 15.sp,
+                                    fontSize: 13.sp,
                                   ),
                                 ),
                                 Text(
                                   '  ${controller.accountNumberFS.value}',
                                   style: TextStyle(
-                                    fontSize: 15.sp,
+                                    fontSize: 13.sp,
                                   ),
                                 ),
                               ],
@@ -65,7 +68,7 @@ class MainAccountComponent extends GetView<BankAccountController> {
                             child: Text(
                               '${controller.accountHolderFS.value}님의 통장',
                               style: TextStyle(
-                                  fontSize: 17.sp, fontWeight: FontWeight.bold),
+                                  fontSize: 18.sp, fontWeight: FontWeight.bold),
                             ),
                           ),
                         ],

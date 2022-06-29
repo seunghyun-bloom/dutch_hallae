@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 const kAppBarStyle = AppBarTheme(
-  color: Colors.white,
+  color: Colors.transparent,
   foregroundColor: Colors.black,
-  elevation: 1,
+  elevation: 0,
   centerTitle: true,
   titleTextStyle: TextStyle(
     fontWeight: FontWeight.w700,
@@ -49,6 +49,41 @@ InputDecoration kTextFieldStyle = InputDecoration(
 );
 
 TextStyle bold20 = const TextStyle(fontWeight: FontWeight.w700, fontSize: 20);
+
+TextStyle whiteText = const TextStyle(color: Colors.white);
+
+class Palette {
+  static const MaterialColor basicBlue = MaterialColor(
+    0xff3F68A7,
+    <int, Color>{
+      50: Color(0xff3F68A7), //10%
+      100: Color(0xff3F68A7), //20%
+      200: Color(0xff3F68A7), //30%
+      300: Color(0xff3F68A7), //40%
+      400: Color(0xff3F68A7), //50%
+      500: Color(0xff3F68A7), //60%
+      600: Color(0xff3F68A7), //70%
+      700: Color(0xff3F68A7), //80%
+      800: Color(0xff3F68A7), //90%
+      900: Color(0xff3F68A7), //100%
+    },
+  );
+  static const MaterialColor basicYellow = MaterialColor(
+    0xffFFE072,
+    <int, Color>{
+      50: Color(0xffFFE072), //10%
+      100: Color(0xffFFE072), //20%
+      200: Color(0xffFFE072), //30%
+      300: Color(0xffFFE072), //40%
+      400: Color(0xffFFE072), //50%
+      500: Color(0xffFFE072), //60%
+      600: Color(0xffFFE072), //70%
+      700: Color(0xffFFE072), //80%
+      800: Color(0xffFFE072), //90%
+      900: Color(0xffFFE072), //100%
+    },
+  );
+}
 
 class Pantone {
   static const MaterialColor veryPeri = MaterialColor(

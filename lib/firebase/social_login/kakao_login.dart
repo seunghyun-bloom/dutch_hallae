@@ -1,6 +1,9 @@
 import 'package:dutch_hallae/getx/controller/user_data_controller.dart';
+import 'package:dutch_hallae/utilities/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:http/http.dart' as http;
@@ -12,11 +15,12 @@ const String cloudFunctionURL =
     'https://asia-northeast3-dutchhallae.cloudfunctions.net/createCustomToken';
 final _getxUser = Get.put(UserDataController());
 
-signInWithKakao() async {
+signInWithKakao(BuildContext context) async {
   await loginWithKakaoAPI();
   if (!isLogined) {
     return;
   }
+  Loading(context);
   user = await kakaoUserApi.me();
   final token = await createCustomToken({
     'uid': user!.id.toString(),
@@ -26,6 +30,7 @@ signInWithKakao() async {
   });
 
   await FirebaseAuth.instance.signInWithCustomToken(token);
+  Get.back();
   return _getxUser.createFirestoreData();
 }
 

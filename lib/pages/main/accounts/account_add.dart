@@ -1,6 +1,7 @@
 import 'package:dutch_hallae/getx/controller/bank_account_controller.dart';
 import 'package:dutch_hallae/pages/main/accounts/account_contents.dart';
 import 'package:dutch_hallae/utilities/buttons.dart';
+import 'package:dutch_hallae/utilities/insert_info_frame.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,7 +47,7 @@ class CreateAccountContents extends GetView<BankAccountController> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              InsertAccountInfoFrame(
+              InsertInfoFrame(
                 title: '계좌명',
                 content: TextField(
                   controller: accountNameController,
@@ -58,7 +59,7 @@ class CreateAccountContents extends GetView<BankAccountController> {
                   ),
                 ),
               ),
-              InsertAccountInfoFrame(
+              InsertInfoFrame(
                 title: '예금주',
                 content: TextField(
                   controller: accountHolderController,
@@ -70,7 +71,7 @@ class CreateAccountContents extends GetView<BankAccountController> {
                   ),
                 ),
               ),
-              InsertAccountInfoFrame(
+              InsertInfoFrame(
                 title: '은행',
                 content: Obx(
                   () => DropdownButtonFormField(
@@ -100,7 +101,7 @@ class CreateAccountContents extends GetView<BankAccountController> {
                   ),
                 ),
               ),
-              InsertAccountInfoFrame(
+              InsertInfoFrame(
                 title: '계좌번호',
                 content: TextField(
                   controller: accountNumberController,
@@ -130,7 +131,7 @@ class CreateAccountContents extends GetView<BankAccountController> {
                 ],
               ),
               StretchedButton(
-                color: Pantone.veryPeri,
+                color: Palette.basicBlue,
                 title: '등록',
                 onTap: () {
                   controller.createAccountInfo(

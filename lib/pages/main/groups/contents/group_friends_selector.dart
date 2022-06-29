@@ -150,7 +150,6 @@ class FriendsBubble extends GetView<GroupController> {
                 i++;
               }
             }
-            print(controller.selectedMembersInfo);
           },
         ),
       ),
@@ -161,14 +160,38 @@ class FriendsBubble extends GetView<GroupController> {
 class ShowingSelectedMembers extends GetView<GroupController> {
   const ShowingSelectedMembers({Key? key}) : super(key: key);
 
+  final String questionMark =
+      'https://media.istockphoto.com/photos/question-mark-3d-red-interrogation-point-asking-sign-punctuation-mark-picture-id1023347350?k=20&m=1023347350&s=612x612&w=0&h=VogcQy0SJJYgV_TItvoIRowOCR93tuCmO9o3AY-_mCg=';
+
   @override
   Widget build(BuildContext context) {
     Get.put(GroupController());
     return Obx(
-      () => MiniProfile(
-        image: NetworkImage(controller.selectedMembersInfo[0]['image'] ?? ''),
-        name: controller.selectedMembersInfo[0]['name'] ?? '',
-      ),
+      () {
+        if (controller.selectedMembersInfo.isEmpty) {
+          return SizedBox(
+            height: 50.h,
+            child: const Center(child: Text('구성원을 추가해주세요')),
+          );
+        }
+
+        List<MiniProfile> miniProfileList = <MiniProfile>[];
+        int i = 0;
+        for (var selectedMember in controller.selectedMembersInfo) {
+          miniProfileList.add(
+            MiniProfile(
+              image: NetworkImage(
+                  controller.selectedMembersInfo[i]['image'] ?? questionMark),
+              name: controller.selectedMembersInfo[i]['name'] ?? '?',
+            ),
+          );
+          i++;
+        }
+
+        return Wrap(
+          children: miniProfileList,
+        );
+      },
     );
   }
 }

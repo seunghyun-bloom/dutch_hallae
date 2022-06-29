@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dutch_hallae/getx/controller/friends_controller.dart';
+import 'package:dutch_hallae/utilities/buttons.dart';
 import 'package:dutch_hallae/utilities/dialog.dart';
 import 'package:dutch_hallae/utilities/modifiable_avatar.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
@@ -89,7 +90,7 @@ class _ModalFitState extends State<ModalFit> {
               ),
             ),
             Text(
-              '프로필을 완성해 보세요',
+              '프로필 사진을 선택해주세요',
               style: bold20,
             ),
             SizedBox(height: 10.h),
@@ -100,35 +101,26 @@ class _ModalFitState extends State<ModalFit> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  SizedBox(
+                  StretchedButton(
                     width: Get.width * 0.4,
                     height: 45,
-                    child: ElevatedButton(
-                      child: const Text(
-                        '취소',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.grey.shade300),
-                      ),
-                      onPressed: () => Get.back(),
-                    ),
+                    title: '취소',
+                    titleColor: Colors.black,
+                    color: Colors.grey.shade300,
+                    onTap: () => Get.back(),
+                    showElevation: true,
                   ),
-                  SizedBox(
+                  StretchedButton(
                     width: Get.width * 0.4,
                     height: 45,
-                    child: ElevatedButton(
-                      child: const Text(
-                        '완료',
-                        textAlign: TextAlign.center,
-                      ),
-                      onPressed: () {
-                        _getxFriends.uploadFriendFirestore(widget.friend,
-                            widget.phone, _textEditingController.text, context);
-                      },
-                    ),
+                    title: '완료',
+                    onTap: () {
+                      Get.back();
+                      Get.back();
+                      _getxFriends.uploadFriendFirebase(widget.friend,
+                          widget.phone, _textEditingController.text, context);
+                    },
+                    showElevation: true,
                   ),
                 ],
               ),

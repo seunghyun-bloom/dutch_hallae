@@ -60,10 +60,6 @@ class UserProfilePage extends StatelessWidget {
                     style: kRoundedButtonStyle,
                     onPressed: () => Get.to(() => const ProfileModifyPage()),
                   ),
-                  TextButton(
-                    child: const Text('설정 하기'),
-                    onPressed: () => showToast('무엇을 설정할까?'),
-                  ),
                   const SizedBox(height: 100),
                   OutlinedButton(
                     child: const Text('로그아웃'),

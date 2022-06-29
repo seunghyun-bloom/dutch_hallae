@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dutch_hallae/getx/controller/group_controller.dart';
 import 'package:dutch_hallae/getx/controller/user_data_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -13,6 +14,7 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 class ImageController extends GetxController {
   uploadProfileImage(ImageSource source) async {
     Get.put(UserDataController());
+    Get.put(GroupController());
 
     final ImagePicker _picker = ImagePicker();
     XFile? ximage = await _picker.pickImage(
@@ -44,6 +46,8 @@ class ImageController extends GetxController {
         .collection('userData')
         .doc(_auth.currentUser?.uid)
         .update({'profileImage': downloadURL});
+
+    await Get.find<GroupController>().refreshUserProfileImage(downloadURL);
 
     Get.find<UserDataController>().changeProfileImage(downloadURL);
 

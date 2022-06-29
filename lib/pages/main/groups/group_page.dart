@@ -1,3 +1,4 @@
+import 'package:dutch_hallae/pages/main/groups/contents/group_streamer.dart';
 import 'package:dutch_hallae/pages/main/groups/group_add_page.dart';
 import 'package:dutch_hallae/utilities/appbar_button.dart';
 import 'package:flutter/material.dart';
@@ -20,11 +21,9 @@ class GroupPage extends StatelessWidget {
           ),
         ],
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(15),
-        child: Center(
-          child: Text('모임 정보 표기 예정'),
-        ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: GroupStreamer(),
       ),
     );
   }

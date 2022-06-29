@@ -6,7 +6,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-
 import 'getx/binding/init_bindings.dart';
 
 void main() {
@@ -37,9 +36,13 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             fontFamily: 'AppleSDGothic',
             primaryColor: Colors.white,
-            primarySwatch: Pantone.veryPeri,
+            primarySwatch: Palette.basicBlue,
             appBarTheme: kAppBarStyle,
-            useMaterial3: true,
+            bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            ),
+            scaffoldBackgroundColor: Colors.white,
           ),
           initialBinding: InitBinding(),
           home: const FirebaseInitializer(),

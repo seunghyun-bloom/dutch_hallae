@@ -59,6 +59,8 @@ dependencies:
   flutter_animated_dialog: ^2.0.1
   kakao_flutter_sdk_user: ^1.1.1
   flutter_colorpicker: ^1.0.3
+  intl: ^0.17.0
+  mask_text_input_formatter: ^2.3.0
 
 dev_dependencies:
   flutter_test:
