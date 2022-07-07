@@ -1,19 +1,19 @@
 import 'package:dutch_hallae/getx/controller/record_controller.dart';
-import 'package:dutch_hallae/pages/record/contents/record_groupPicker.dart';
 import 'package:dutch_hallae/pages/main/components/main_account.dart';
+import 'package:dutch_hallae/pages/main/record/contents/record_group_picker.dart';
 import 'package:dutch_hallae/utilities/insert_info_frame.dart';
 import 'package:dutch_hallae/utilities/textfield_formatter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class RecordCreatePage extends StatelessWidget {
-  RecordCreatePage({Key? key}) : super(key: key);
+class RecordAddPage extends StatelessWidget {
+  RecordAddPage({Key? key}) : super(key: key);
 
   final TextEditingController _titleTextController = TextEditingController();
-  TextEditingController _totalAmountTextController = TextEditingController();
+  final TextEditingController _totalAmountTextController =
+      TextEditingController();
   final TextEditingController _specialDCTextController =
       TextEditingController();
   List members = ['김채원', '사쿠라', '홍은채', '카즈하', '허윤진'];
@@ -29,14 +29,14 @@ class RecordCreatePage extends StatelessWidget {
           TextButton(
             child: Text('print'),
             onPressed: () {
-              print(_getxRecord.title.value);
-              print(_getxRecord.totalAmount.value);
+              // print(_getxRecord.title.value);
+              // print(_getxRecord.totalAmount.value);
             },
           ),
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: SingleChildScrollView(
           physics: const ScrollPhysics(),
           child: Column(

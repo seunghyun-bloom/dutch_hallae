@@ -21,6 +21,7 @@ class _MapPageState extends State<MapPage> {
         onMapCreated: onMapCreated,
         mapType: MapType.Basic,
         locationButtonEnable: true,
+        indoorEnable: true,
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: 'map page',

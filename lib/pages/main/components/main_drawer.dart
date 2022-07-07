@@ -42,7 +42,7 @@ Drawer mainDrawerMenu() {
             }),
         ListTile(
           leading: const FaIcon(FontAwesomeIcons.clipboardList),
-          title: const Text('정산기록'),
+          title: const Text('모임기록'),
           onTap: () {},
         ),
         const Divider(

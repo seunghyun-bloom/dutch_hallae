@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dutch_hallae/getx/controller/group_controller.dart';
+import 'package:dutch_hallae/getx/controller/record_controller.dart';
 import 'package:dutch_hallae/pages/main/groups/group_add_page.dart';
 import 'package:dutch_hallae/utilities/no_data.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
@@ -7,10 +8,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+final _getxGroup = Get.find<GroupController>();
+final _getxRecord = Get.find<RecordController>();
+
 class RecordGroupPicker extends StatelessWidget {
   RecordGroupPicker({Key? key}) : super(key: key);
-
-  final _getxGroup = Get.find<GroupController>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class RecordGroupPicker extends StatelessWidget {
                     image: snapshot.data?.docs[index]['image'],
                     name: snapshot.data?.docs[index]['name'],
                     members: snapshot.data?.docs[index]['members'],
-                    isFavorite: snapshot.data?.docs[index]['favorite'],
+                    isPicked: snapshot.data?.docs[index]['picked'],
                   ),
                 );
               },
@@ -55,33 +57,33 @@ class RecordGroupPicker extends StatelessWidget {
   }
 }
 
-class RecordGroupPickerBubble extends GetView<GroupController> {
+class RecordGroupPickerBubble extends StatelessWidget {
   String name;
   String image;
   List members;
-  bool isFavorite;
   bool isPicked;
   RecordGroupPickerBubble({
     Key? key,
     required this.name,
     required this.image,
     required this.members,
-    required this.isFavorite,
-    this.isPicked = false,
+    required this.isPicked,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Get.put(GroupController());
+    Get.put(RecordController());
     return InkWell(
       onTap: () {
-        controller.setToFavorite(name);
+        _getxGroup.pickForRecord(name);
+        _getxRecord.group(name);
       },
       child: Container(
         width: 200.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: isFavorite ? Palette.basicBlue : Colors.grey.shade300,
+          color: isPicked ? Palette.basicBlue : Colors.grey.shade300,
         ),
         foregroundDecoration:
             BoxDecoration(borderRadius: BorderRadius.circular(12)),
@@ -189,9 +191,9 @@ class RecordGroupPickerBubble extends GetView<GroupController> {
             Expanded(
               child: Center(
                 child: Text(
-                  isFavorite ? '선택완료' : '선택',
+                  isPicked ? '선택완료' : '선택',
                   style: TextStyle(
-                    color: isFavorite ? Colors.white : Colors.black,
+                    color: isPicked ? Colors.white : Colors.black,
                     fontSize: 16.sp,
                   ),
                 ),

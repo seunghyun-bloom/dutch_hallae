@@ -1,13 +1,11 @@
 import 'package:dutch_hallae/getx/controller/bank_account_controller.dart';
 import 'package:dutch_hallae/getx/controller/user_data_controller.dart';
-import 'package:dutch_hallae/pages/main/components/main_account.dart';
 import 'package:dutch_hallae/pages/main/components/main_drawer.dart';
 import 'package:dutch_hallae/pages/main/components/main_group.dart';
 import 'package:dutch_hallae/pages/main/components/main_record.dart';
 import 'package:dutch_hallae/pages/main/components/main_title.dart';
 import 'package:dutch_hallae/pages/main/groups/group_page.dart';
-import 'package:dutch_hallae/pages/record/record_create_page.dart';
-import 'package:dutch_hallae/utilities/toast.dart';
+import 'package:dutch_hallae/pages/main/record/record_create_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -41,8 +39,6 @@ class _MainPageState extends State<MainPage> {
             padding: EdgeInsets.all(12.w),
             child: Column(
               children: [
-                // MainAccountComponent(onTap: () {}),
-                // Divider(height: 30.h, color: Colors.grey),
                 ContentsTitle(
                   title: '즐겨 사용하는 모임',
                   onTap: () => Get.to(() => const GroupPage()),

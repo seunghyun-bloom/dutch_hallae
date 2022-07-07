@@ -102,7 +102,7 @@ class _ModalFitState extends State<ModalFit> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   StretchedButton(
-                    width: Get.width * 0.4,
+                    width: Get.width * 0.35,
                     height: 45,
                     title: '취소',
                     titleColor: Colors.black,
@@ -111,7 +111,7 @@ class _ModalFitState extends State<ModalFit> {
                     showElevation: true,
                   ),
                   StretchedButton(
-                    width: Get.width * 0.4,
+                    width: Get.width * 0.35,
                     height: 45,
                     title: '완료',
                     onTap: () {

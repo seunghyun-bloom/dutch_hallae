@@ -90,6 +90,22 @@ class GroupController extends GetxController {
     });
   }
 
+  pickForRecord(String name) async {
+    var querySnapshot = await _firestoreREF.get();
+
+    for (var doc in querySnapshot.docs) {
+      await doc.reference.set(
+        {'picked': false},
+        SetOptions(merge: true),
+      );
+    }
+
+    await _firestoreREF.doc(name).update({
+      'picked': true,
+      'timeStamp': Timestamp.now(),
+    });
+  }
+
   uploadGroupFirebase() async {
     Get.put(UserDataController());
 
@@ -146,6 +162,7 @@ class GroupController extends GetxController {
       'color': colorValue,
       'members': members,
       'favorite': false,
+      'picked': false,
       'timeStamp': Timestamp.now(),
     });
   }
