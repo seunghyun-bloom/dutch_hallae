@@ -51,7 +51,7 @@ app.*.map.json
 
 # Cloud Functions related
 /functions/service_account.json
-/functions/packages-lock.json
+/functions/package-lock.json
 /functions/node_modules/
 
 # Secret Keys related
