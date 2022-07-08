@@ -33,45 +33,12 @@ class _FriendsPageState extends State<FriendsPage> {
           ),
         ],
       ),
-      // bottomSheet: Padding(
-      //   padding: EdgeInsets.all(20.h),
-      //   child: Obx(
-      //     () => _getxFriend.showCreateGroupButton.value
-      //         ? SizedBox(
-      //             height:
-      //                 (Get.height - AppBar().preferredSize.height) * 0.9 * 0.1,
-      //             child: Padding(
-      //               padding: EdgeInsets.symmetric(
-      //                   horizontal: 10,
-      //                   vertical: (Get.height - AppBar().preferredSize.height) *
-      //                       0.95 *
-      //                       0.1 *
-      //                       0.1),
-      //               child: StretchedButton(
-      //                 color: Palette.basicBlue,
-      //                 title: '모임 만들기',
-      //                 onTap: () {
-      //                   Get.back();
-      //                   Get.to(() => GroupAddPage());
-      //                 },
-      //               ),
-      //             ),
-      //           )
-      //         : const SizedBox(),
-      //   ),
-      // ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          //TODO: iOS & Galaxy 사이즈 맞추기
-          Expanded(
+          const Expanded(
             child: SizedBox(
-              // height: Get.mediaQuery.size.height -
-              //     Get.mediaQuery.padding.top -
-              //     Get.mediaQuery.padding.bottom -
-              //     AppBar().preferredSize.height -
-              //     90.h,
-              child: const SingleChildScrollView(
+              child: SingleChildScrollView(
                 child: FriendsStreamer(),
                 physics: ScrollPhysics(),
               ),

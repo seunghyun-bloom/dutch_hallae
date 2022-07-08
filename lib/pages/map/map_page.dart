@@ -19,7 +19,6 @@ class _MapPageState extends State<MapPage> {
     return Scaffold(
       body: NaverMap(
         onMapCreated: onMapCreated,
-        mapType: MapType.Basic,
         locationButtonEnable: true,
         indoorEnable: true,
       ),

@@ -1,6 +1,7 @@
 import 'package:dutch_hallae/getx/controller/place_controller.dart';
 import 'package:dutch_hallae/getx/controller/record_controller.dart';
 import 'package:dutch_hallae/pages/main/components/main_account.dart';
+import 'package:dutch_hallae/pages/main/record/contents/mini_map.dart';
 import 'package:dutch_hallae/pages/main/record/contents/record_group_picker.dart';
 import 'package:dutch_hallae/pages/main/record/contents/record_place_searcher.dart';
 import 'package:dutch_hallae/utilities/insert_info_frame.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:naver_map_plugin/naver_map_plugin.dart';
 
 class RecordCreatePage extends StatelessWidget {
   RecordCreatePage({Key? key}) : super(key: key);
@@ -34,7 +36,8 @@ class RecordCreatePage extends StatelessWidget {
           TextButton(
             child: Text('print'),
             onPressed: () async {
-              print(_getxPlace.pickedPlace);
+              print(_getxPlace.pickedPlace['x']);
+              print(_getxPlace.pickedPlace['y']);
             },
           ),
         ],
@@ -70,21 +73,19 @@ class RecordCreatePage extends StatelessWidget {
                   title: '장소',
                   fontSize: 18,
                   height: 40,
-                  content: Expanded(
-                    child: TextButton(
-                      child: _getxPlace.pickedPlace.isEmpty
-                          ? const Text('검색해서 찾아보기')
-                          : Text(_getxPlace.pickedPlace['title']),
-                      onPressed: () => PlaceSearcher(context: context),
-                    ),
+                  content: TextButton(
+                    child: _getxPlace.pickedPlace.isEmpty
+                        ? const Text('검색해서 찾아보기')
+                        : Text(_getxPlace.pickedPlace['title']),
+                    onPressed: () => PlaceSearcher(context: context),
                   ),
                 ),
-                Container(
-                  color: Colors.amber.shade300,
-                  width: Get.mediaQuery.size.width,
-                  height: Get.mediaQuery.size.width * 0.5,
-                  child: const Center(child: Text('지도 표시 예정')),
-                )
+                _getxPlace.pickedPlace.isEmpty
+                    ? const SizedBox()
+                    : MiniMap(
+                        x: _getxPlace.pickedPlace['x'],
+                        y: _getxPlace.pickedPlace['y'],
+                      ),
               ],
             ),
           ),
