@@ -19,7 +19,7 @@ class MainRecordComponent extends StatelessWidget {
           return MainRecordBubble(
             name: '${index + 1}번째 모임',
             image:
-                'https://cdn.trendbiz.co.kr/news/photo/202205/7113_14296_5118.png',
+                'https://previews.123rf.com/images/gstockstudio/gstockstudio1610/gstockstudio161000001/64179305-%EC%B9%9C%EA%B5%AC%EB%93%A4%EA%B3%BC-%ED%8F%89%EC%98%A8%ED%95%9C-%EC%8B%9C%EA%B0%84%EC%9D%84-%EC%A6%90%EA%B8%B0%EA%B3%A0-%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4-%EB%B6%80%EC%97%8C%EC%97%90%EC%84%9C-%EC%A7%91%EC%97%90-%ED%8C%8C%ED%8B%B0%EB%A5%BC-%EC%A6%90%EA%B8%B0%EB%A9%B4%EC%84%9C-%EC%B6%A4%EA%B3%BC-%EC%88%A0%EC%9D%84-%EB%A7%88%EC%8B%9C%EB%8A%94-%EC%BE%8C%ED%99%9C%ED%95%9C-%EC%A0%8A%EC%9D%80-%EC%82%AC%EB%9E%8C%EB%93%A4.jpg',
             members: ['김채원', '사쿠라', '홍은채', '카즈하', '허윤진'],
             date: '2022/06/0${index + 1}',
             totalAmount: 130000,

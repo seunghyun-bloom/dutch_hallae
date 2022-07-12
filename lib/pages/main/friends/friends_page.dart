@@ -6,7 +6,6 @@ import 'package:dutch_hallae/utilities/appbar_button.dart';
 import 'package:dutch_hallae/utilities/buttons.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class FriendsPage extends StatefulWidget {

@@ -11,6 +11,7 @@ class NoDataSquare extends StatelessWidget {
   final dynamic onTap;
   final bool showButton;
   final String buttonTitle;
+  final Color borderColor;
 
   const NoDataSquare({
     Key? key,
@@ -19,6 +20,7 @@ class NoDataSquare extends StatelessWidget {
     required this.onTap,
     this.showButton = false,
     this.buttonTitle = '',
+    this.borderColor = Colors.grey,
   }) : super(key: key);
 
   @override
@@ -26,6 +28,7 @@ class NoDataSquare extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: DottedBorder(
+        color: borderColor,
         borderType: BorderType.RRect,
         radius: const Radius.circular(6),
         child: InkWell(

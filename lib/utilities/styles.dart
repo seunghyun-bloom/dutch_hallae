@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const kAppBarStyle = AppBarTheme(
-  color: Colors.transparent,
+  color: Colors.white,
   foregroundColor: Colors.black,
   elevation: 0,
   centerTitle: true,
@@ -32,6 +32,12 @@ ButtonStyle kRoundedButtonStyle = ButtonStyle(
   ),
 );
 
+ButtonStyle whiteElevatedStyle = ButtonStyle(
+  backgroundColor: MaterialStateColor.resolveWith((states) => Colors.white),
+  foregroundColor:
+      MaterialStateColor.resolveWith((states) => Palette.basicBlue),
+);
+
 RoundedRectangleBorder kShape20 = RoundedRectangleBorder(
   borderRadius: BorderRadius.circular(20),
 );
@@ -48,8 +54,8 @@ InputDecoration kTextFieldStyle = InputDecoration(
   ),
 );
 
+TextStyle fontSize20 = const TextStyle(fontSize: 20);
 TextStyle bold20 = const TextStyle(fontWeight: FontWeight.w700, fontSize: 20);
-
 TextStyle whiteText = const TextStyle(color: Colors.white);
 
 class Palette {

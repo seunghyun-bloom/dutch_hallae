@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dutch_hallae/getx/controller/friends_controller.dart';
 import 'package:dutch_hallae/getx/controller/group_controller.dart';
 import 'package:dutch_hallae/pages/main/friends/friend_add_page.dart';
-import 'package:dutch_hallae/pages/main/groups/contents/group_color_picker.dart';
 import 'package:dutch_hallae/pages/main/groups/contents/insert_frame.dart';
 import 'package:dutch_hallae/utilities/mini_profile.dart';
 import 'package:dutch_hallae/utilities/no_data.dart';
@@ -50,55 +48,57 @@ class SelectMemberDialogContents extends GetView<GroupController> {
   @override
   Widget build(BuildContext context) {
     Get.put(GroupController());
-    return AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      content: SizedBox(
-        width: Get.width,
-        child: StreamBuilder<QuerySnapshot>(
-          stream: _firestore
-              .collection('userData')
-              .doc('${_auth.currentUser?.uid}')
-              .collection('friends')
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
+    return SafeArea(
+      child: AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        content: SizedBox(
+          width: Get.width,
+          child: StreamBuilder<QuerySnapshot>(
+            stream: _firestore
+                .collection('userData')
+                .doc('${_auth.currentUser?.uid}')
+                .collection('friends')
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-            final friends = snapshot.data?.docs.reversed;
-            for (var friend in friends!) {
-              controller.isSelected.add(false);
-            }
+              final friends = snapshot.data?.docs.reversed;
+              for (var friend in friends!) {
+                controller.isSelected.add(false);
+              }
 
-            if (snapshot.data?.docs.length == 0) {
-              return NoDataSquare(
-                titleString: '친구를 추가해 주세요',
-                contentString: '아직 등록된 친구가 없으시네요\n친구를 추가해 보세요',
-                onTap: () => Get.to(() => const FriendAddPage()),
-              );
-            } else {
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: snapshot.data?.docs.length,
-                itemBuilder: (context, index) {
-                  return FriendsBubble(
-                    name: snapshot.data?.docs[index]['name'],
-                    image: snapshot.data?.docs[index]['image'],
-                    phone: snapshot.data?.docs[index]['phone'],
-                    index: index,
-                  );
-                },
-              );
-            }
-          },
+              if (snapshot.data?.docs.length == 0) {
+                return NoDataSquare(
+                  titleString: '친구를 추가해 주세요',
+                  contentString: '아직 등록된 친구가 없으시네요\n친구를 추가해 보세요',
+                  onTap: () => Get.to(() => const FriendAddPage()),
+                );
+              } else {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: snapshot.data?.docs.length,
+                  itemBuilder: (context, index) {
+                    return FriendsBubble(
+                      name: snapshot.data?.docs[index]['name'],
+                      image: snapshot.data?.docs[index]['image'],
+                      phone: snapshot.data?.docs[index]['phone'],
+                      index: index,
+                    );
+                  },
+                );
+              }
+            },
+          ),
         ),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Get.back(),
+            child: const Text('추가'),
+          ),
+        ],
       ),
-      actions: [
-        ElevatedButton(
-          onPressed: () => Get.back(),
-          child: const Text('추가'),
-        ),
-      ],
     );
   }
 }

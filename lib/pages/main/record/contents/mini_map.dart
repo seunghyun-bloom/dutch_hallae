@@ -1,9 +1,10 @@
 import 'dart:async';
-
-import 'package:dutch_hallae/utilities/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:naver_map_plugin/naver_map_plugin.dart';
+
+const double defaultX = 126.9778;
+const double defaultY = 37.5664;
 
 class MiniMap extends StatefulWidget {
   double x;
@@ -22,16 +23,12 @@ class _MiniMapState extends State<MiniMap> {
     LatLng latLng = LatLng(widget.y, widget.x);
     moveCamera(latLng);
 
-    showToast('rebuild: $latLng');
-
     return SizedBox(
       width: Get.mediaQuery.size.width,
       height: Get.mediaQuery.size.width * 0.5,
       child: NaverMap(
         onMapCreated: _onMapCreated,
-        initialCameraPosition: CameraPosition(
-          target: latLng,
-        ),
+        initialCameraPosition: CameraPosition(target: latLng),
         tiltGestureEnable: false,
         zoomGestureEnable: false,
         rotationGestureEnable: false,
@@ -54,6 +51,5 @@ class _MiniMapState extends State<MiniMap> {
   moveCamera(LatLng latLng) async {
     var controller = await naverMapController.future;
     controller.moveCamera(CameraUpdate.scrollTo(latLng));
-    showToast('moveCamera called');
   }
 }

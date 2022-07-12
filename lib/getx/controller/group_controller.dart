@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 String _defaultImage = 'assets/images/group_sample.png';
@@ -49,7 +50,20 @@ class GroupController extends GetxController {
       maxWidth: 1260,
     );
 
-    pickedImage(ximage!.path);
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: ximage!.path,
+      aspectRatio: const CropAspectRatio(ratioX: 1260, ratioY: 1260),
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: '사진 업로드',
+          toolbarColor: Colors.black87,
+          toolbarWidgetColor: Colors.white,
+        ),
+        IOSUiSettings(title: '사진 업로드'),
+      ],
+    );
+
+    pickedImage(croppedFile?.path);
     isSample(false);
 
     Get.back();

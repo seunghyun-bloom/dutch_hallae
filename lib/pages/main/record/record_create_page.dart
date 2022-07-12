@@ -1,26 +1,20 @@
+import 'package:dutch_hallae/pages/main/record/contents/date_picker.dart';
+import 'package:dutch_hallae/pages/main/record/contents/record_image_picker.dart';
+import 'package:dutch_hallae/utilities/styles.dart';
+import 'package:flutter/material.dart';
 import 'package:dutch_hallae/getx/controller/place_controller.dart';
 import 'package:dutch_hallae/getx/controller/record_controller.dart';
-import 'package:dutch_hallae/pages/main/components/main_account.dart';
 import 'package:dutch_hallae/pages/main/record/contents/mini_map.dart';
 import 'package:dutch_hallae/pages/main/record/contents/record_group_picker.dart';
 import 'package:dutch_hallae/pages/main/record/contents/record_place_searcher.dart';
-import 'package:dutch_hallae/utilities/insert_info_frame.dart';
-import 'package:dutch_hallae/utilities/textfield_formatter.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:naver_map_plugin/naver_map_plugin.dart';
 
 class RecordCreatePage extends StatelessWidget {
   RecordCreatePage({Key? key}) : super(key: key);
 
   final TextEditingController _titleTextController = TextEditingController();
-  final TextEditingController _totalAmountTextController =
-      TextEditingController();
-  final TextEditingController _specialDCTextController =
-      TextEditingController();
-  List members = ['김채원', '사쿠라', '홍은채', '카즈하', '허윤진'];
   final _getxRecord = Get.put(RecordController());
   final _getxPlace = Get.put(PlaceController());
   var numberFormat = NumberFormat('###,###,###,###');
@@ -32,15 +26,6 @@ class RecordCreatePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('기록하기'),
-        actions: [
-          TextButton(
-            child: Text('print'),
-            onPressed: () async {
-              print(_getxPlace.pickedPlace['x']);
-              print(_getxPlace.pickedPlace['y']);
-            },
-          ),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -50,33 +35,38 @@ class RecordCreatePage extends StatelessWidget {
             () => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('정산 모임 선택하기'),
-                RecordGroupPicker(),
-                InsertInfoFrame(
-                  title: '제목',
-                  fontSize: 18,
-                  height: 40,
-                  content: TextField(
+                Text('제목', style: fontSize20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: TextField(
                     controller: _titleTextController,
                     onChanged: (value) {
                       _getxRecord.title.value = value;
                     },
-                    maxLength: 8,
+                    maxLength: 10,
                     decoration: const InputDecoration(
-                      hintText: 'ex) 1차 치맥',
-                      border: InputBorder.none,
-                      counterText: "",
+                      hintText: 'ex) 베프 생일 기념',
                     ),
                   ),
                 ),
-                InsertInfoFrame(
-                  title: '장소',
-                  fontSize: 18,
+                Padding(
+                  padding: const EdgeInsets.only(top: 20, bottom: 10),
+                  child: Text(' 모임 선택하기', style: fontSize20),
+                ),
+                RecordGroupPicker(),
+                const SizedBox(height: 20),
+                Text('장소', style: fontSize20),
+                Container(
+                  width: Get.mediaQuery.size.width,
                   height: 40,
-                  content: TextButton(
-                    child: _getxPlace.pickedPlace.isEmpty
-                        ? const Text('검색해서 찾아보기')
-                        : Text(_getxPlace.pickedPlace['title']),
+                  margin: EdgeInsets.symmetric(vertical: 10.h),
+                  child: ElevatedButton(
+                    style: whiteElevatedStyle,
+                    child: Text(
+                      _getxPlace.pickedPlace.isEmpty
+                          ? '검색해서 찾아보기'
+                          : _getxPlace.pickedPlace['title'],
+                    ),
                     onPressed: () => PlaceSearcher(context: context),
                   ),
                 ),
@@ -86,6 +76,21 @@ class RecordCreatePage extends StatelessWidget {
                         x: _getxPlace.pickedPlace['x'],
                         y: _getxPlace.pickedPlace['y'],
                       ),
+                const SizedBox(height: 20),
+                Text(
+                  '날짜',
+                  style: fontSize20,
+                ),
+                const SizedBox(height: 10),
+                const DatePicker(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20, bottom: 10),
+                  child: Text(
+                    '사진',
+                    style: fontSize20,
+                  ),
+                ),
+                const RecordImagePicker(),
               ],
             ),
           ),

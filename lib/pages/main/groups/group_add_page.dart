@@ -6,6 +6,7 @@ import 'package:dutch_hallae/pages/main/groups/contents/group_name_writer.dart';
 import 'package:dutch_hallae/utilities/buttons.dart';
 import 'package:dutch_hallae/utilities/dialog.dart';
 import 'package:dutch_hallae/utilities/loading.dart';
+import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,26 +19,23 @@ class GroupAddPage extends GetView<GroupController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('모임 추가'),
-        actions: [
-          TextButton(
-            child: const Text('print'),
-            onPressed: () {
-              print(controller.pickedColor);
-            },
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(15),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              GroupImagePicker(),
-              GroupNameWriter(),
-              GroupColorPicker(),
-              GroupFriendsSelector(),
+              Column(
+                children: [
+                  GroupImagePicker(),
+                  GroupNameWriter(),
+                  GroupColorPicker(),
+                  GroupFriendsSelector(),
+                ],
+              ),
               StretchedButton(
-                color: Colors.blue,
+                color: Palette.basicBlue,
                 title: '등록하기',
                 onTap: () => DialogByPlatform(
                   title: '모임 등록',

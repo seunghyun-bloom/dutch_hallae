@@ -21,6 +21,15 @@ class _MapPageState extends State<MapPage> {
         onMapCreated: onMapCreated,
         locationButtonEnable: true,
         indoorEnable: true,
+        markers: [
+          Marker(
+            markerId: 'temp',
+            position: const LatLng(37.47784109625723, 126.96112696391705),
+            captionColor: Colors.red,
+            infoWindow: '제훈이 취업 기념 모임',
+            captionText: '고딩 동창들',
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: 'map page',

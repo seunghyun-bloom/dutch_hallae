@@ -7,7 +7,9 @@ import 'package:dutch_hallae/utilities/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
@@ -54,11 +56,24 @@ class FriendsController extends GetxController {
     final ImagePicker _picker = ImagePicker();
     XFile? ximage = await _picker.pickImage(
       source: source,
-      maxHeight: 300,
-      maxWidth: 300,
+      maxHeight: 1260,
+      maxWidth: 1260,
     );
 
-    showingFriendImage(ximage!.path);
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: ximage!.path,
+      aspectRatio: const CropAspectRatio(ratioX: 300, ratioY: 300),
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: '사진 업로드',
+          toolbarColor: Colors.black87,
+          toolbarWidgetColor: Colors.white,
+        ),
+        IOSUiSettings(title: '사진 업로드'),
+      ],
+    );
+
+    showingFriendImage(croppedFile?.path);
 
     Get.back();
   }
@@ -69,11 +84,24 @@ class FriendsController extends GetxController {
     final ImagePicker _picker = ImagePicker();
     XFile? ximage = await _picker.pickImage(
       source: source,
-      maxHeight: 300,
-      maxWidth: 300,
+      maxHeight: 1260,
+      maxWidth: 1260,
     );
 
-    changedImage(ximage!.path);
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: ximage!.path,
+      aspectRatio: const CropAspectRatio(ratioX: 300, ratioY: 300),
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: '사진 업로드',
+          toolbarColor: Colors.black87,
+          toolbarWidgetColor: Colors.white,
+        ),
+        IOSUiSettings(title: '사진 업로드'),
+      ],
+    );
+
+    changedImage(croppedFile?.path);
 
     Get.back();
   }
