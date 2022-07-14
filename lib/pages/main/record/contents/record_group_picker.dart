@@ -2,14 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dutch_hallae/getx/controller/group_controller.dart';
 import 'package:dutch_hallae/getx/controller/record_controller.dart';
 import 'package:dutch_hallae/pages/main/groups/group_add_page.dart';
+import 'package:dutch_hallae/pages/main/record/contents/record_friends_selector.dart';
 import 'package:dutch_hallae/utilities/no_data.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-final _getxGroup = Get.find<GroupController>();
-final _getxRecord = Get.find<RecordController>();
+// final _getxGroup = Get.find<GroupController>();
+// final _getxRecord = Get.find<RecordController>();
+
+final _getxGroup = Get.put(GroupController());
+final _getxRecord = Get.put(RecordController());
 
 class RecordGroupPicker extends StatelessWidget {
   RecordGroupPicker({Key? key}) : super(key: key);
@@ -17,6 +21,7 @@ class RecordGroupPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(GroupController());
+
     return SizedBox(
       width: Get.width,
       height: 240.h,
@@ -76,8 +81,10 @@ class RecordGroupPickerBubble extends StatelessWidget {
     Get.put(RecordController());
     return InkWell(
       onTap: () {
+        _getxRecord.resetSelectedMembers();
         _getxGroup.pickForRecord(name);
         _getxRecord.group(name);
+        SelectMemberPopup(context: context, groupName: name);
       },
       child: Container(
         width: 200.h,

@@ -1,10 +1,9 @@
-import 'package:dotted_border/dotted_border.dart';
-import 'package:dutch_hallae/utilities/styles.dart';
+import 'package:day_night_time_picker/day_night_time_picker.dart';
+import 'package:day_night_time_picker/lib/constants.dart';
+import 'package:dutch_hallae/getx/controller/record_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-
-DateTime dateTime = DateTime.now();
 
 class DatePicker extends StatefulWidget {
   const DatePicker({Key? key}) : super(key: key);
@@ -15,6 +14,16 @@ class DatePicker extends StatefulWidget {
 
 class _DatePickerState extends State<DatePicker> {
   final DateRangePickerController _dateController = DateRangePickerController();
+  DateTime dateTime = DateTime.now();
+  late TimeOfDay defaultTime;
+
+  @override
+  void initState() {
+    int minute = _setDefaultTime();
+    defaultTime = TimeOfDay(hour: DateTime.now().hour, minute: minute);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -31,32 +40,49 @@ class _DatePickerState extends State<DatePicker> {
       ),
     );
   }
-}
 
-_onSelectedChanged(
-    DateRangePickerSelectionChangedArgs args, BuildContext context) {
-  dateTime = args.value;
-  _timePicker(context);
-}
+  _onSelectedChanged(
+      DateRangePickerSelectionChangedArgs args, BuildContext context) {
+    dateTime = args.value;
+    Get.put(RecordController()).meetingDateTime = dateTime;
+    _dayNightTimePicker();
+  }
 
-_timePicker(BuildContext context) async {
-  Future<TimeOfDay?> selectedTime = showTimePicker(
-    context: context,
-    helpText: '',
-    initialTime: TimeOfDay(
-      hour: DateTime.now().hour,
-      minute: DateTime.now().minute,
-    ),
-  );
-  final time = await selectedTime;
-  if (time == null) return;
-  DateTime newDateTime = DateTime(
-    dateTime.year,
-    dateTime.month,
-    dateTime.day,
-    time.hour,
-    time.minute,
-  );
-  dateTime = newDateTime;
-  print(dateTime);
+  _dayNightTimePicker() {
+    Navigator.of(context).push(
+      showPicker(
+        context: context,
+        value: defaultTime,
+        onChange: _onTimeChanged,
+        minuteInterval: MinuteInterval.FIVE,
+        okText: '확인',
+        cancelText: '취소',
+        blurredBackground: true,
+        maxMinute: 55,
+      ),
+    );
+  }
+
+  _onTimeChanged(TimeOfDay newTime) {
+    DateTime newDateTime = DateTime(
+      dateTime.year,
+      dateTime.month,
+      dateTime.day,
+      newTime.hour,
+      newTime.minute,
+    );
+    dateTime = newDateTime;
+    Get.put(RecordController()).meetingDateTime = dateTime;
+  }
+
+  int _setDefaultTime() {
+    int rawMinute = DateTime.now().minute;
+    if (rawMinute % 5 != 5) {
+      int fixingMinute = rawMinute % 5;
+      int fixedMinute = rawMinute - fixingMinute;
+      return fixedMinute;
+    } else {
+      return rawMinute;
+    }
+  }
 }

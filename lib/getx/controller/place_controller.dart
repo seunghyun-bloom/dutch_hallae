@@ -1,3 +1,4 @@
+import 'package:dutch_hallae/getx/controller/record_controller.dart';
 import 'package:dutch_hallae/utilities/secret_keys.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
@@ -46,6 +47,8 @@ class PlaceController extends GetxController {
       'x': x,
       'y': y,
     });
+
+    Get.put(RecordController()).place = pickedPlace;
   }
 
   Future fetchData(String query, int ea) async {

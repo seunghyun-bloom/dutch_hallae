@@ -26,6 +26,7 @@ class MiniProfile extends StatelessWidget {
           children: [
             CircleAvatar(
               backgroundImage: image,
+              backgroundColor: Colors.white,
             ),
             SizedBox(width: 2.w),
             Text(
