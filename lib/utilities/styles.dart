@@ -55,8 +55,10 @@ InputDecoration kTextFieldStyle = InputDecoration(
 );
 
 TextStyle fontSize20 = const TextStyle(fontSize: 20);
+TextStyle fontSize18 = const TextStyle(fontSize: 18);
 TextStyle bold20 = const TextStyle(fontWeight: FontWeight.w700, fontSize: 20);
 TextStyle whiteText = const TextStyle(color: Colors.white);
+TextStyle white12Text = const TextStyle(color: Colors.white, fontSize: 12);
 
 class Palette {
   static const MaterialColor basicBlue = MaterialColor(

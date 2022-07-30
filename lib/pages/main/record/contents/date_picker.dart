@@ -57,7 +57,6 @@ class _DatePickerState extends State<DatePicker> {
         minuteInterval: MinuteInterval.FIVE,
         okText: '확인',
         cancelText: '취소',
-        blurredBackground: true,
         maxMinute: 55,
       ),
     );
@@ -77,7 +76,7 @@ class _DatePickerState extends State<DatePicker> {
 
   int _setDefaultTime() {
     int rawMinute = DateTime.now().minute;
-    if (rawMinute % 5 != 5) {
+    if (rawMinute % 5 != 0) {
       int fixingMinute = rawMinute % 5;
       int fixedMinute = rawMinute - fixingMinute;
       return fixedMinute;

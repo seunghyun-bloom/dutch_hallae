@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dutch_hallae/getx/controller/record_controller.dart';
 import 'package:dutch_hallae/getx/controller/user_data_controller.dart';
+import 'package:dutch_hallae/pages/main/groups/contents/group_streamer.dart';
 import 'package:dutch_hallae/utilities/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -13,6 +14,7 @@ import 'package:image_picker/image_picker.dart';
 String _defaultImage = 'assets/images/group_sample.png';
 String _defaultImageURL =
     'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Fgroup%2Fgroup_sample_HQ.png?alt=media&token=b5232a4c-a891-4ac9-a9a8-995a4aa3b9a6';
+final defaultTimeStamp = Timestamp(1, 1);
 final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -26,11 +28,14 @@ class GroupController extends GetxController {
   String writedName = '';
   RxBool isSample = true.obs;
   RxBool imageChanged = false.obs;
-  RxList<bool?> isSelected = [false].obs;
+  RxList<bool?> isSelected = <bool>[].obs;
   RxList<Map<String, String>> selectedMembersInfo = <Map<String, String>>[].obs;
   RxString favoriteGroupName = ''.obs;
   RxString favoriteGroupImage = ''.obs;
+  RxInt favoriteGroupColor = 0.obs;
   RxList<dynamic> favoriteGroupMembers = <dynamic>[].obs;
+  Rx<Timestamp> favoriteGroupCreatedDate = defaultTimeStamp.obs;
+  RxList<dynamic> groupRecord = <dynamic>[].obs;
 
   final Reference _storageREF = _firebaseStorage
       .ref()
@@ -38,7 +43,7 @@ class GroupController extends GetxController {
       .child('${_auth.currentUser?.uid}')
       .child('groups');
 
-  final CollectionReference _firestoreREF = _firestore
+  final CollectionReference firestoreREF = _firestore
       .collection('userData')
       .doc(FirebaseAuth.instance.currentUser?.uid)
       .collection('groups');
@@ -60,7 +65,11 @@ class GroupController extends GetxController {
           toolbarColor: Colors.black87,
           toolbarWidgetColor: Colors.white,
         ),
-        IOSUiSettings(title: '사진 업로드'),
+        IOSUiSettings(
+          title: '사진 업로드',
+          doneButtonTitle: '업로드',
+          cancelButtonTitle: '취소',
+        ),
       ],
     );
 
@@ -76,7 +85,7 @@ class GroupController extends GetxController {
   }
 
   setToFavorite(String name) async {
-    var querySnapshot = await _firestoreREF.get();
+    var querySnapshot = await firestoreREF.get();
 
     for (var doc in querySnapshot.docs) {
       await doc.reference.update({
@@ -84,7 +93,7 @@ class GroupController extends GetxController {
       });
     }
 
-    await _firestoreREF.doc(name).update({
+    await firestoreREF.doc(name).update({
       'favorite': true,
       'timeStamp': Timestamp.now(),
     });
@@ -93,20 +102,22 @@ class GroupController extends GetxController {
   }
 
   findFavoite() {
-    _firestoreREF
+    firestoreREF
         .where('favorite', isEqualTo: true)
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((element) {
         favoriteGroupName(element['name']);
         favoriteGroupImage(element['image']);
+        favoriteGroupColor(element['color']);
         favoriteGroupMembers(element['members']);
+        favoriteGroupCreatedDate(element['createdDate']);
       });
     });
   }
 
   pickForRecord(String name) async {
-    var querySnapshot = await _firestoreREF.get();
+    var querySnapshot = await firestoreREF.get();
 
     for (var doc in querySnapshot.docs) {
       await doc.reference.set(
@@ -115,7 +126,7 @@ class GroupController extends GetxController {
       );
     }
 
-    await _firestoreREF.doc(name).update({
+    await firestoreREF.doc(name).update({
       'picked': true,
       'timeStamp': Timestamp.now(),
     });
@@ -143,7 +154,7 @@ class GroupController extends GetxController {
       addGroupToFriendsInfo(selectedMember['name']!, [writedName]);
     }
 
-    QuerySnapshot querySnapshot = await _firestoreREF.get();
+    QuerySnapshot querySnapshot = await firestoreREF.get();
     int docsLength = querySnapshot.docs.length;
     if (docsLength <= 1) {
       await setToFavorite(writedName);
@@ -171,7 +182,7 @@ class GroupController extends GetxController {
   }
 
   firestoreUploader(String name, String image, int colorValue, List members) {
-    _firestoreREF.doc(name).set({
+    firestoreREF.doc(name).set({
       'name': name,
       'image': image,
       'color': colorValue,
@@ -179,11 +190,12 @@ class GroupController extends GetxController {
       'favorite': false,
       'picked': false,
       'timeStamp': Timestamp.now(),
+      'createdDate': Timestamp.now(),
     });
   }
 
   updateTimeStamp(String name) {
-    _firestoreREF.doc(name).update({
+    firestoreREF.doc(name).update({
       'timeStamp': Timestamp.now(),
     });
   }
@@ -218,7 +230,7 @@ class GroupController extends GetxController {
       'image': newImagePath
     });
 
-    var querySnapshots = await _firestoreREF.get();
+    var querySnapshots = await firestoreREF.get();
 
     for (var doc in querySnapshots.docs) {
       await doc.reference.update(
@@ -231,11 +243,37 @@ class GroupController extends GetxController {
     }
   }
 
+  getRecordByGroup(String group) async {
+    groupRecord.clear();
+    final _getxRecord = Get.put(RecordController());
+    await _getxRecord.firestoreREF
+        .where('group', isEqualTo: group)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      for (var element in querySnapshot.docs) {
+        groupRecord.add({
+          'title': element['title'],
+          'group': element['group'],
+          'image': element['image'],
+          'amount': element['amount'],
+          'members': element['members'],
+          'place': element['place'],
+          'timeStamp': element['timeStamp'],
+        });
+      }
+    });
+  }
+
+  resetSelectedMembers() {
+    isSelected.clear();
+    selectedMembersInfo.clear();
+  }
+
   @override
   void onInit() {
     findFavoite();
     firestoreQuery =
-        _firestoreREF.orderBy('timeStamp', descending: true).snapshots();
+        firestoreREF.orderBy('timeStamp', descending: true).snapshots();
 
     super.onInit();
   }

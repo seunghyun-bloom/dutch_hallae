@@ -26,6 +26,12 @@ class FriendsStreamer extends StatefulWidget {
 
 class _FriendsStreamerState extends State<FriendsStreamer> {
   @override
+  void initState() {
+    _getxGroup.resetSelectedMembers();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: _firestore
@@ -39,8 +45,8 @@ class _FriendsStreamerState extends State<FriendsStreamer> {
           return const Center(child: CircularProgressIndicator());
         }
 
-        _getxGroup.isSelected.clear();
-        _getxGroup.selectedMembersInfo.clear();
+        // _getxGroup.isSelected.clear();
+        // _getxGroup.selectedMembersInfo.clear();
 
         final friends = snapshot.data?.docs.reversed;
         for (var friend in friends!) {

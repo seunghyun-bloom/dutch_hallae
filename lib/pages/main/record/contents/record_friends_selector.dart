@@ -1,6 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dutch_hallae/getx/controller/group_controller.dart';
 import 'package:dutch_hallae/getx/controller/record_controller.dart';
+import 'package:dutch_hallae/pages/main/friends/friend_add_page.dart';
+import 'package:dutch_hallae/pages/main/friends/modal_fit.dart';
+import 'package:dutch_hallae/pages/main/record/contents/record_friend_add.dart';
+import 'package:dutch_hallae/pages/main/record/contents/record_friend_add_list.dart';
+import 'package:dutch_hallae/utilities/dialog.dart';
 import 'package:dutch_hallae/utilities/mini_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,20 +13,21 @@ import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-//TODO: resetSelectedMember 가 호출되지 않는 문제 해결
+//TODO: 모임에 속하지 않은 일회성 멤버 추가 기능
 
 class SelectMemberPopup {
   BuildContext context;
   String groupName;
   SelectMemberPopup({required this.context, required this.groupName}) {
     showAnimatedDialog(
-        context: context,
-        barrierDismissible: true,
-        animationType: DialogTransitionType.scale,
-        duration: const Duration(milliseconds: 300),
-        builder: (BuildContext context) {
-          return SelectMemberPopupContents(groupName: groupName);
-        });
+      context: context,
+      barrierDismissible: true,
+      animationType: DialogTransitionType.scale,
+      duration: const Duration(milliseconds: 300),
+      builder: (BuildContext context) {
+        return SelectMemberPopupContents(groupName: groupName);
+      },
+    );
   }
 }
 
@@ -42,44 +48,67 @@ class SelectMemberPopupContents extends GetView<RecordController> {
         content: SizedBox(
           width: Get.width,
           child: StreamBuilder<DocumentSnapshot>(
-              stream: _firestore
-                  .collection('userData')
-                  .doc('${_auth.currentUser?.uid}')
-                  .collection('groups')
-                  .doc(groupName)
-                  .snapshots(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<DocumentSnapshot> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+            stream: _firestore
+                .collection('userData')
+                .doc('${_auth.currentUser?.uid}')
+                .collection('groups')
+                .doc(groupName)
+                .snapshots(),
+            builder: (BuildContext context,
+                AsyncSnapshot<DocumentSnapshot> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-                if (!snapshot.hasData) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+              if (!snapshot.hasData) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-                List<dynamic> friends = snapshot.data!['members'];
-                for (var friend in friends) {
-                  controller.isSelectedMember.add(false);
-                }
+              for (int i = 0; i < snapshot.data!['members'].length; i++) {
+                controller.isSelectedMember.add(false);
+              }
+              // List<dynamic> friends = snapshot.data!['members'];
+              // for (var friend in friends) {
+              //   controller.isSelectedMember.add(false);
+              // }
 
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: friends.length,
-                  itemBuilder: (context, index) {
-                    return FriendBubble(
-                      image: friends[index]['image'],
-                      name: friends[index]['name'],
-                      index: index,
-                    );
-                  },
-                );
-              }),
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: snapshot.data!['members'].length,
+                itemBuilder: (context, index) {
+                  return FriendBubble(
+                    image: snapshot.data!['members'][index]['image'],
+                    name: snapshot.data!['members'][index]['name'],
+                    index: index,
+                  );
+                },
+              );
+            },
+          ),
         ),
         actions: [
+          IconButton(
+            onPressed: () async {
+              Get.back();
+              await Future.delayed(const Duration(milliseconds: 500));
+              controller.resetPickedGroup();
+              controller.resetSelectedMembers();
+            },
+            icon: const Icon(Icons.refresh_rounded),
+          ),
           ElevatedButton(
-            onPressed: () => Get.back(),
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.grey.shade300),
+              foregroundColor: MaterialStateProperty.all(Colors.black),
+            ),
+            child: const Text('목록에 없는 멤버'),
+            onPressed: () {
+              AddAtFriendsList(context: context);
+            },
+          ),
+          ElevatedButton(
             child: const Text('추가'),
+            onPressed: () => Get.back(),
           ),
         ],
       ),

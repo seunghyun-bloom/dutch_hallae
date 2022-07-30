@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:dutch_hallae/getx/controller/group_controller.dart';
 import 'package:dutch_hallae/pages/main/groups/contents/group_streamer.dart';
@@ -31,9 +32,10 @@ class MainGroupComponent extends GetView<GroupController> {
               child: GroupBubble(
                 name: controller.favoriteGroupName.value,
                 image: controller.favoriteGroupImage.value,
-                colorValue: Colors.black.value,
+                colorValue: controller.favoriteGroupColor.value,
                 members: controller.favoriteGroupMembers,
                 isFavorite: true,
+                createdDate: controller.favoriteGroupCreatedDate.value,
               ),
             ),
     );

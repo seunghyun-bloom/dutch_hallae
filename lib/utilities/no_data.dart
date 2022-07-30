@@ -12,6 +12,7 @@ class NoDataSquare extends StatelessWidget {
   final bool showButton;
   final String buttonTitle;
   final Color borderColor;
+  final bool isCrying;
 
   const NoDataSquare({
     Key? key,
@@ -21,6 +22,7 @@ class NoDataSquare extends StatelessWidget {
     this.showButton = false,
     this.buttonTitle = '',
     this.borderColor = Colors.grey,
+    this.isCrying = true,
   }) : super(key: key);
 
   @override
@@ -43,15 +45,17 @@ class NoDataSquare extends StatelessWidget {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
+                      borderRadius: BorderRadius.circular(12),
                       color: Colors.grey,
                     ),
                     height: Get.width * 0.3,
                     width: Get.width * 0.3,
-                    child: const Center(
-                      child: Text(
-                        '캐릭터',
-                        style: TextStyle(color: Colors.white),
+                    child: Center(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.asset(isCrying
+                            ? 'assets/images/no_data.png'
+                            : 'assets/images/profile_sample_6.png'),
                       ),
                     ),
                   ),
@@ -76,7 +80,7 @@ class NoDataSquare extends StatelessWidget {
                           width: 200.w,
                           child: StretchedButton(
                             title: buttonTitle,
-                            fontSize: 16.sp,
+                            fontSize: 15.sp,
                             height: 45.h,
                             onTap: onTap,
                           ),

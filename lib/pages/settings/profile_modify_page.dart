@@ -40,11 +40,11 @@ class _ProfileModifyPageState extends State<ProfileModifyPage> {
                 DialogByPlatform(
                   title: '프로필 사진 변경',
                   content: '어디에서 불러오시겠습니까?',
-                  leftLabel: '사진첩',
+                  rightLabel: '사진첩',
                   onTap: () =>
                       _getxImage.uploadProfileImage(ImageSource.gallery),
-                  rightLabel: '카메라',
-                  onRightTap: () =>
+                  leftLabel: '카메라',
+                  onLeftTap: () =>
                       _getxImage.uploadProfileImage(ImageSource.camera),
                   context: context,
                 );

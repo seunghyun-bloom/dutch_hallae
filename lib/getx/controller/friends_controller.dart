@@ -6,7 +6,6 @@ import 'package:dutch_hallae/utilities/loading.dart';
 import 'package:dutch_hallae/utilities/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -17,23 +16,23 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 String _defaultImageURL =
-    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Ffriend_sample_0.jpeg?alt=media&token=3f159e77-cade-4345-8b6e-7a5d4c7e75e8';
-String defaultImage = 'assets/images/friend_sample_0.jpeg';
+    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Fprofile_sample_0.png?alt=media&token=bbb403a6-3ef9-495d-a7eb-2b60c0b3562c';
+String defaultImage = 'assets/images/profile_sample_0.png';
 
 class FriendsController extends GetxController {
   RxString friendImageURL = _defaultImageURL.obs;
   RxString showingFriendImage = defaultImage.obs;
   List<String> sampleFriendImages = [
-    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Ffriend_sample_0.jpeg?alt=media&token=3f159e77-cade-4345-8b6e-7a5d4c7e75e8',
-    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Ffriend_sample_1.jpeg?alt=media&token=3e418c93-3688-4256-ba80-f9b8d05488c5',
-    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Ffriend_sample_2.jpeg?alt=media&token=fdc0f4e5-56a6-4fe3-ad63-6f4993f479dd',
-    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Ffriend_sample_3.jpeg?alt=media&token=e2c8c602-4460-4d8a-8fc8-597002a47225',
-    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Ffriend_sample_4.jpeg?alt=media&token=1ed26537-7130-4a42-806b-c6f03df99e69',
-    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Ffriend_sample_5.jpeg?alt=media&token=5b3fad8b-ca4d-4fb7-a55f-bf92aad09fbc',
-    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Ffriend_sample_6.jpeg?alt=media&token=43b34226-23d2-431f-b3c2-1cd4eafad4a2',
-    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Ffriend_sample_7.jpeg?alt=media&token=cdf99d99-1d53-4148-b99c-9579778bfc49',
-    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Ffriend_sample_8.jpeg?alt=media&token=970360fd-32fc-4677-b55e-3f33c732e1cf',
-    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Ffriend_sample_9.jpeg?alt=media&token=ffd0c33a-dc81-412a-b090-61dbd6630f6e'
+    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Fprofile_sample_0.png?alt=media&token=bbb403a6-3ef9-495d-a7eb-2b60c0b3562c',
+    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Fprofile_sample_1.png?alt=media&token=db87e4a1-4c84-4756-aa1b-87a998be8e4e',
+    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Fprofile_sample_2.png?alt=media&token=f323c5a1-19a3-49de-b472-b8e5ec01f090',
+    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Fprofile_sample_3.png?alt=media&token=fa32e2d8-bc9f-41f8-882a-380d39f03dfa',
+    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Fprofile_sample_4.png?alt=media&token=b4686a50-e483-41c4-a853-d3e975a3377f',
+    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Fprofile_sample_5.png?alt=media&token=0649ff05-c446-48e8-8812-f976f2ea9211',
+    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Fprofile_sample_6.png?alt=media&token=99c4eb87-f88a-45a0-b64a-521169288bc1',
+    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Fprofile_sample_7.png?alt=media&token=00b8d856-3736-41a3-8782-95077946b97c',
+    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Fprofile_sample_8.png?alt=media&token=658c0162-0438-43a4-a9bd-370ba08b220c',
+    'https://firebasestorage.googleapis.com/v0/b/dutchhallae.appspot.com/o/basic%2Ffriends%2Fsample_images%2Fprofile_sample_9.png?alt=media&token=8a37ab07-be15-48e2-8a45-2b280d469916',
   ];
   final CollectionReference _firestoreREF = _firestore
       .collection('userData')
@@ -56,11 +55,11 @@ class FriendsController extends GetxController {
     final ImagePicker _picker = ImagePicker();
     XFile? ximage = await _picker.pickImage(
       source: source,
-      maxHeight: 1260,
-      maxWidth: 1260,
     );
 
     CroppedFile? croppedFile = await ImageCropper().cropImage(
+      maxHeight: 300,
+      maxWidth: 300,
       sourcePath: ximage!.path,
       aspectRatio: const CropAspectRatio(ratioX: 300, ratioY: 300),
       uiSettings: [
@@ -69,13 +68,15 @@ class FriendsController extends GetxController {
           toolbarColor: Colors.black87,
           toolbarWidgetColor: Colors.white,
         ),
-        IOSUiSettings(title: '사진 업로드'),
+        IOSUiSettings(
+          title: '사진 업로드',
+          doneButtonTitle: '업로드',
+          cancelButtonTitle: '취소',
+        ),
       ],
     );
 
     showingFriendImage(croppedFile?.path);
-
-    Get.back();
   }
 
   changeFriendImage(ImageSource source) async {
@@ -114,7 +115,7 @@ class FriendsController extends GetxController {
     isSample(true);
     String selectedSampleImage = sampleFriendImages[i];
     friendImageURL(selectedSampleImage);
-    showingFriendImage('assets/images/friend_sample_$i.jpeg');
+    showingFriendImage('assets/images/profile_sample_$i.png');
   }
 
   uploadFriendFirebase(String name, String phone, String textfieldValue,
@@ -130,15 +131,15 @@ class FriendsController extends GetxController {
         DialogByPlatform(
           title: '이미 등록된 친구',
           content: '기존 정보를 삭제하고 새로 추가하시겠습니까?\n동명이인이라면 다른 이름을 지정해주세요.',
-          leftLabel: '삭제 후 추가',
-          rightLabel: '돌아가기',
+          rightLabel: '삭제 후 추가',
+          leftLabel: '돌아가기',
           onTap: () async {
             await storageUploader(
                 isSample.value, uploadName, showingFriendImage.value);
             firestoreUploader(uploadName, phone, friendImageURL.value);
             Get.back();
           },
-          onRightTap: () => Get.back(),
+          onLeftTap: () => Get.back(),
           context: context,
         );
       } else {

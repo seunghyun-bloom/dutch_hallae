@@ -1,6 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+class MiniProfiles extends StatelessWidget {
+  List people = [];
+
+  MiniProfiles({Key? key, required this.people}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    List<MiniProfile> profiles = <MiniProfile>[];
+    if (people.isEmpty) {
+      return SizedBox();
+    } else {
+      for (var person in people) {
+        profiles.add(
+          MiniProfile(
+            image: NetworkImage(person['image']!),
+            name: person['name']!,
+          ),
+        );
+      }
+      return Wrap(children: profiles);
+    }
+  }
+}
+
 class MiniProfile extends StatelessWidget {
   ImageProvider image;
   String name;

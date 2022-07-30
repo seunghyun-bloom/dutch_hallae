@@ -21,7 +21,7 @@ class GroupPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
+      body: const Padding(
         padding: EdgeInsets.symmetric(horizontal: 15),
         child: GroupStreamer(),
       ),

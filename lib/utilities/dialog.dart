@@ -11,18 +11,18 @@ import 'package:get/get.dart';
 class DialogByPlatform {
   String title;
   String content;
-  String leftLabel;
   String rightLabel;
+  String leftLabel;
   dynamic onTap;
-  dynamic onRightTap = () => Get.back();
+  dynamic onLeftTap;
   BuildContext context;
   DialogByPlatform(
       {required this.title,
       required this.content,
-      this.leftLabel = '예',
-      this.rightLabel = '아니오',
+      this.rightLabel = '예',
+      this.leftLabel = '아니오',
       required this.onTap,
-      this.onRightTap,
+      this.onLeftTap,
       required this.context}) {
     Platform.isIOS
         ? showCupertinoDialog(
@@ -34,12 +34,12 @@ class DialogByPlatform {
                 content: Text(content),
                 actions: [
                   CupertinoDialogAction(
-                    child: Text(leftLabel),
+                    child: Text(rightLabel),
                     onPressed: onTap,
                   ),
                   CupertinoDialogAction(
-                    child: Text(rightLabel),
-                    onPressed: onRightTap,
+                    child: Text(leftLabel),
+                    onPressed: onLeftTap ?? () => Get.back(),
                   ),
                 ],
               );
@@ -69,10 +69,10 @@ class DialogByPlatform {
                             margin: EdgeInsets.symmetric(horizontal: 5.w),
                             child: StretchedButton(
                                 color: Colors.grey,
-                                title: rightLabel,
+                                title: leftLabel,
                                 height: 40,
                                 fontSize: 14,
-                                onTap: onRightTap),
+                                onTap: onLeftTap),
                           ),
                         ),
                         Expanded(
@@ -80,7 +80,7 @@ class DialogByPlatform {
                             margin: EdgeInsets.symmetric(horizontal: 5.w),
                             child: StretchedButton(
                               color: Palette.basicBlue,
-                              title: leftLabel,
+                              title: rightLabel,
                               height: 40,
                               fontSize: 14,
                               onTap: onTap,

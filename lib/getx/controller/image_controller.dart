@@ -21,11 +21,11 @@ class ImageController extends GetxController {
     final ImagePicker _picker = ImagePicker();
     XFile? ximage = await _picker.pickImage(
       source: source,
-      maxHeight: 1260,
-      maxWidth: 1260,
     );
 
     CroppedFile? croppedFile = await ImageCropper().cropImage(
+      maxHeight: 300,
+      maxWidth: 300,
       sourcePath: ximage!.path,
       aspectRatio: const CropAspectRatio(ratioX: 300, ratioY: 300),
       uiSettings: [
@@ -34,7 +34,11 @@ class ImageController extends GetxController {
           toolbarColor: Colors.black87,
           toolbarWidgetColor: Colors.white,
         ),
-        IOSUiSettings(title: '사진 업로드'),
+        IOSUiSettings(
+          title: '사진 업로드',
+          doneButtonTitle: '업로드',
+          cancelButtonTitle: '취소',
+        ),
       ],
     );
 

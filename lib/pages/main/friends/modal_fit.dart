@@ -54,12 +54,16 @@ class _ModalFitState extends State<ModalFit> {
                   DialogByPlatform(
                     title: '친구 사진',
                     content: '어디에서 불러오시겠습니까?',
-                    leftLabel: '사진첩',
-                    onTap: () =>
-                        _getxFriends.getFriendImage(ImageSource.gallery),
-                    rightLabel: '카메라',
-                    onRightTap: () =>
-                        _getxFriends.getFriendImage(ImageSource.camera),
+                    rightLabel: '사진첩',
+                    onTap: () {
+                      _getxFriends.getFriendImage(ImageSource.gallery);
+                      Get.back();
+                    },
+                    leftLabel: '카메라',
+                    onLeftTap: () {
+                      _getxFriends.getFriendImage(ImageSource.camera);
+                      Get.back();
+                    },
                     context: context,
                   );
                 },
@@ -141,7 +145,7 @@ class _ModalFitState extends State<ModalFit> {
             InkWell(
               child: CircleAvatar(
                 backgroundImage:
-                    AssetImage('assets/images/friend_sample_$i.jpeg'),
+                    AssetImage('assets/images/profile_sample_$i.png'),
                 backgroundColor: Colors.grey.shade300,
               ),
               onTap: () => _getxFriends.selectSampleImage(i),

@@ -3,7 +3,10 @@ import 'package:dutch_hallae/pages/main/record/contents/date_picker.dart';
 import 'package:dutch_hallae/pages/main/record/contents/record_friends_selector.dart';
 import 'package:dutch_hallae/pages/main/record/contents/record_image_picker.dart';
 import 'package:dutch_hallae/utilities/buttons.dart';
+import 'package:dutch_hallae/utilities/loading.dart';
 import 'package:dutch_hallae/utilities/styles.dart';
+import 'package:dutch_hallae/utilities/textfield_formatter.dart';
+import 'package:dutch_hallae/utilities/title.dart';
 import 'package:dutch_hallae/utilities/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:dutch_hallae/getx/controller/place_controller.dart';
@@ -15,26 +18,44 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class RecordCreatePage extends StatelessWidget {
+class RecordCreatePage extends StatefulWidget {
   RecordCreatePage({Key? key}) : super(key: key);
 
+  @override
+  State<RecordCreatePage> createState() => _RecordCreatePageState();
+}
+
+class _RecordCreatePageState extends State<RecordCreatePage> {
   final TextEditingController _titleTextController = TextEditingController();
+  final TextEditingController _totalAmountTextController =
+      TextEditingController();
+
   final _getxRecord = Get.put(RecordController());
   final _getxPlace = Get.put(PlaceController());
-  final _getxGroup = Get.put(GroupController());
-  var numberFormat = NumberFormat('###,###,###,###');
+
   FocusNode focusNode = FocusNode();
+  FocusNode focusNode2 = FocusNode();
+
+  unfocusTextField() {
+    focusNode.unfocus();
+    focusNode2.unfocus();
+  }
+
+  @override
+  void dispose() {
+    _getxRecord.resetAllRecordData();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     Get.put(RecordController());
     Get.put(PlaceController());
-    Get.put(GroupController());
     return GestureDetector(
-      onTap: () => focusNode.unfocus(),
+      onTap: () => unfocusTextField(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('기록하기'),
+          title: const Text('만남 기록하기'),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -44,7 +65,7 @@ class RecordCreatePage extends StatelessWidget {
               () => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('제목', style: fontSize20),
+                  TitleText(title: '제목', top: 10),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: TextField(
@@ -59,15 +80,9 @@ class RecordCreatePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20, bottom: 10),
-                    child: Text('모임 선택하기', style: fontSize20),
-                  ),
-                  RecordGroupPicker(),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20, bottom: 10),
-                    child: Text('함께한 친구', style: fontSize20),
-                  ),
+                  TitleText(title: '모임 선택하기'),
+                  RecordGroupPicker(focusNode: focusNode),
+                  TitleText(title: '함께한 친구'),
                   InkWell(
                       onTap: () => _getxRecord.selectedMembersInfo.isEmpty
                           ? showToast('모임을 먼저 선택해주세요')
@@ -77,7 +92,7 @@ class RecordCreatePage extends StatelessWidget {
                             ),
                       child: const ShowingSelectedMembers()),
                   const SizedBox(height: 20),
-                  Text('장소', style: fontSize20),
+                  TitleText(title: '장소', top: 10),
                   Container(
                     width: Get.mediaQuery.size.width,
                     height: 40.h,
@@ -99,28 +114,49 @@ class RecordCreatePage extends StatelessWidget {
                           y: _getxPlace.pickedPlace['y'],
                         ),
                   const SizedBox(height: 20),
-                  Text(
-                    '날짜',
-                    style: fontSize20,
-                  ),
-                  const SizedBox(height: 10),
-                  const DatePicker(),
+                  TitleText(title: '총 금액 (₩)', top: 0),
                   Padding(
-                    padding: const EdgeInsets.only(top: 20, bottom: 10),
-                    child: Text(
-                      '사진',
-                      style: fontSize20,
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: TextField(
+                      controller: _totalAmountTextController,
+                      focusNode: focusNode2,
+                      onChanged: (value) {
+                        var removeChars = value.replaceAll(",", "");
+                        var intValue = int.tryParse(removeChars) ?? 0;
+                        _getxRecord.totalAmount.value = intValue;
+                      },
+                      maxLength: 15,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [DecimalFormatter()],
+                      decoration: const InputDecoration(
+                        hintText: 'ex) 15,000',
+                        counterText: "",
+                      ),
                     ),
                   ),
+                  TitleText(title: '날짜', top: 35),
+                  const DatePicker(),
+                  TitleText(title: '사진'),
                   const RecordImagePicker(),
                   Padding(
                     padding: EdgeInsets.all(10.h),
                     child: StretchedButton(
                       title: '등록하기',
-                      onTap: () => print(
-                          '\n isSelectedMember: ${_getxRecord.isSelectedMember.length}\n selectedMembersInfo: ${_getxRecord.selectedMembersInfo.length}\n groupName: ${_getxRecord.group.value}'),
+                      onTap: () async {
+                        bool passNullCheck = _getxRecord.nullCheck();
+                        if (!passNullCheck) {
+                          return;
+                        } else {
+                          Loading(context);
+                          await _getxRecord.uploadRecordFirebase();
+                          showToast(
+                              '${_getxRecord.title.value}의 정보가 업데이트 되었습니다');
+                          Get.back();
+                          Get.back();
+                        }
+                      },
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

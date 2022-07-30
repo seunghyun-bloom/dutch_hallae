@@ -76,11 +76,11 @@ class FriendInfoContents extends GetView<FriendsController> {
                 DialogByPlatform(
                   title: '친구 사진',
                   content: '어디에서 불러오시겠습니까?',
-                  leftLabel: '사진첩',
+                  rightLabel: '사진첩',
                   onTap: () =>
                       controller.changeFriendImage(ImageSource.gallery),
-                  rightLabel: '카메라',
-                  onRightTap: () =>
+                  leftLabel: '카메라',
+                  onLeftTap: () =>
                       controller.changeFriendImage(ImageSource.camera),
                   context: context,
                 );

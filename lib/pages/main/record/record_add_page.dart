@@ -175,8 +175,6 @@ class RecordAddPage extends StatelessWidget {
                   )
                 ],
               ),
-              const Text('정산 모임 선택하기'),
-              RecordGroupPicker(),
             ],
           ),
         ),

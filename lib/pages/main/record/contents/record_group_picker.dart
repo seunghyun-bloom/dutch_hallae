@@ -9,14 +9,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-// final _getxGroup = Get.find<GroupController>();
-// final _getxRecord = Get.find<RecordController>();
+final _getxGroup = Get.find<GroupController>();
+final _getxRecord = Get.find<RecordController>();
 
-final _getxGroup = Get.put(GroupController());
-final _getxRecord = Get.put(RecordController());
+// final _getxGroup = Get.put(GroupController());
+// final _getxRecord = Get.put(RecordController());
 
 class RecordGroupPicker extends StatelessWidget {
-  RecordGroupPicker({Key? key}) : super(key: key);
+  FocusNode focusNode;
+  RecordGroupPicker({Key? key, required this.focusNode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +52,7 @@ class RecordGroupPicker extends StatelessWidget {
                     name: snapshot.data?.docs[index]['name'],
                     members: snapshot.data?.docs[index]['members'],
                     isPicked: snapshot.data?.docs[index]['picked'],
+                    focusNode: focusNode,
                   ),
                 );
               },
@@ -67,12 +69,14 @@ class RecordGroupPickerBubble extends StatelessWidget {
   String image;
   List members;
   bool isPicked;
+  FocusNode focusNode;
   RecordGroupPickerBubble({
     Key? key,
     required this.name,
     required this.image,
     required this.members,
     required this.isPicked,
+    required this.focusNode,
   }) : super(key: key);
 
   @override
@@ -81,8 +85,9 @@ class RecordGroupPickerBubble extends StatelessWidget {
     Get.put(RecordController());
     return InkWell(
       onTap: () {
-        _getxRecord.resetSelectedMembers();
+        focusNode.unfocus();
         _getxGroup.pickForRecord(name);
+        _getxRecord.resetSelectedMembers();
         _getxRecord.group(name);
         SelectMemberPopup(context: context, groupName: name);
       },

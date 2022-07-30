@@ -1,6 +1,7 @@
 import 'package:dutch_hallae/pages/main/accounts/account_page.dart';
 import 'package:dutch_hallae/pages/main/friends/friends_page.dart';
 import 'package:dutch_hallae/pages/main/groups/group_page.dart';
+import 'package:dutch_hallae/pages/main/record/record_page.dart';
 import 'package:dutch_hallae/pages/settings/user_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -42,8 +43,11 @@ Drawer mainDrawerMenu() {
             }),
         ListTile(
           leading: const FaIcon(FontAwesomeIcons.clipboardList),
-          title: const Text('모임기록'),
-          onTap: () {},
+          title: const Text('만남기록'),
+          onTap: () {
+            Get.back();
+            Get.to(() => const RecordPage());
+          },
         ),
         const Divider(
           color: Colors.blueGrey,

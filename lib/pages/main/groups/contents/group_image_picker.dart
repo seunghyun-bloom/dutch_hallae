@@ -32,10 +32,10 @@ class GroupImagePicker extends GetView<GroupController> {
           onTap: () => DialogByPlatform(
             title: '모임 사진',
             content: '어디에서 불러오시겠습니까?',
-            leftLabel: '사진첩',
+            rightLabel: '사진첩',
             onTap: () => controller.getGroupImage(ImageSource.gallery),
-            rightLabel: '카메라',
-            onRightTap: () => controller.getGroupImage(ImageSource.camera),
+            leftLabel: '카메라',
+            onLeftTap: () => controller.getGroupImage(ImageSource.camera),
             context: context,
           ),
         ),

@@ -31,8 +31,10 @@ class AccountPage extends GetView<BankAccountController> {
                 builder: (context, snapshot) {
                   if (snapshot.data?.docs.length == 0) {
                     return NoDataSquare(
-                      titleString: '계좌를 추가해 주세요',
-                      contentString: '등록된 계좌가 아직 없으시네요\n네모 박스를 눌러 계좌를 추가해 주세요',
+                      titleString: '계좌정보가 없어요',
+                      contentString: '네모 박스를 눌러 계좌를 등록해 주세요',
+                      showButton: true,
+                      buttonTitle: '계좌 등록하기',
                       onTap: () => CreateAccount(context: context),
                     );
                   } else if (snapshot.hasData) {
